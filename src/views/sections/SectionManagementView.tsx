@@ -21,10 +21,12 @@ interface SectionUpdateFormState {
 
 export const SectionManagementView: React.FC = () => {
   const {
+    subjects,
     sections,
     loading,
     error,
     success,
+    fetchSubjects,
     fetchSections,
     loadSectionDetail,
     createSectionItem,
@@ -48,6 +50,11 @@ export const SectionManagementView: React.FC = () => {
     image: null,
   });
 
+  // 初期ロード時に題材一覧を取得
+  useEffect(() => {
+    fetchSubjects();
+  }, []);
+
   useEffect(() => {
     if (!selectedSectionId) return;
     const latestSection = sections.find(
@@ -58,11 +65,14 @@ export const SectionManagementView: React.FC = () => {
     }
   }, [sections, selectedSectionId]);
 
-  const handleSubjectLoad = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!subjectId) return;
-    await fetchSections(Number(subjectId));
+  const handleSubjectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSubjectId = event.target.value;
+    setSubjectId(newSubjectId);
     setSelectedSectionId('');
+    setSelectedSection(null);
+    if (newSubjectId) {
+      await fetchSections(Number(newSubjectId));
+    }
   };
 
   const handleSectionSelect = async (sectionIdValue: string) => {
@@ -148,21 +158,24 @@ export const SectionManagementView: React.FC = () => {
       {success && <div className="success-message">{success}</div>}
       {error && <div className="error-message">{error}</div>}
 
-      <form className="management-form inline-form" onSubmit={handleSubjectLoad}>
+      <div className="management-form inline-form">
         <label>
-          題材ID
-          <input
-            type="number"
-            min="1"
+          題材を選択
+          <select
             value={subjectId}
-            onChange={(e) => setSubjectId(e.target.value)}
-            required
-          />
+            onChange={handleSubjectChange}
+            disabled={loading}
+          >
+            <option value="">-- 題材を選択してください --</option>
+            {subjects.map((subject) => (
+              <option key={subject.subjectId} value={subject.subjectId}>
+                {subject.subjectId}: {subject.title}
+              </option>
+            ))}
+          </select>
         </label>
-        <button type="submit" className="btn-primary" disabled={loading}>
-          {loading ? '取得中...' : 'セクションを取得' }
-        </button>
-      </form>
+        {loading && <span className="loading-indicator">読み込み中...</span>}
+      </div>
 
       <div className="management-grid">
         <div className="management-card">

@@ -4,6 +4,7 @@
  */
 import { useState } from 'react';
 import {
+  getAllSubjects,
   getSectionsBySubjectId,
   getSectionById,
   createSection,
@@ -13,12 +14,15 @@ import {
   deleteSectionImage,
 } from '@/services/SubjectService';
 import { type Section, type CreateSectionPayload, type UpdateSectionPayload } from '@/models/Section';
+import { type Subject } from '@/models/Subject';
 
 interface SectionManagementViewModelReturn {
+  subjects: Subject[];
   sections: Section[];
   loading: boolean;
   error: string | null;
   success: string | null;
+  fetchSubjects: () => Promise<void>;
   fetchSections: (subjectId: number) => Promise<void>;
   loadSectionDetail: (subjectId: number, sectionId: number) => Promise<Section | null>;
   createSectionItem: (subjectId: number, payload: CreateSectionPayload) => Promise<void>;
@@ -36,10 +40,31 @@ interface SectionManagementViewModelReturn {
 }
 
 export const useSectionManagementViewModel = (): SectionManagementViewModelReturn => {
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  /**
+   * 題材一覧を取得
+   */
+  const fetchSubjects = async (): Promise<void> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getAllSubjects();
+      setSubjects(data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('題材一覧の取得に失敗しました');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchSections = async (subjectId: number): Promise<void> => {
     setLoading(true);
@@ -184,10 +209,12 @@ export const useSectionManagementViewModel = (): SectionManagementViewModelRetur
   };
 
   return {
+    subjects,
     sections,
     loading,
     error,
     success,
+    fetchSubjects,
     fetchSections,
     loadSectionDetail,
     createSectionItem,
