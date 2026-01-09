@@ -153,8 +153,8 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
       return;
     }
     
-    // ターゲット要素をクリック（クリアボタンとサイドバー閉じるは除く）
-    if (!step.target.includes('clear-filter') && !step.target.includes('sidebar-close')) {
+    // ターゲット要素をクリック（クリアボタンは除く）
+    if (!step.target.includes('clear-filter')) {
       const target = document.querySelector(step.target) as HTMLElement;
       if (target) {
         target.click();
