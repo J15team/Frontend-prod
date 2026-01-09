@@ -259,41 +259,38 @@ export const LandingView: React.FC = () => {
           <div className="section-header">
             <span className="section-label">Team</span>
             <h2 className="section-title">製作チーム</h2>
-            <p className="section-subtitle">
-              Pathlyを作った6人のメンバーを紹介します
-            </p>
           </div>
 
-          <div className="team-grid">
+          <div className="team-grid-large">
             {[
-              { id: 'member-1', name: '吉田 力輝', role: 'Tech Lead', desc: '開発責任者（Frontend & Backend）', image: '/images/team/member-1.jpg' },
-              { id: 'member-2', name: 'メンバー2', role: 'Backend', desc: '紹介文をここに', image: '' },
-              { id: 'member-3', name: 'メンバー3', role: 'Design', desc: '紹介文をここに', image: '' },
-              { id: 'member-4', name: 'メンバー4', role: 'Frontend', desc: '紹介文をここに', image: '' },
-              { id: 'member-5', name: 'メンバー5', role: 'Backend', desc: '紹介文をここに', image: '' },
-              { id: 'member-6', name: 'メンバー6', role: 'PM', desc: '紹介文をここに', image: '' },
+              { id: 'member-1', name: 'RIKI YOSHIDA', role: '開発責任者（Frontend & Backend）', image: '/images/team/member-1.jpg' },
+              { id: 'member-2', name: 'Member 2', role: 'Backend Engineer', image: '' },
+              { id: 'member-3', name: 'Member 3', role: 'Designer', image: '' },
+              { id: 'member-4', name: 'Member 4', role: 'Frontend Engineer', image: '' },
+              { id: 'member-5', name: 'Member 5', role: 'Backend Engineer', image: '' },
+              { id: 'member-6', name: 'Member 6', role: 'Project Manager', image: '' },
             ].map((member, i) => (
               <div 
                 key={i} 
-                className="team-card"
+                className="team-card-large"
                 onClick={() => navigate(`/team/${member.id}`)}
-                style={{ cursor: 'pointer' }}
               >
-                <div className="team-avatar">
+                <div className="team-photo">
                   {member.image ? (
                     <img src={member.image} alt={member.name} />
                   ) : (
-                    <div className="avatar-placeholder">
+                    <div className="photo-placeholder">
                       <span>{member.name.charAt(0)}</span>
                     </div>
                   )}
                 </div>
-                <div className="team-info">
-                  <span className="team-role">{member.role}</span>
-                  <h3 className="team-name">{member.name}</h3>
-                  <p className="team-desc">{member.desc}</p>
+                <div className="team-card-info">
+                  <p className="team-card-role">{member.role}</p>
+                  <h3 className="team-card-name">{member.name}</h3>
+                  <button className="team-card-btn">
+                    <span>+</span>
+                  </button>
                 </div>
-                <div className="team-arrow">→</div>
               </div>
             ))}
           </div>

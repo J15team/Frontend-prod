@@ -17,7 +17,7 @@ const membersData: Record<string, {
   links: { label: string; url: string }[];
 }> = {
   'member-1': {
-    name: '吉田 吏希',
+    name: 'RIKI YOSHIDA',
     nameEn: 'RIKI YOSHIDA',
     role: 'Tech Lead',
     title: '開発責任者（Frontend & Backend）',
