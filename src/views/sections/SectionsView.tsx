@@ -10,6 +10,8 @@ import { Sidebar } from '@/views/components/Sidebar';
 import { ContentArea } from '@/views/components/ContentArea';
 import { CodeEditor } from '@/views/components/CodeEditor';
 import { ConfettiEffect } from '@/views/components/ConfettiEffect';
+import { GitHubExportModal } from '@/views/components/GitHubExportModal';
+import { isGitHubConnected } from '@/utils/githubStorage';
 
 export const SectionsView: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -31,6 +33,7 @@ export const SectionsView: React.FC = () => {
 
   // リサイズ用の状態
   const [leftWidth, setLeftWidth] = useState(50); // パーセント
+  const [showExportModal, setShowExportModal] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
@@ -146,6 +149,13 @@ export const SectionsView: React.FC = () => {
           <strong>次のセクション:</strong>{' '}
           {progressData.nextSectionId !== null ? `#${progressData.nextSectionId}` : '全て完了'}
         </div>
+        <button
+          className="btn-github-export-small"
+          onClick={() => setShowExportModal(true)}
+          title={isGitHubConnected() ? 'GitHubにエクスポート' : 'GitHub連携が必要です'}
+        >
+          🐙 GitHubに保存
+        </button>
       </div>
 
       <div className="sections-content">
@@ -188,6 +198,14 @@ export const SectionsView: React.FC = () => {
       </div>
 
       <ConfettiEffect isActive={showCelebration} onComplete={dismissCelebration} />
+
+      {showExportModal && (
+        <GitHubExportModal
+          subjectId={Number(subjectId)}
+          subjectTitle={subject.title}
+          onClose={() => setShowExportModal(false)}
+        />
+      )}
     </div>
   );
 };
