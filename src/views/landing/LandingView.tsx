@@ -276,8 +276,8 @@ export const LandingView: React.FC = () => {
 
           <div className="team-grid-large">
             {[
-              { id: 'member-1', name: 'RIKI YOSHIDA', role: '開発責任者（Frontend & Backend）', image: '/images/team/member-1.jpg' },
-              { id: 'member-2', name: 'Member 2', role: 'Backend Engineer', image: '' },
+              { id: 'member-1', name: 'RIKI YOSHIDA', role: 'Tech Lead (Frontend & Backend)', image: '/images/team/member-1.jpg' },
+              { id: 'member-2', name: 'HARUYA NAKATA', role: 'Team Leader (Frontend & Designer)', image: '/images/team/member-2.jpg' },
               { id: 'member-3', name: 'Member 3', role: 'Designer', image: '' },
               { id: 'member-4', name: 'Member 4', role: 'Frontend Engineer', image: '' },
               { id: 'member-5', name: 'Member 5', role: 'Backend Engineer', image: '' },

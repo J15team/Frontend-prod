@@ -20,7 +20,7 @@ const membersData: Record<string, {
     name: 'RIKI YOSHIDA',
     nameEn: 'RIKI YOSHIDA',
     role: 'Tech Lead',
-    title: '開発責任者（Frontend & Backend）',
+    title: 'Tech Lead (Frontend & Backend)',
     image: '/images/team/member-1-detail.jpg',
     bio: [
       'この作品における大体なんでもやったなんでも屋さんです。',
@@ -36,9 +36,9 @@ const membersData: Record<string, {
   'member-2': {
     name: 'HARUYA NAKATA',
     nameEn: 'HARUYA NAKATA',
-    role: 'Backend Engineer',
-    title: 'チームリーダー(フロントエンド & デザイナー)',
-    image: '/images/team/member-2.jpg',
+    role: 'Team Leader',
+    title: 'Team Leader(Frontend & Designer)',
+    image: '/images/team/member-2-detail.jpg',
     bio: [
       'チームリーダーさせてもらってます。',
       'フロントエンドとデザイン触ってます。'
@@ -47,10 +47,10 @@ const membersData: Record<string, {
     links: [],
   },
   'member-3': {
-    name: 'メンバー3',
+    name: 'Member 3',
     nameEn: 'Member Three',
     role: 'Designer',
-    title: 'デザイン担当',
+    title: 'Designer',
     image: '/images/team/member-3.jpg',
     bio: [
       'ここに経歴や紹介文を書きます。',
@@ -60,10 +60,10 @@ const membersData: Record<string, {
     links: [],
   },
   'member-4': {
-    name: 'メンバー4',
+    name: 'Member 4',
     nameEn: 'Member Four',
     role: 'Frontend Engineer',
-    title: 'フロントエンド担当',
+    title: 'Frontend Engineer',
     image: '/images/team/member-4.jpg',
     bio: [
       'ここに経歴や紹介文を書きます。',
@@ -72,10 +72,10 @@ const membersData: Record<string, {
     links: [],
   },
   'member-5': {
-    name: 'メンバー5',
+    name: 'Member 5',
     nameEn: 'Member Five',
     role: 'Backend Engineer',
-    title: 'バックエンド担当',
+    title: 'Backend Engineer',
     image: '/images/team/member-5.jpg',
     bio: [
       'ここに経歴や紹介文を書きます。',
@@ -84,10 +84,10 @@ const membersData: Record<string, {
     links: [],
   },
   'member-6': {
-    name: 'メンバー6',
+    name: 'Member 6',
     nameEn: 'Member Six',
     role: 'Project Manager',
-    title: 'PM担当',
+    title: 'Project Manager',
     image: '/images/team/member-6.jpg',
     bio: [
       'ここに経歴や紹介文を書きます。',
