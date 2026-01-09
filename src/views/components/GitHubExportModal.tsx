@@ -17,14 +17,19 @@ interface GitHubExportModalProps {
 // 少し待機する関数
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+// 日付ベースのリポジトリ名を生成
+const generateRepoName = () => {
+  const now = new Date();
+  const date = now.toISOString().slice(0, 10).replace(/-/g, '');
+  return `pathly-project-${date}`;
+};
+
 export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
   subjectId,
   subjectTitle,
   onClose,
 }) => {
-  const [repoName, setRepoName] = useState(
-    `pathly-${subjectTitle.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 30)}`
-  );
+  const [repoName, setRepoName] = useState(generateRepoName());
   const [description, setDescription] = useState(`Pathlyで学習: ${subjectTitle}`);
   const [isPrivate, setIsPrivate] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -181,6 +186,7 @@ ${new Date().toLocaleDateString('ja-JP')}
                 onChange={(e) => setRepoName(e.target.value)}
                 placeholder="my-project"
               />
+              <small className="input-hint">※ 英数字とハイフンのみ使用可能</small>
             </div>
 
             <div className="form-group">
