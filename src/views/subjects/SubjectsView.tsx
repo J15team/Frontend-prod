@@ -275,6 +275,10 @@ export const SubjectsView: React.FC = () => {
   const { handleSignout } = useAuthViewModel();
   const [modalSubject, setModalSubject] = useState<Subject | null>(null);
   const [showSidebar, setShowSidebar] = useState(false);
+  
+  // フィルター・ソート用の状態
+  const [selectedWeight, setSelectedWeight] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<'weight' | 'sections' | 'progress'>('weight');
 
   const onSubjectClick = (subject: Subject) => {
     navigate(`/subjects/${subject.subjectId}/sections`);
@@ -335,8 +339,26 @@ export const SubjectsView: React.FC = () => {
     5: { label: '発展', emoji: '🏆' },
   };
 
-  // 重みでグループ化
-  const groupedSubjects = subjects.reduce((acc, subject) => {
+  // フィルタリング
+  const filteredSubjects = selectedWeight
+    ? subjects.filter(s => (s.weight || 1) === selectedWeight)
+    : subjects;
+
+  // ソート
+  const sortedSubjects = [...filteredSubjects].sort((a, b) => {
+    switch (sortBy) {
+      case 'sections':
+        return (b.maxSections || 0) - (a.maxSections || 0);
+      case 'progress':
+        return (progress[b.subjectId] || 0) - (progress[a.subjectId] || 0);
+      case 'weight':
+      default:
+        return (a.weight || 1) - (b.weight || 1);
+    }
+  });
+
+  // 重みでグループ化（カテゴリ表示用）
+  const groupedSubjects = sortedSubjects.reduce((acc, subject) => {
     const weight = subject.weight || 1;
     if (!acc[weight]) acc[weight] = [];
     acc[weight].push(subject);
@@ -347,6 +369,11 @@ export const SubjectsView: React.FC = () => {
   const sortedWeights = Object.keys(groupedSubjects)
     .map(Number)
     .sort((a, b) => a - b);
+
+  // 星フィルターのクリック
+  const handleStarClick = (weight: number) => {
+    setSelectedWeight(selectedWeight === weight ? null : weight);
+  };
 
   return (
     <div className="subjects-page-wrapper">
@@ -374,6 +401,45 @@ export const SubjectsView: React.FC = () => {
       </header>
 
       <main className="subjects-container">
+        {/* フィルター・ソートバー */}
+        <div className="filter-bar">
+          <div className="filter-section">
+            <span className="filter-label">難易度で絞り込み:</span>
+            <div className="star-filter">
+              {[1, 2, 3, 4, 5].map((weight) => (
+                <button
+                  key={weight}
+                  className={`star-filter-btn ${selectedWeight === weight ? 'active' : ''}`}
+                  onClick={() => handleStarClick(weight)}
+                  title={categoryLabels[weight]?.label}
+                >
+                  <span className="filter-emoji">{categoryLabels[weight]?.emoji}</span>
+                  <span className="filter-stars">{'★'.repeat(weight)}</span>
+                </button>
+              ))}
+              {selectedWeight && (
+                <button className="clear-filter-btn" onClick={() => setSelectedWeight(null)}>
+                  ✕ クリア
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="sort-section">
+            <span className="filter-label">並び替え:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'weight' | 'sections' | 'progress')}
+              className="sort-select"
+            >
+              <option value="weight">難易度順</option>
+              <option value="sections">セクション数順</option>
+              <option value="progress">進捗率順</option>
+            </select>
+          </div>
+          <div className="filter-result">
+            {filteredSubjects.length} 件表示中
+          </div>
+        </div>
         {sortedWeights.map((weight) => {
           const category = categoryLabels[weight] || { label: `レベル${weight}`, emoji: '📚' };
           const categorySubjects = groupedSubjects[weight];
