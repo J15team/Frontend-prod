@@ -5,7 +5,7 @@
 import React from 'react';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || 'Ov23li1eg2wFShx5hmTd';
-const REDIRECT_URI = `${window.location.origin}/auth/github/callback`;
+const REDIRECT_URI = `${window.location.origin}/github/connect/callback`;
 
 interface GitHubSignInButtonProps {
   className?: string;
