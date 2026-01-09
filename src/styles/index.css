@@ -1036,3 +1036,23 @@ body {
 .subject-card .star-rating {
   font-size: 1.2rem;
 }
+
+
+/* 題材カード内の進捗ゲージ */
+.subject-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.subject-progress .progress-container {
+  flex: 1;
+}
+
+.subject-progress .progress-percentage {
+  font-size: 0.9em;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+}

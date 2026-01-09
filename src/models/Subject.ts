@@ -7,7 +7,7 @@ export interface Subject {
   title: string;
   description: string;
   maxSections: number;
-  weight: number;
+  weight?: number;
   createdAt?: string;
 }
 

@@ -4,10 +4,16 @@
  */
 import { useState, useEffect } from 'react';
 import { getAllSubjects } from '@/services/SubjectService';
+import { getProgress } from '@/services/ProgressService';
 import { type Subject } from '@/models/Subject';
+
+interface SubjectProgress {
+  [subjectId: number]: number; // progressPercentage
+}
 
 interface SubjectsViewModelReturn {
   subjects: Subject[];
+  progress: SubjectProgress;
   loading: boolean;
   error: string | null;
   fetchSubjects: () => Promise<void>;
@@ -15,11 +21,12 @@ interface SubjectsViewModelReturn {
 
 export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [progress, setProgress] = useState<SubjectProgress>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   /**
-   * 題材一覧を取得
+   * 題材一覧と進捗を取得
    */
   const fetchSubjects = async (): Promise<void> => {
     setLoading(true);
@@ -27,6 +34,20 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
     try {
       const data = await getAllSubjects();
       setSubjects(data);
+
+      // 各題材の進捗を取得
+      const progressMap: SubjectProgress = {};
+      await Promise.all(
+        data.map(async (subject) => {
+          try {
+            const progressData = await getProgress(subject.subjectId);
+            progressMap[subject.subjectId] = progressData.progressPercentage;
+          } catch {
+            progressMap[subject.subjectId] = 0;
+          }
+        })
+      );
+      setProgress(progressMap);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -45,6 +66,7 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
 
   return {
     subjects,
+    progress,
     loading,
     error,
     fetchSubjects,

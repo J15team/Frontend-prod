@@ -10,9 +10,10 @@ import { type Subject } from '@/models/Subject';
 
 const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
   const stars = [];
+  const safeWeight = weight || 0;
   for (let i = 0; i < 5; i++) {
     stars.push(
-      <span key={i} style={{ color: i < weight ? '#ffc107' : '#e0e0e0', fontSize: '1.2rem' }}>
+      <span key={i} style={{ color: i < safeWeight ? '#ffc107' : '#e0e0e0', fontSize: '1.2rem' }}>
         ★
       </span>
     );
@@ -22,7 +23,7 @@ const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
 
 export const SubjectsView: React.FC = () => {
   const navigate = useNavigate();
-  const { subjects, loading, error } = useSubjectsViewModel();
+  const { subjects, progress, loading, error } = useSubjectsViewModel();
   const { handleSignout } = useAuthViewModel();
 
   const onSubjectClick = (subject: Subject) => {
@@ -43,8 +44,12 @@ export const SubjectsView: React.FC = () => {
     return <div className="error-container">エラー: {error}</div>;
   }
 
-  // 重みで降順にソート
-  const sortedSubjects = [...subjects].sort((a, b) => b.weight - a.weight);
+  // 重みで降順、同じ重みならsubjectId降順にソート
+  const sortedSubjects = [...subjects].sort((a, b) => {
+    const weightDiff = (b.weight || 0) - (a.weight || 0);
+    if (weightDiff !== 0) return weightDiff;
+    return b.subjectId - a.subjectId;
+  });
 
   return (
     <div className="subjects-container">
@@ -55,25 +60,37 @@ export const SubjectsView: React.FC = () => {
         </button>
       </header>
       <div className="subjects-grid">
-        {sortedSubjects.map((subject) => (
-          <div
-            key={subject.subjectId}
-            className="subject-card"
-            onClick={() => onSubjectClick(subject)}
-          >
-            <div className="subject-weight">
-              <StarRating weight={subject.weight} />
+        {sortedSubjects.map((subject) => {
+          const progressPercent = progress[subject.subjectId] || 0;
+          return (
+            <div
+              key={subject.subjectId}
+              className="subject-card"
+              onClick={() => onSubjectClick(subject)}
+            >
+              <div className="subject-weight">
+                <StarRating weight={subject.weight || 0} />
+              </div>
+              <h2>{subject.title}</h2>
+              <p>{subject.description}</p>
+              <div className="subject-progress">
+                <div className="progress-container">
+                  <div
+                    className="progress-bar"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+                <span className="progress-percentage">{progressPercent}%</span>
+              </div>
+              <div className="subject-footer">
+                <span className="section-count">
+                  {subject.maxSections} セクション
+                </span>
+                <span className="created-at">作成日: {formatDate(subject.createdAt)}</span>
+              </div>
             </div>
-            <h2>{subject.title}</h2>
-            <p>{subject.description}</p>
-            <div className="subject-footer">
-              <span className="section-count">
-                {subject.maxSections} セクション
-              </span>
-              <span className="created-at">作成日: {formatDate(subject.createdAt)}</span>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -22,9 +22,10 @@ interface SubjectUpdateFormState {
 
 const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
   const stars = [];
+  const safeWeight = weight || 0;
   for (let i = 0; i < 5; i++) {
     stars.push(
-      <span key={i} style={{ color: i < weight ? '#ffc107' : '#e0e0e0' }}>
+      <span key={i} style={{ color: i < safeWeight ? '#ffc107' : '#e0e0e0' }}>
         ★
       </span>
     );
@@ -69,7 +70,7 @@ export const SubjectManagementView: React.FC = () => {
         title: subject.title,
         description: subject.description,
         maxSections: String(subject.maxSections),
-        weight: String(subject.weight),
+        weight: String(subject.weight || 1),
       });
     }
   }, [selectedSubjectId, subjects]);
@@ -268,11 +269,11 @@ export const SubjectManagementView: React.FC = () => {
             <span>最大セクション</span>
             <span>作成日</span>
           </div>
-          {[...subjects].sort((a, b) => b.weight - a.weight).map((subject) => (
+          {[...subjects].sort((a, b) => (b.weight || 0) - (a.weight || 0)).map((subject) => (
             <div key={subject.subjectId} className="data-table-row">
               <span>#{subject.subjectId}</span>
               <span>{subject.title}</span>
-              <span><StarRating weight={subject.weight} /></span>
+              <span><StarRating weight={subject.weight || 0} /></span>
               <span>{subject.maxSections}</span>
               <span>{subject.createdAt ? new Date(subject.createdAt).toLocaleString() : '-'}</span>
             </div>
