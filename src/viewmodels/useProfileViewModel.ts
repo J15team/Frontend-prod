@@ -27,6 +27,7 @@ interface ProfileViewModelReturn {
   user: User | null;
   inProgressSubjects: SubjectWithProgress[];
   completedSubjects: SubjectWithProgress[];
+  totalSubjects: number;
   loading: boolean;
   updating: boolean;
   error: string | null;
@@ -41,6 +42,7 @@ export const useProfileViewModel = (): ProfileViewModelReturn => {
   const [user, setUser] = useState<User | null>(null);
   const [inProgressSubjects, setInProgressSubjects] = useState<SubjectWithProgress[]>([]);
   const [completedSubjects, setCompletedSubjects] = useState<SubjectWithProgress[]>([]);
+  const [totalSubjects, setTotalSubjects] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -98,6 +100,7 @@ export const useProfileViewModel = (): ProfileViewModelReturn => {
 
       setInProgressSubjects(inProgress);
       setCompletedSubjects(completed);
+      setTotalSubjects(subjects.length);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -183,6 +186,7 @@ export const useProfileViewModel = (): ProfileViewModelReturn => {
     user,
     inProgressSubjects,
     completedSubjects,
+    totalSubjects,
     loading,
     updating,
     error,

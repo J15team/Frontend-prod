@@ -157,6 +157,7 @@ export const ProfileView: React.FC = () => {
     user,
     inProgressSubjects,
     completedSubjects,
+    totalSubjects,
     loading,
     updating,
     error,
@@ -177,12 +178,6 @@ export const ProfileView: React.FC = () => {
   }
 
   const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || 'User')}&background=667eea&color=fff&size=128`;
-  
-  // 全体の進捗率を計算
-  const totalSubjects = inProgressSubjects.length + completedSubjects.length;
-  const overallProgress = totalSubjects > 0
-    ? Math.round((completedSubjects.length / totalSubjects) * 100)
-    : 0;
 
   return (
     <div className="profile-page">
@@ -199,7 +194,7 @@ export const ProfileView: React.FC = () => {
                 />
                 <path
                   className="ring-progress"
-                  strokeDasharray={`${overallProgress}, 100`}
+                  strokeDasharray={`${totalSubjects > 0 ? Math.round((completedSubjects.length / totalSubjects) * 100) : 0}, 100`}
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
               </svg>
@@ -242,10 +237,10 @@ export const ProfileView: React.FC = () => {
             </div>
           </div>
           <div className="stat-card-fancy progress">
-            <div className="stat-icon">📊</div>
+            <div className="stat-icon">📚</div>
             <div className="stat-info">
-              <span className="stat-number-large">{overallProgress}%</span>
-              <span className="stat-label-small">達成率</span>
+              <span className="stat-number-large">{totalSubjects}</span>
+              <span className="stat-label-small">総題材</span>
             </div>
           </div>
         </div>
