@@ -80,18 +80,29 @@ export const getSubjectCodes = (
   subjectId: number
 ): { sectionId: number; html: string; css: string; js: string }[] => {
   const data = getAllCodeData();
+  console.log('All code data:', data);
+  console.log('Looking for subjectId:', subjectId);
+  
   const subjectData = data[subjectId];
-  if (!subjectData) return [];
+  console.log('Subject data:', subjectData);
+  
+  if (!subjectData) {
+    console.log('No subject data found');
+    return [];
+  }
 
   // セクションIDを抽出（10で割って元のセクションIDを取得）
   const sectionIds = new Set<number>();
   Object.keys(subjectData).forEach(key => {
     const id = parseInt(key);
     const sectionId = Math.floor(id / 10);
+    console.log(`Key: ${key}, id: ${id}, sectionId: ${sectionId}`);
     if (sectionId > 0) {
       sectionIds.add(sectionId);
     }
   });
+
+  console.log('Found section IDs:', Array.from(sectionIds));
 
   // コードがあるセクションのみ返す
   const results: { sectionId: number; html: string; css: string; js: string }[] = [];
@@ -101,12 +112,15 @@ export const getSubjectCodes = (
     const css = subjectData[sectionId * 10 + 1]?.code || '';
     const js = subjectData[sectionId * 10 + 2]?.code || '';
     
+    console.log(`Section ${sectionId}: html=${!!html}, css=${!!css}, js=${!!js}`);
+    
     // 少なくとも1つのファイルにコードがある場合のみ追加
     if (html || css || js) {
       results.push({ sectionId, html, css, js });
     }
   });
 
+  console.log('Results:', results);
   return results;
 };
 
