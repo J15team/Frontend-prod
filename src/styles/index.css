@@ -1068,7 +1068,7 @@ body {
    ==================================================================== */
 .profile-page {
   min-height: 100vh;
-  background: #f5f7fa;
+  background: #f5f9f6;
 }
 
 .profile-hero {
@@ -1082,7 +1082,7 @@ body {
   left: 0;
   right: 0;
   height: 200px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2d6a4f 0%, #40916c 50%, #52b788 100%);
   z-index: 0;
 }
 
@@ -1164,7 +1164,7 @@ body {
 
 .avatar-progress-ring .ring-progress {
   fill: none;
-  stroke: #feca57;
+  stroke: #b7e4c7;
   stroke-width: 2;
   stroke-linecap: round;
   transition: stroke-dasharray 0.5s ease;
@@ -1188,12 +1188,12 @@ body {
 .profile-name-large {
   margin-top: 16px;
   font-size: 1.8rem;
-  color: #333;
+  color: #1b4332;
   font-weight: 700;
 }
 
 .profile-email-light {
-  color: #666;
+  color: #555;
   font-size: 0.95rem;
   margin-top: 4px;
 }
@@ -1202,9 +1202,9 @@ body {
   margin-top: 16px;
   padding: 10px 24px;
   background: white;
-  border: 2px solid #667eea;
+  border: 2px solid #40916c;
   border-radius: 24px;
-  color: #667eea;
+  color: #40916c;
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
@@ -1212,7 +1212,7 @@ body {
 }
 
 .btn-settings-outline:hover {
-  background: #667eea;
+  background: #40916c;
   color: white;
 }
 
@@ -1236,7 +1236,7 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08);
   transition: transform 0.2s;
 }
 
@@ -1256,20 +1256,20 @@ body {
 .stat-number-large {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #333;
+  color: #1b4332;
 }
 
 .stat-label-small {
   font-size: 0.85rem;
-  color: #888;
+  color: #74796d;
 }
 
 .stat-card-fancy.completed .stat-number-large {
-  color: #28a745;
+  color: #2d6a4f;
 }
 
 .stat-card-fancy.progress .stat-number-large {
-  color: #667eea;
+  color: #40916c;
 }
 
 .profile-section-fancy {
@@ -1277,7 +1277,7 @@ body {
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08);
 }
 
 .section-header {
@@ -1289,16 +1289,16 @@ body {
 
 .section-header h2 {
   font-size: 1.2rem;
-  color: #333;
+  color: #1b4332;
   margin: 0;
 }
 
 .section-count {
-  background: #f0f0f0;
+  background: #d8f3dc;
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 0.85rem;
-  color: #666;
+  color: #2d6a4f;
 }
 
 .profile-subject-grid {
@@ -1308,7 +1308,7 @@ body {
 }
 
 .profile-subject-card {
-  background: #f8f9fa;
+  background: #f8faf8;
   border-radius: 12px;
   padding: 16px;
   cursor: pointer;
@@ -1317,12 +1317,12 @@ body {
 }
 
 .profile-subject-card:hover {
-  border-color: #667eea;
+  border-color: #52b788;
   transform: translateY(-2px);
 }
 
 .profile-subject-card.completed {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
 }
 
 .subject-card-top {
@@ -1335,7 +1335,7 @@ body {
 
 .subject-title-card {
   font-weight: 600;
-  color: #333;
+  color: #1b4332;
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -1355,13 +1355,13 @@ body {
 
 .circle-bg-small {
   fill: none;
-  stroke: #e0e0e0;
+  stroke: #d8f3dc;
   stroke-width: 3;
 }
 
 .circle-progress-small {
   fill: none;
-  stroke: #667eea;
+  stroke: #40916c;
   stroke-width: 3;
   stroke-linecap: round;
   transition: stroke-dasharray 0.3s ease;
@@ -1374,13 +1374,13 @@ body {
   transform: translate(-50%, -50%);
   font-size: 0.7rem;
   font-weight: 700;
-  color: #333;
+  color: #1b4332;
 }
 
 .complete-check {
   width: 32px;
   height: 32px;
-  background: #28a745;
+  background: #2d6a4f;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -1400,14 +1400,14 @@ body {
 
 .subject-card-bar {
   height: 6px;
-  background: #e0e0e0;
+  background: #d8f3dc;
   border-radius: 3px;
   overflow: hidden;
 }
 
 .subject-card-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #40916c, #52b788);
   border-radius: 3px;
   transition: width 0.3s ease;
 }
@@ -1417,7 +1417,7 @@ body {
   padding: 60px 20px;
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08);
 }
 
 .profile-empty .empty-icon {
@@ -1427,9 +1427,61 @@ body {
 }
 
 .profile-empty p {
-  color: #666;
+  color: #555;
   font-size: 1.1rem;
   margin-bottom: 24px;
+}
+
+.profile-empty .btn-primary {
+  background: #40916c;
+  border-color: #40916c;
+}
+
+.profile-empty .btn-primary:hover {
+  background: #2d6a4f;
+}
+
+/* プロフィールページ下部のアクション */
+.profile-bottom-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e8ede9;
+}
+
+.btn-back-bottom {
+  padding: 12px 32px;
+  background: white;
+  border: 2px solid #40916c;
+  border-radius: 8px;
+  color: #40916c;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-back-bottom:hover {
+  background: #40916c;
+  color: white;
+}
+
+.btn-signout-bottom {
+  padding: 12px 32px;
+  background: transparent;
+  border: 2px solid #d4d4d4;
+  border-radius: 8px;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-signout-bottom:hover {
+  border-color: #999;
+  color: #333;
 }
 
 /* レスポンシブ対応 */
@@ -1440,6 +1492,10 @@ body {
   
   .profile-subject-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .profile-bottom-actions {
+    flex-direction: column;
   }
 }
 

@@ -188,14 +188,6 @@ export const ProfileView: React.FC = () => {
     <div className="profile-page">
       <div className="profile-hero">
         <div className="profile-hero-bg" />
-        <header className="profile-header">
-          <button onClick={() => navigate('/subjects')} className="btn-back-light">
-            ← 戻る
-          </button>
-          <button onClick={handleSignout} className="btn-signout">
-            サインアウト
-          </button>
-        </header>
 
         <div className="profile-hero-content">
           <div className="profile-avatar-wrapper">
@@ -341,6 +333,15 @@ export const ProfileView: React.FC = () => {
             </button>
           </div>
         )}
+
+        <div className="profile-bottom-actions">
+          <button onClick={() => navigate('/subjects')} className="btn-back-bottom">
+            ← 題材一覧へ戻る
+          </button>
+          <button onClick={handleSignout} className="btn-signout-bottom">
+            サインアウト
+          </button>
+        </div>
       </div>
 
       {showSettings && user && (
