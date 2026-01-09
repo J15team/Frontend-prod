@@ -1019,3 +1019,20 @@ body {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+
+/* ====================================================================
+   Star Rating (重み表示)
+   ==================================================================== */
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.subject-weight {
+  margin-bottom: 8px;
+}
+
+.subject-card .star-rating {
+  font-size: 1.2rem;
+}

@@ -8,6 +8,18 @@ import { useSubjectsViewModel } from '@/viewmodels/useSubjectsViewModel';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
 import { type Subject } from '@/models/Subject';
 
+const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    stars.push(
+      <span key={i} style={{ color: i < weight ? '#ffc107' : '#e0e0e0', fontSize: '1.2rem' }}>
+        ★
+      </span>
+    );
+  }
+  return <span className="star-rating">{stars}</span>;
+};
+
 export const SubjectsView: React.FC = () => {
   const navigate = useNavigate();
   const { subjects, loading, error } = useSubjectsViewModel();
@@ -31,6 +43,9 @@ export const SubjectsView: React.FC = () => {
     return <div className="error-container">エラー: {error}</div>;
   }
 
+  // 重みで降順にソート
+  const sortedSubjects = [...subjects].sort((a, b) => b.weight - a.weight);
+
   return (
     <div className="subjects-container">
       <header className="subjects-header">
@@ -40,12 +55,15 @@ export const SubjectsView: React.FC = () => {
         </button>
       </header>
       <div className="subjects-grid">
-        {subjects.map((subject) => (
+        {sortedSubjects.map((subject) => (
           <div
             key={subject.subjectId}
             className="subject-card"
             onClick={() => onSubjectClick(subject)}
           >
+            <div className="subject-weight">
+              <StarRating weight={subject.weight} />
+            </div>
             <h2>{subject.title}</h2>
             <p>{subject.description}</p>
             <div className="subject-footer">

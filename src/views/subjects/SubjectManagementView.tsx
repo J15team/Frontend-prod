@@ -10,13 +10,27 @@ interface SubjectFormState {
   title: string;
   description: string;
   maxSections: string;
+  weight: string;
 }
 
 interface SubjectUpdateFormState {
   title: string;
   description: string;
   maxSections: string;
+  weight: string;
 }
+
+const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    stars.push(
+      <span key={i} style={{ color: i < weight ? '#ffc107' : '#e0e0e0' }}>
+        ★
+      </span>
+    );
+  }
+  return <span className="star-rating">{stars}</span>;
+};
 
 export const SubjectManagementView: React.FC = () => {
   const {
@@ -34,17 +48,19 @@ export const SubjectManagementView: React.FC = () => {
     title: '',
     description: '',
     maxSections: '1',
+    weight: '1',
   });
   const [selectedSubjectId, setSelectedSubjectId] = useState<string>('');
   const [updateForm, setUpdateForm] = useState<SubjectUpdateFormState>({
     title: '',
     description: '',
     maxSections: '1',
+    weight: '1',
   });
 
   useEffect(() => {
     if (!selectedSubjectId) {
-      setUpdateForm({ title: '', description: '', maxSections: '1' });
+      setUpdateForm({ title: '', description: '', maxSections: '1', weight: '1' });
       return;
     }
     const subject = subjects.find((item) => item.subjectId === Number(selectedSubjectId));
@@ -53,6 +69,7 @@ export const SubjectManagementView: React.FC = () => {
         title: subject.title,
         description: subject.description,
         maxSections: String(subject.maxSections),
+        weight: String(subject.weight),
       });
     }
   }, [selectedSubjectId, subjects]);
@@ -64,8 +81,9 @@ export const SubjectManagementView: React.FC = () => {
       title: createForm.title,
       description: createForm.description,
       maxSections: Number(createForm.maxSections),
+      weight: Number(createForm.weight),
     });
-    setCreateForm({ subjectId: '', title: '', description: '', maxSections: '1' });
+    setCreateForm({ subjectId: '', title: '', description: '', maxSections: '1', weight: '1' });
   };
 
   const handleUpdateSubmit = async (event: React.FormEvent) => {
@@ -75,6 +93,7 @@ export const SubjectManagementView: React.FC = () => {
       title: updateForm.title,
       description: updateForm.description,
       maxSections: Number(updateForm.maxSections),
+      weight: Number(updateForm.weight),
     });
   };
 
@@ -140,6 +159,19 @@ export const SubjectManagementView: React.FC = () => {
                 required
               />
             </label>
+            <label>
+              重み（1〜5）
+              <input
+                type="number"
+                min="1"
+                max="5"
+                value={createForm.weight}
+                onChange={(e) =>
+                  setCreateForm({ ...createForm, weight: e.target.value })
+                }
+                required
+              />
+            </label>
             <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? '送信中...' : '題材を作成'}
             </button>
@@ -196,6 +228,19 @@ export const SubjectManagementView: React.FC = () => {
                 required
               />
             </label>
+            <label>
+              重み（1〜5）
+              <input
+                type="number"
+                min="1"
+                max="5"
+                value={updateForm.weight}
+                onChange={(e) =>
+                  setUpdateForm({ ...updateForm, weight: e.target.value })
+                }
+                required
+              />
+            </label>
             <div className="management-actions">
               <button type="submit" className="btn-primary" disabled={loading || !selectedSubjectId}>
                 {loading ? '更新中...' : '題材を更新'}
@@ -219,13 +264,15 @@ export const SubjectManagementView: React.FC = () => {
           <div className="data-table-header">
             <span>ID</span>
             <span>タイトル</span>
+            <span>重み</span>
             <span>最大セクション</span>
             <span>作成日</span>
           </div>
-          {subjects.map((subject) => (
+          {[...subjects].sort((a, b) => b.weight - a.weight).map((subject) => (
             <div key={subject.subjectId} className="data-table-row">
               <span>#{subject.subjectId}</span>
               <span>{subject.title}</span>
+              <span><StarRating weight={subject.weight} /></span>
               <span>{subject.maxSections}</span>
               <span>{subject.createdAt ? new Date(subject.createdAt).toLocaleString() : '-'}</span>
             </div>

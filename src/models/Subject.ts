@@ -7,6 +7,7 @@ export interface Subject {
   title: string;
   description: string;
   maxSections: number;
+  weight: number;
   createdAt?: string;
 }
 
@@ -18,6 +19,7 @@ export interface CreateSubjectRequest {
   title: string;
   description?: string;
   maxSections: number;
+  weight: number;
 }
 
 /**
@@ -27,4 +29,5 @@ export interface UpdateSubjectRequest {
   title: string;
   description?: string;
   maxSections: number;
+  weight: number;
 }
