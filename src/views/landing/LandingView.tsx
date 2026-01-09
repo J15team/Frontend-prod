@@ -84,13 +84,7 @@ export const LandingView: React.FC = () => {
       >
         <div className="hero-bg">
           <div className="hero-image" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
-            {/* プレースホルダー画像 */}
-            <div className="placeholder-image">
-              <div className="placeholder-content">
-                <span className="placeholder-icon">💻</span>
-                <span className="placeholder-text">Hero Image</span>
-              </div>
-            </div>
+            <img src="/images/landing/hero.jpg" alt="Pathly - プログラミング学習" />
           </div>
           <div className="hero-overlay" />
         </div>
