@@ -104,7 +104,8 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
       setTargetRect(rect);
       setIsVisible(true);
     } else {
-      setIsVisible(false);
+      // ターゲットが見つからない場合は待機（非表示にしない）
+      setTargetRect(null);
     }
   }, [step]);
 
@@ -158,12 +159,14 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
     if (target) {
       target.click();
     }
-    // 次のステップへ
-    if (currentStep < tutorialSteps.length - 1) {
-      setCurrentStep(prev => prev + 1);
-    } else {
-      handleComplete();
-    }
+    // 少し遅延してから次のステップへ（DOMの更新を待つ）
+    setTimeout(() => {
+      if (currentStep < tutorialSteps.length - 1) {
+        setCurrentStep(prev => prev + 1);
+      } else {
+        handleComplete();
+      }
+    }, 300);
   };
 
   if (!isVisible || !targetRect || !step) return null;
