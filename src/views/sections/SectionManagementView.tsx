@@ -166,7 +166,7 @@ export const SectionManagementView: React.FC = () => {
             onChange={handleSubjectChange}
             disabled={loading}
           >
-            <option value="">-- 題材を選択してください --</option>
+            <option value="">題材を選択してください</option>
             {subjects.map((subject) => (
               <option key={subject.subjectId} value={subject.subjectId}>
                 {subject.subjectId}: {subject.title}
