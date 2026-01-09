@@ -255,12 +255,13 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
 
 /**
  * チュートリアルが必要かどうかを判定
+ * TODO: バックエンド修正後に isFirstLogin === true に戻す
  */
-export const shouldShowTutorial = (isFirstLogin?: boolean): boolean => {
+export const shouldShowTutorial = (_isFirstLogin?: boolean): boolean => {
   // すでに完了している場合は表示しない
   if (localStorage.getItem('tutorial_completed') === 'true') {
     return false;
   }
-  // 初回ログインの場合は表示
-  return isFirstLogin === true;
+  // 強制表示モード（テスト用）
+  return true;
 };
