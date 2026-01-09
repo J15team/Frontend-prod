@@ -3,11 +3,12 @@
  * 題材一覧ページのView
  */
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSubjectsViewModel } from '@/viewmodels/useSubjectsViewModel';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
 import { type Subject } from '@/models/Subject';
 import { LoadingSpinner } from '@/views/components/LoadingSpinner';
+import { Tutorial, shouldShowTutorial } from '@/views/components/Tutorial';
 
 // スクロールアニメーション用フック
 const useScrollAnimation = () => {
@@ -305,6 +306,7 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
 
 export const SubjectsView: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     subjects,
     progress,
@@ -324,6 +326,19 @@ export const SubjectsView: React.FC = () => {
   const [selectedWeight, setSelectedWeight] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<'weight' | 'sections' | 'progress'>('weight');
   const [effectsEnabled, setEffectsEnabled] = useState(true);
+  
+  // チュートリアル
+  const [showTutorial, setShowTutorial] = useState(false);
+  
+  useEffect(() => {
+    // ログイン時にisFirstLoginがlocationのstateで渡される場合
+    const state = location.state as { isFirstLogin?: boolean } | null;
+    if (shouldShowTutorial(state?.isFirstLogin)) {
+      // 少し遅延させてDOMが準備できてから表示
+      const timer = setTimeout(() => setShowTutorial(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
 
   const onSubjectClick = (subject: Subject) => {
     navigate(`/subjects/${subject.subjectId}/sections`);
@@ -617,6 +632,10 @@ export const SubjectsView: React.FC = () => {
             onSubjectClick(subject);
           }}
         />
+      )}
+
+      {showTutorial && (
+        <Tutorial onComplete={() => setShowTutorial(false)} />
       )}
     </div>
   );

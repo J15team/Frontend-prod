@@ -75,6 +75,8 @@ export interface AuthTokens {
 export interface SigninResponse extends AuthTokens {
   user: User;
   message?: string;
+  isFirstLogin?: boolean;
+  loginCount?: number;
 }
 
 /**

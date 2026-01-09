@@ -20,6 +20,7 @@ import { getRoleFromToken } from '@/utils/jwtDecoder';
  */
 interface GoogleSigninResponse extends SigninResponse {
   isNewUser: boolean;
+  isFirstLogin?: boolean;
 }
 
 const isSigninResponse = (payload: SignupResponse | SigninResponse): payload is SigninResponse => {

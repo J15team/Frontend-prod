@@ -60,8 +60,8 @@ export const useAuthViewModel = (): AuthViewModelReturn => {
     try {
       const response = await signin(data);
       setUser(response.user);
-      // サインイン成功後、題材一覧ページへ遷移
-      navigate('/subjects');
+      // サインイン成功後、題材一覧ページへ遷移（初回ログインフラグを渡す）
+      navigate('/subjects', { state: { isFirstLogin: response.isFirstLogin } });
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -82,8 +82,8 @@ export const useAuthViewModel = (): AuthViewModelReturn => {
     try {
       const response = await googleSignin(credential);
       setUser(response.user);
-      // サインイン成功後、題材一覧ページへ遷移
-      navigate('/subjects');
+      // サインイン成功後、題材一覧ページへ遷移（初回ログインフラグを渡す）
+      navigate('/subjects', { state: { isFirstLogin: response.isFirstLogin } });
     } catch (err: unknown) {
       if (err instanceof Error) {
         if (err.message.includes('409')) {
