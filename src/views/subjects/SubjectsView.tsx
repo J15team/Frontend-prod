@@ -341,7 +341,14 @@ export const SubjectsView: React.FC = () => {
   }, [location.state]);
 
   const onSubjectClick = (subject: Subject) => {
-    navigate(`/subjects/${subject.subjectId}/sections`);
+    // チュートリアル中の場合はフラグを渡してセクションページでも継続
+    if (showTutorial) {
+      navigate(`/subjects/${subject.subjectId}/sections`, { 
+        state: { continueTutorial: true } 
+      });
+    } else {
+      navigate(`/subjects/${subject.subjectId}/sections`);
+    }
   };
 
   const handleDeadlineClick = (e: React.MouseEvent, subject: Subject) => {
@@ -536,6 +543,7 @@ export const SubjectsView: React.FC = () => {
                     <AnimatedCard key={subject.subjectId} delay={index * 50}>
                       <div
                         className="subject-card"
+                        data-subject-id={subject.subjectId}
                         onClick={() => onSubjectClick(subject)}
                       >
                         <div className="subject-card-header">

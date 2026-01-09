@@ -4,6 +4,7 @@
  * 特定の要素をハイライトして他を触れなくする
  */
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface TutorialStep {
   target: string;        // CSSセレクタ
@@ -11,7 +12,11 @@ interface TutorialStep {
   description: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   action?: 'click' | 'none';  // クリックで次に進むか
+  navigateTo?: string;   // クリック後に遷移する場合のパス
 }
+
+// チュートリアル用題材ID
+const TUTORIAL_SUBJECT_ID = 100;
 
 // 題材一覧ページ用のステップ
 const subjectsTutorialSteps: TutorialStep[] = [
@@ -44,11 +49,12 @@ const subjectsTutorialSteps: TutorialStep[] = [
     action: 'click',
   },
   {
-    target: '.subject-card:first-child',
-    title: '題材を選ぼう',
-    description: '学びたい題材をクリックして学習を始めましょう！初心者向けの題材から始めるのがおすすめです。',
+    target: `[data-subject-id="${TUTORIAL_SUBJECT_ID}"], .subject-card:first-child`,
+    title: 'チュートリアル題材を始めよう',
+    description: '「はじめてのPathly」をクリックして、基本操作を学びましょう！',
     position: 'right',
     action: 'click',
+    navigateTo: 'sections',
   },
 ];
 
@@ -71,7 +77,7 @@ const sectionsTutorialSteps: TutorialStep[] = [
   {
     target: '.btn-complete-section',
     title: 'セクション完了',
-    description: '学習が終わったら「完了」ボタンを押して次に進みましょう！',
+    description: '学習が終わったら「完了」ボタンを押して次に進みましょう！これでチュートリアルは終了です。',
     position: 'top',
     action: 'click',
   },

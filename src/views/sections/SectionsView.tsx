@@ -3,7 +3,7 @@
  * セクション一覧ページのView
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useSectionsViewModel } from '@/viewmodels/useSectionsViewModel';
 import { ProgressBar } from '@/views/components/ProgressBar';
 import { Sidebar } from '@/views/components/Sidebar';
@@ -14,10 +14,12 @@ import { ConfettiEffect } from '@/views/components/ConfettiEffect';
 import { GitHubExportModal } from '@/views/components/GitHubExportModal';
 import { LoadingSpinner } from '@/views/components/LoadingSpinner';
 import { isGitHubConnected } from '@/utils/githubStorage';
+import { Tutorial } from '@/views/components/Tutorial';
 
 export const SectionsView: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     subject,
     sections,
@@ -44,11 +46,24 @@ export const SectionsView: React.FC = () => {
   const draggingSidebar = useRef(false);
   const draggingContent = useRef(false);
 
+  // チュートリアル
+  const [showTutorial, setShowTutorial] = useState(false);
+
   useEffect(() => {
     if (subjectId) {
       fetchData(Number(subjectId));
     }
   }, [subjectId]);
+
+  // チュートリアル表示判定（題材ページから継続）
+  useEffect(() => {
+    const state = location.state as { continueTutorial?: boolean } | null;
+    if (state?.continueTutorial && !localStorage.getItem('tutorial_sections_completed')) {
+      // データ読み込み後に表示
+      const timer = setTimeout(() => setShowTutorial(true), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state, sections]);
 
   // サイドバーリサイズ
   const handleSidebarMouseDown = useCallback(() => {
@@ -264,6 +279,16 @@ export const SectionsView: React.FC = () => {
           subjectId={Number(subjectId)}
           subjectTitle={subject.title}
           onClose={() => setShowExportModal(false)}
+        />
+      )}
+
+      {showTutorial && (
+        <Tutorial 
+          page="sections" 
+          onComplete={() => {
+            setShowTutorial(false);
+            localStorage.setItem('tutorial_sections_completed', 'true');
+          }} 
         />
       )}
     </div>
