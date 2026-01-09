@@ -23,7 +23,7 @@ const subjectsTutorialSteps: TutorialStep[] = [
     target: '.hamburger-btn',
     title: '進捗を確認しよう',
     description: 'ここをクリックすると、全体の学習進捗を確認できます。',
-    position: 'right',
+    position: 'bottom',
     action: 'click',
   },
   {
