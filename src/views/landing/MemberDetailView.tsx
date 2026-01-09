@@ -23,11 +23,12 @@ const membersData: Record<string, {
     title: '開発責任者（Frontend & Backend）',
     image: '/images/team/member-1-detail.jpg',
     bio: [
-      'なんか全般やったなんでも屋さんです。',
-      '最近の趣味は、お酒と小説を読むことらしい。森博嗣って人の"S&Mシリーズ"面白いよ。',
-      'なんかOS作る本買ったらしい(オレンジ本)'
+      'この作品における大体なんでもやったなんでも屋さんです。',
+      '最近の趣味は、お酒と小説を読むことらしい。(森博嗣って人の"S&Mシリーズ"面白いよ。)',
+      '一緒に遊んでくれる方(お酒飲める方)募集してます。なんか適当にご連絡ください。'
+
     ],
-    skills: ['Kotlin(Spring Framework)', 'Go', 'Python','TypeScript(苦手意識あり)', 'AWS(ECSとかRDSとかそこら)'],
+    skills: ['Kotlin(Spring Framework)', 'Go','TypeScript(勉強中)', 'AWS(ECSとかRDSとかそこら)','阪神ファン(10年近く)'],
     links: [
       { label: 'GitHub', url: 'https://github.com/S4AK4N' },
     ],
