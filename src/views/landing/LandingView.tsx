@@ -23,16 +23,24 @@ export const LandingView: React.FC = () => {
     navigate('/auth/signin');
   };
 
+  const handleAdminSignIn = () => {
+    navigate('/auth/admin-signin');
+  };
+
   return (
     <div className="landing-page">
       {/* ヘッダー */}
       <header className="landing-header">
         <div className="landing-header-inner">
           <div className="landing-logo">
-            <span className="logo-icon">🌱</span>
-            <span className="logo-text">CodeSprout</span>
+            <span className="logo-icon">🛤️</span>
+            <span className="logo-text">Pathly</span>
           </div>
           <nav className="landing-nav">
+            <button className="btn-nav-admin" onClick={handleAdminSignIn}>
+              管理者ログイン
+            </button>
+            <div className="nav-divider" />
             <button className="btn-nav" onClick={handleSignIn}>
               ログイン
             </button>
@@ -68,22 +76,6 @@ export const LandingView: React.FC = () => {
               ログインはこちら
             </button>
           </div>
-          <div className="hero-stats">
-            <div className="stat-item">
-              <span className="stat-number">20+</span>
-              <span className="stat-label">学習コンテンツ</span>
-            </div>
-            <div className="stat-divider" />
-            <div className="stat-item">
-              <span className="stat-number">100%</span>
-              <span className="stat-label">無料</span>
-            </div>
-            <div className="stat-divider" />
-            <div className="stat-item">
-              <span className="stat-number">初心者</span>
-              <span className="stat-label">向け</span>
-            </div>
-          </div>
         </div>
         <div className="hero-visual">
           <div className="code-window">
@@ -98,7 +90,7 @@ export const LandingView: React.FC = () => {
 {`function greet() {
   console.log("Hello!");
   console.log("Welcome to");
-  console.log("CodeSprout! 🌱");
+  console.log("Pathly! 🛤️");
 }`}
                 </code>
               </pre>
@@ -198,10 +190,10 @@ export const LandingView: React.FC = () => {
       <footer className="landing-footer">
         <div className="footer-inner">
           <div className="footer-logo">
-            <span className="logo-icon">🌱</span>
-            <span className="logo-text">CodeSprout</span>
+            <span className="logo-icon">🛤️</span>
+            <span className="logo-text">Pathly</span>
           </div>
-          <p className="footer-copy">© 2026 CodeSprout. All rights reserved.</p>
+          <p className="footer-copy">© 2026 Pathly. All rights reserved.</p>
         </div>
       </footer>
     </div>

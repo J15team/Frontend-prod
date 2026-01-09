@@ -78,10 +78,6 @@ export const SigninView: React.FC = () => {
         <div className="auth-footer">
           アカウントをお持ちでないですか？{' '}
           <Link to="/auth/signup">アカウント作成</Link>
-          <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #e0e0e0' }}>
-            管理者の方はこちら:{' '}
-            <Link to="/auth/admin-signin">Admin Portalへサインイン</Link>
-          </div>
         </div>
       </div>
     </div>
