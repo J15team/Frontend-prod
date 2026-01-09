@@ -348,7 +348,7 @@ export const SubjectsView: React.FC = () => {
   const sortedSubjects = [...filteredSubjects].sort((a, b) => {
     switch (sortBy) {
       case 'sections':
-        return (b.maxSections || 0) - (a.maxSections || 0);
+        return (a.maxSections || 0) - (b.maxSections || 0); // 少ない順
       case 'progress':
         return (progress[b.subjectId] || 0) - (progress[a.subjectId] || 0);
       case 'weight':
@@ -413,8 +413,7 @@ export const SubjectsView: React.FC = () => {
                   onClick={() => handleStarClick(weight)}
                   title={categoryLabels[weight]?.label}
                 >
-                  <span className="filter-emoji">{categoryLabels[weight]?.emoji}</span>
-                  <span className="filter-stars">{'★'.repeat(weight)}</span>
+                  {'★'.repeat(weight)}{'☆'.repeat(5 - weight)}
                 </button>
               ))}
               {selectedWeight && (

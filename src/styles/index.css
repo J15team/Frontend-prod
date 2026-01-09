@@ -549,15 +549,17 @@ body {
 
 .star-filter-btn {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  justify-content: center;
   padding: 8px 12px;
   background: #f3f4f6;
   border: 2px solid transparent;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s;
+  font-size: 1rem;
+  color: #ffc107;
+  letter-spacing: -1px;
 }
 
 .star-filter-btn:hover {
@@ -569,16 +571,6 @@ body {
   background: #dcfce7;
   border-color: #22c55e;
   transform: scale(1.05);
-}
-
-.filter-emoji {
-  font-size: 1.2rem;
-}
-
-.filter-stars {
-  font-size: 0.7rem;
-  color: #ffc107;
-  letter-spacing: -2px;
 }
 
 .clear-filter-btn {
