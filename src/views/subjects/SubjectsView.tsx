@@ -480,7 +480,7 @@ export const SubjectsView: React.FC = () => {
             <p className="footer-tagline">学習の道筋を、あなたと共に</p>
           </div>
           <div className="footer-links">
-            <a href="mailto:support@pathly.example.com" className="footer-link">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScxw4sQcRCVQ5e8bHqe0Fl_G5e0PHER_fdWazzTR1aBqR6zZA/viewform" target="_blank" rel="noopener noreferrer" className="footer-link">
               📧 お問い合わせ
             </a>
             <a href="/" className="footer-link">
