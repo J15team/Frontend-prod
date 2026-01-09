@@ -77,7 +77,7 @@ export const ConfettiEffect: React.FC<ConfettiEffectProps> = ({ isActive, onComp
       ))}
       <div className="celebration-message">
         <span className="celebration-emoji">🎉</span>
-        <span className="celebration-text">おめでとう！</span>
+        <span className="celebration-text">Congratulations!!</span>
         <span className="celebration-emoji">🎉</span>
       </div>
     </div>
