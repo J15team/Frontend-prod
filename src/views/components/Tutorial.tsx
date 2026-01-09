@@ -4,6 +4,7 @@
  * 特定の要素をハイライトして他を触れなくする
  */
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface TutorialStep {
   target: string;        // CSSセレクタ
@@ -88,6 +89,7 @@ interface TutorialProps {
 }
 
 export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects' }) => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -141,8 +143,18 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   };
 
   const handleNext = () => {
-    // ターゲット要素をクリック（クリアボタンは除く）
-    if (!step.target.includes('clear-filter')) {
+    // 最後のステップでnavigateToがある場合は遷移
+    if (step.navigateTo === 'sections') {
+      localStorage.setItem('tutorial_completed', 'true');
+      navigate(`/subjects/${TUTORIAL_SUBJECT_ID}/sections`, { 
+        state: { continueTutorial: true } 
+      });
+      onComplete();
+      return;
+    }
+    
+    // ターゲット要素をクリック（クリアボタンとサイドバー閉じるは除く）
+    if (!step.target.includes('clear-filter') && !step.target.includes('sidebar-close')) {
       const target = document.querySelector(step.target) as HTMLElement;
       if (target) {
         target.click();
