@@ -44,8 +44,12 @@ export const SubjectsView: React.FC = () => {
     return <div className="error-container">エラー: {error}</div>;
   }
 
-  // subjectId昇順にソート
-  const sortedSubjects = [...subjects].sort((a, b) => a.subjectId - b.subjectId);
+  // 重み昇順（星1が上、星5が下）、同じ重みならsubjectId昇順
+  const sortedSubjects = [...subjects].sort((a, b) => {
+    const weightDiff = (a.weight || 0) - (b.weight || 0);
+    if (weightDiff !== 0) return weightDiff;
+    return a.subjectId - b.subjectId;
+  });
 
   return (
     <div className="subjects-container">
