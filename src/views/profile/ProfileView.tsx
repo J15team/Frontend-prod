@@ -176,104 +176,172 @@ export const ProfileView: React.FC = () => {
     return <div className="error-container">エラー: {error}</div>;
   }
 
-  const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || 'User')}&background=007bff&color=fff&size=128`;
+  const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || 'User')}&background=667eea&color=fff&size=128`;
+  
+  // 全体の進捗率を計算
+  const totalSubjects = inProgressSubjects.length + completedSubjects.length;
+  const overallProgress = totalSubjects > 0
+    ? Math.round((completedSubjects.length / totalSubjects) * 100)
+    : 0;
 
   return (
-    <div className="profile-container">
-      <header className="profile-header">
-        <button onClick={() => navigate('/subjects')} className="btn-back">
-          ← 題材一覧へ
-        </button>
-        <button onClick={handleSignout} className="btn-secondary">
-          サインアウト
-        </button>
-      </header>
+    <div className="profile-page">
+      <div className="profile-hero">
+        <div className="profile-hero-bg" />
+        <header className="profile-header">
+          <button onClick={() => navigate('/subjects')} className="btn-back-light">
+            ← 戻る
+          </button>
+          <button onClick={handleSignout} className="btn-signout">
+            サインアウト
+          </button>
+        </header>
 
-      <div className="profile-card">
-        <div className="profile-avatar">
-          <img
-            src={user?.profileImageUrl || defaultAvatar}
-            alt={user?.username || 'User'}
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = defaultAvatar;
-            }}
-          />
+        <div className="profile-hero-content">
+          <div className="profile-avatar-wrapper">
+            <div className="profile-avatar-ring">
+              <svg viewBox="0 0 36 36" className="avatar-progress-ring">
+                <path
+                  className="ring-bg"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  className="ring-progress"
+                  strokeDasharray={`${overallProgress}, 100`}
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+              </svg>
+            </div>
+            <div className="profile-avatar-large">
+              <img
+                src={user?.profileImageUrl || defaultAvatar}
+                alt={user?.username || 'User'}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = defaultAvatar;
+                }}
+              />
+            </div>
+          </div>
+          <h1 className="profile-name-large">{user?.username || '名前未設定'}</h1>
+          <p className="profile-email-light">{user?.email}</p>
+          <button
+            className="btn-settings-outline"
+            onClick={() => setShowSettings(true)}
+          >
+            ⚙️ プロフィールを編集
+          </button>
         </div>
-        <h1 className="profile-name">{user?.username || '名前未設定'}</h1>
-        <p className="profile-email">{user?.email}</p>
-        <button
-          className="btn-settings"
-          onClick={() => setShowSettings(true)}
-        >
-          ⚙️ 設定
-        </button>
       </div>
 
-      <div className="profile-stats">
-        <div className="stat-card">
-          <span className="stat-number">{inProgressSubjects.length}</span>
-          <span className="stat-label">学習中</span>
+      <div className="profile-content">
+        <div className="profile-stats-grid">
+          <div className="stat-card-fancy">
+            <div className="stat-icon">🔥</div>
+            <div className="stat-info">
+              <span className="stat-number-large">{inProgressSubjects.length}</span>
+              <span className="stat-label-small">学習中</span>
+            </div>
+          </div>
+          <div className="stat-card-fancy completed">
+            <div className="stat-icon">✅</div>
+            <div className="stat-info">
+              <span className="stat-number-large">{completedSubjects.length}</span>
+              <span className="stat-label-small">完了</span>
+            </div>
+          </div>
+          <div className="stat-card-fancy progress">
+            <div className="stat-icon">📊</div>
+            <div className="stat-info">
+              <span className="stat-number-large">{overallProgress}%</span>
+              <span className="stat-label-small">達成率</span>
+            </div>
+          </div>
         </div>
-        <div className="stat-card">
-          <span className="stat-number">{completedSubjects.length}</span>
-          <span className="stat-label">完了</span>
-        </div>
-      </div>
 
-      {inProgressSubjects.length > 0 && (
-        <section className="profile-section">
-          <h2>学習中の題材</h2>
-          <div className="profile-subject-list">
-            {inProgressSubjects.map((subject) => (
-              <div
-                key={subject.subjectId}
-                className="profile-subject-item"
-                onClick={() => navigate(`/subjects/${subject.subjectId}/sections`)}
-              >
-                <div className="subject-info">
-                  <span className="subject-title">{subject.title}</span>
-                  <span className="subject-progress-text">{subject.progressPercentage}%</span>
-                </div>
-                {subject.deadline && (
-                  <div className={`deadline-badge-small ${getDeadlineClass(subject.daysRemaining)}`}>
-                    {subject.daysRemaining !== null && subject.daysRemaining < 0
-                      ? `⚠️ ${Math.abs(subject.daysRemaining)}日超過`
-                      : subject.daysRemaining === 0
-                      ? '🔥 今日まで'
-                      : `📅 ${formatDeadline(subject.deadline)}（残り${subject.daysRemaining}日）`}
+        {inProgressSubjects.length > 0 && (
+          <section className="profile-section-fancy">
+            <div className="section-header">
+              <h2>🔥 学習中の題材</h2>
+              <span className="section-count">{inProgressSubjects.length}件</span>
+            </div>
+            <div className="profile-subject-grid">
+              {inProgressSubjects.map((subject) => (
+                <div
+                  key={subject.subjectId}
+                  className="profile-subject-card"
+                  onClick={() => navigate(`/subjects/${subject.subjectId}/sections`)}
+                >
+                  <div className="subject-card-top">
+                    <span className="subject-title-card">{subject.title}</span>
+                    <div className="circular-progress-small">
+                      <svg viewBox="0 0 36 36">
+                        <path
+                          className="circle-bg-small"
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                        <path
+                          className="circle-progress-small"
+                          strokeDasharray={`${subject.progressPercentage}, 100`}
+                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                      </svg>
+                      <span className="progress-text-small">{subject.progressPercentage}%</span>
+                    </div>
                   </div>
-                )}
-                <div className="progress-container">
-                  <div
-                    className="progress-bar"
-                    style={{ width: `${subject.progressPercentage}%` }}
-                  />
+                  {subject.deadline && (
+                    <div className={`deadline-tag ${getDeadlineClass(subject.daysRemaining)}`}>
+                      {subject.daysRemaining !== null && subject.daysRemaining < 0
+                        ? `⚠️ ${Math.abs(subject.daysRemaining)}日超過`
+                        : subject.daysRemaining === 0
+                        ? '🔥 今日まで'
+                        : `📅 ${formatDeadline(subject.deadline)}（残り${subject.daysRemaining}日）`}
+                    </div>
+                  )}
+                  <div className="subject-card-bar">
+                    <div
+                      className="subject-card-bar-fill"
+                      style={{ width: `${subject.progressPercentage}%` }}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+              ))}
+            </div>
+          </section>
+        )}
 
-      {completedSubjects.length > 0 && (
-        <section className="profile-section">
-          <h2>完了した題材</h2>
-          <div className="profile-subject-list">
-            {completedSubjects.map((subject) => (
-              <div
-                key={subject.subjectId}
-                className="profile-subject-item completed"
-                onClick={() => navigate(`/subjects/${subject.subjectId}/sections`)}
-              >
-                <div className="subject-info">
-                  <span className="subject-title">{subject.title}</span>
-                  <span className="complete-badge">✓ 完了</span>
+        {completedSubjects.length > 0 && (
+          <section className="profile-section-fancy">
+            <div className="section-header">
+              <h2>✅ 完了した題材</h2>
+              <span className="section-count">{completedSubjects.length}件</span>
+            </div>
+            <div className="profile-subject-grid">
+              {completedSubjects.map((subject) => (
+                <div
+                  key={subject.subjectId}
+                  className="profile-subject-card completed"
+                  onClick={() => navigate(`/subjects/${subject.subjectId}/sections`)}
+                >
+                  <div className="subject-card-top">
+                    <span className="subject-title-card">{subject.title}</span>
+                    <span className="complete-check">✓</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </section>
+        )}
+
+        {inProgressSubjects.length === 0 && completedSubjects.length === 0 && (
+          <div className="profile-empty">
+            <span className="empty-icon">📚</span>
+            <p>まだ学習を始めていません</p>
+            <button className="btn-primary" onClick={() => navigate('/subjects')}>
+              題材を見る
+            </button>
           </div>
-        </section>
-      )}
+        )}
+      </div>
 
       {showSettings && user && (
         <SettingsModal
