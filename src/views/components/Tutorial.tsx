@@ -96,20 +96,24 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
       const rect = target.getBoundingClientRect();
       setTargetRect(rect);
       setIsVisible(true);
+    } else {
+      setIsVisible(false);
     }
   }, [step]);
 
+  // 常に位置を再計算（60fps）
   useEffect(() => {
-    // 少し遅延させてDOMが準備できてから位置を取得
-    const timer = setTimeout(updateTargetPosition, 500);
+    let animationId: number;
     
-    window.addEventListener('resize', updateTargetPosition);
-    window.addEventListener('scroll', updateTargetPosition);
+    const tick = () => {
+      updateTargetPosition();
+      animationId = requestAnimationFrame(tick);
+    };
+    
+    animationId = requestAnimationFrame(tick);
     
     return () => {
-      clearTimeout(timer);
-      window.removeEventListener('resize', updateTargetPosition);
-      window.removeEventListener('scroll', updateTargetPosition);
+      cancelAnimationFrame(animationId);
     };
   }, [updateTargetPosition]);
 
