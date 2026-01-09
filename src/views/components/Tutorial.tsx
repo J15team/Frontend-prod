@@ -4,7 +4,6 @@
  * 特定の要素をハイライトして他を触れなくする
  */
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface TutorialStep {
   target: string;        // CSSセレクタ

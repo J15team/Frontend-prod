@@ -96,6 +96,10 @@ export const googleSignin = async (credential: string): Promise<GoogleSigninResp
   const response = await apiClient.post<GoogleSigninResponse>('/auth/google/token', {
     credential,
   });
+  
+  // デバッグ用: レスポンス内容を確認
+  console.log('=== google signin response ===', response.data);
+  
   const normalizedUser = normalizeUser(response.data.user);
 
   // JWTトークンからroleを取得してユーザーオブジェクトに追加
