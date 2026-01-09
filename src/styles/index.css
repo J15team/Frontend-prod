@@ -1365,3 +1365,13 @@ body {
   background: #f44336;
   color: white;
 }
+
+
+/* プロフィール内の期限バッジ（小さめ） */
+.deadline-badge-small {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 6px 0;
+}
