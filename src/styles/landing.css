@@ -19,7 +19,16 @@
   right: 0;
   z-index: 1000;
   padding: 1.5rem 3rem;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  color: #fff;
+}
+
+.landing-header-v2 .logo-text {
+  color: inherit;
+}
+
+.landing-header-v2 .header-nav button {
+  color: inherit;
 }
 
 .landing-header-v2.scrolled {
@@ -27,6 +36,7 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
   padding: 1rem 3rem;
+  color: #111;
 }
 
 .landing-header-v2 .header-inner {
@@ -78,39 +88,61 @@
 .landing-header-v2 .btn-text {
   background: none;
   border: none;
-  color: #6b7280;
+  color: inherit;
+  opacity: 0.8;
   font-size: 0.875rem;
   cursor: pointer;
 }
 
 .landing-header-v2 .btn-outline {
   padding: 0.6rem 1.25rem;
-  background: transparent;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  color: #1e3a2f;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #fff;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+}
+
+.landing-header-v2.scrolled .btn-outline {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  color: #1e3a2f;
 }
 
 .landing-header-v2 .btn-outline:hover {
+  transform: translateY(-1px);
+  opacity: 0.85;
+}
+
+.landing-header-v2.scrolled .btn-outline:hover {
   border-color: #22c55e;
   color: #22c55e;
 }
 
 .landing-header-v2 .btn-primary {
   padding: 0.6rem 1.25rem;
-  background: #1e3a2f;
+  background: #000;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
   color: white;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+}
+
+.landing-header-v2.scrolled .btn-primary {
+  background: #1e3a2f;
+  border-radius: 6px;
 }
 
 .landing-header-v2 .btn-primary:hover {
+  transform: translateY(-1px);
+  opacity: 0.85;
+}
+
+.landing-header-v2.scrolled .btn-primary:hover {
   background: #22c55e;
 }
 
@@ -199,13 +231,45 @@
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.8) 40%,
-    rgba(255, 255, 255, 0.3) 70%,
-    transparent 100%
-  );
+  background: rgba(0, 0, 0, 0.38);
+  transition: background 0.3s ease;
+}
+
+/* 右寄せヒーローコンテンツ */
+.hero-content-right {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-align: right;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: 120px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.hero-section.visible .hero-content-right {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-title-new {
+  margin: 0;
+  font-weight: 200;
+  font-size: 3rem;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.hero-sub {
+  display: block;
+  margin-top: 14px;
+  font-size: 1rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
 }
 
 .hero-content {

@@ -24,7 +24,8 @@ export const LandingView: React.FC = () => {
     }
     
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
       
       // アクティブセクションの検出
       sectionsRef.current.forEach((section, index) => {
@@ -49,10 +50,15 @@ export const LandingView: React.FC = () => {
     sectionsRef.current[index]?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // ヒーロー暗幕の透明度（スクロールで薄くなる）
+  const heroOverlayOpacity = Math.max(0.18, 0.38 - scrollY / 800);
+  // 英語サブコピーの透明度（スクロールでフェードアウト）
+  const heroSubOpacity = Math.max(0, 0.85 - scrollY / 300);
+
   return (
     <div className="landing-page-v2">
       {/* 固定ヘッダー */}
-      <header className={`landing-header-v2 ${scrollY > 50 ? 'scrolled' : ''}`}>
+      <header className={`landing-header-v2 ${scrollY > window.innerHeight * 0.6 ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <div className="logo">
             <span className="logo-text">Pathly</span>
@@ -94,25 +100,19 @@ export const LandingView: React.FC = () => {
           <div className="hero-image" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
             <img src="/images/landing/hero.jpg" alt="Pathly - プログラミング学習" />
           </div>
-          <div className="hero-overlay" />
+          <div 
+            className="hero-overlay" 
+            style={{ background: `rgba(0, 0, 0, ${heroOverlayOpacity})` }}
+          />
         </div>
         
-        <div className="hero-content">
-          <p className="hero-label">Programming Learning Platform</p>
-          <h1 className="hero-title">
-            <span className="line-1">プログラミングを</span>
-            <span className="line-2">楽しく、着実に。</span>
+        <div className="hero-content hero-content-right">
+          <h1 className="hero-title-new">
+            完成への道を
+            <span className="hero-sub" style={{ opacity: heroSubOpacity }}>
+              Path to Completion
+            </span>
           </h1>
-          <p className="hero-description">
-            初心者でも安心。ステップバイステップで学べる<br />
-            プログラミング学習プラットフォーム
-          </p>
-          <div className="hero-buttons">
-            <button className="btn-hero" onClick={handleGetStarted}>
-              無料で始める
-              <span className="arrow">→</span>
-            </button>
-          </div>
         </div>
 
         <div className="scroll-indicator">
