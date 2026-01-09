@@ -6,6 +6,7 @@ export interface User {
   userId: string;
   email: string;
   username: string;
+  profileImageUrl?: string;
   role?: 'ROLE_USER' | 'ROLE_ADMIN';
   createdAt?: string;
 }
@@ -19,6 +20,7 @@ export interface UserApiResponse {
   id?: string;
   email: string;
   username: string;
+  profileImageUrl?: string;
   role?: 'ROLE_USER' | 'ROLE_ADMIN';
   createdAt?: string;
 }
@@ -30,6 +32,7 @@ export const normalizeUser = (payload: UserApiResponse): User => ({
   userId: payload.userId ?? payload.id ?? '',
   email: payload.email,
   username: payload.username,
+  profileImageUrl: payload.profileImageUrl,
   role: payload.role,
   createdAt: payload.createdAt,
 });

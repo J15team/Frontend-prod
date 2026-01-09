@@ -14,6 +14,7 @@ import { SubjectManagementView } from '@/views/subjects/SubjectManagementView';
 import { SectionsView } from '@/views/sections/SectionsView';
 import { SectionManagementView } from '@/views/sections/SectionManagementView';
 import { ProgressInspectorView } from '@/views/progress/ProgressInspectorView';
+import { ProfileView } from '@/views/profile/ProfileView';
 import { AdminUsersView } from '@/views/admin/AdminUsersView';
 import { AdminLayout } from '@/views/admin/AdminLayout';
 import { AdminDashboardView } from '@/views/admin/AdminDashboardView';
@@ -76,6 +77,14 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <ProgressInspectorView />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileView />
             </ProtectedRoute>
           }
         />

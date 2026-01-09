@@ -55,9 +55,14 @@ export const SubjectsView: React.FC = () => {
     <div className="subjects-container">
       <header className="subjects-header">
         <h1>題材一覧</h1>
-        <button onClick={handleSignout} className="btn-secondary">
-          サインアウト
-        </button>
+        <div className="header-actions">
+          <button onClick={() => navigate('/profile')} className="btn-profile">
+            プロフィール
+          </button>
+          <button onClick={handleSignout} className="btn-secondary">
+            サインアウト
+          </button>
+        </div>
       </header>
       <div className="subjects-grid">
         {sortedSubjects.map((subject) => {
