@@ -424,11 +424,6 @@
   justify-content: center;
 }
 
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
 .feature-card h3 {
   font-size: 1.25rem;
   font-weight: 600;
@@ -439,6 +434,49 @@
 .feature-card p {
   color: #6b7280;
   line-height: 1.7;
+}
+
+/* Feature Icon Box - モダンなアイコンデザイン */
+.feature-icon-box {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.25);
+  transition: all 0.3s;
+}
+
+.feature-card:hover .feature-icon-box {
+  transform: scale(1.1) rotate(-5deg);
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.35);
+}
+
+.feature-icon-box svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+/* Large card icon */
+.feature-icon-svg {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #1e3a2f 0%, #2d5a47 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(30, 58, 47, 0.3);
+}
+
+.feature-icon-svg svg {
+  width: 40px;
+  height: 40px;
+  color: #22c55e;
 }
 
 /* ========================================
