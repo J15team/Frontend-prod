@@ -2,7 +2,7 @@
  * Code Editor Component
  * Monaco Editorを使用したマルチファイルコードエディタ
  */
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import Editor, { type OnMount } from '@monaco-editor/react';
 import { saveCode, getCode } from '@/utils/codeStorage';
 
@@ -54,14 +54,44 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   height = '400px',
 }) => {
   const [activeFile, setActiveFile] = useState<FileType>('html');
+  const [codes, setCodes] = useState<Record<FileType, string>>({
+    html: '',
+    css: '',
+    javascript: '',
+  });
   const editorRef = useRef<unknown>(null);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // 各ファイルタイプのコードを取得
-  const getFileCode = (fileType: FileType): string => {
-    const saved = getCode(subjectId, sectionId * 10 + FILE_TABS.findIndex(f => f.type === fileType));
-    return saved?.code || DEFAULT_CODE[fileType];
-  };
+  // セクション変更時にコードを読み込み（前のセクションから引き継ぎ）
+  useEffect(() => {
+    const loadCodes = () => {
+      const newCodes: Record<FileType, string> = { html: '', css: '', javascript: '' };
+      
+      FILE_TABS.forEach((file, index) => {
+        // まず現在のセクションのコードを確認
+        const currentSaved = getCode(subjectId, sectionId * 10 + index);
+        if (currentSaved?.code) {
+          newCodes[file.type] = currentSaved.code;
+        } else {
+          // なければ前のセクションのコードを探す
+          let foundCode = '';
+          for (let prevSection = sectionId - 1; prevSection >= 1; prevSection--) {
+            const prevSaved = getCode(subjectId, prevSection * 10 + index);
+            if (prevSaved?.code) {
+              foundCode = prevSaved.code;
+              break;
+            }
+          }
+          // 前のセクションにもなければデフォルト
+          newCodes[file.type] = foundCode || DEFAULT_CODE[file.type];
+        }
+      });
+      
+      setCodes(newCodes);
+    };
+    
+    loadCodes();
+  }, [subjectId, sectionId]);
 
   const handleEditorMount: OnMount = (editor) => {
     editorRef.current = editor;
@@ -70,6 +100,9 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   const handleChange = useCallback(
     (value: string | undefined) => {
       if (!value) return;
+
+      // 状態を更新
+      setCodes(prev => ({ ...prev, [activeFile]: value }));
 
       // デバウンス保存（500ms後に保存）
       if (saveTimeoutRef.current) {
@@ -102,7 +135,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         height={height}
         language={activeFile}
         theme="vs-dark"
-        value={getFileCode(activeFile)}
+        value={codes[activeFile]}
         onChange={handleChange}
         onMount={handleEditorMount}
         key={`${subjectId}-${sectionId}-${activeFile}`}

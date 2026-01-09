@@ -19,10 +19,23 @@ export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSect
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    // 各ファイルタイプのコードを取得
-    const htmlCode = getCode(subjectId, currentSectionId * 10 + 0)?.code || '';
-    const cssCode = getCode(subjectId, currentSectionId * 10 + 1)?.code || '';
-    const jsCode = getCode(subjectId, currentSectionId * 10 + 2)?.code || '';
+    // 各ファイルタイプのコードを取得（前のセクションから引き継ぎ）
+    const getCodeWithFallback = (fileIndex: number): string => {
+      // まず現在のセクションを確認
+      const current = getCode(subjectId, currentSectionId * 10 + fileIndex);
+      if (current?.code) return current.code;
+      
+      // なければ前のセクションを探す
+      for (let prevSection = currentSectionId - 1; prevSection >= 1; prevSection--) {
+        const prev = getCode(subjectId, prevSection * 10 + fileIndex);
+        if (prev?.code) return prev.code;
+      }
+      return '';
+    };
+
+    const htmlCode = getCodeWithFallback(0);
+    const cssCode = getCodeWithFallback(1);
+    const jsCode = getCodeWithFallback(2);
 
     const previewHtml = `<!DOCTYPE html>
 <html lang="ja">
