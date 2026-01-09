@@ -21,14 +21,15 @@ const membersData: Record<string, {
     nameEn: 'RIKI YOSHIDA',
     role: 'Tech Lead',
     title: '開発責任者（Frontend & Backend）',
-    image: '/images/team/member-1.jpg',
+    image: '/images/team/member-1-detail.jpg',
     bio: [
-      'Pathlyの開発責任者として、フロントエンドとバックエンドの両方を担当。',
-      '紹介文をここに追加できます。',
+      'なんか全般やったなんでも屋さんです。',
+      '最近の趣味は、お酒と小説を読むことらしい。森博嗣って人の"S&Mシリーズ"面白いよ。',
+      'なんかOS作る本買ったらしい(オレンジ本)'
     ],
-    skills: ['React', 'TypeScript', 'AWS', 'Python'],
+    skills: ['Kotlin(Spring Framework)', 'Go', 'Python', 'AWS(ECSとかRDSとかそこら)','TypeScript()'],
     links: [
-      { label: 'GitHub', url: 'https://github.com/' },
+      { label: 'GitHub', url: 'https://github.com/S4AK4N' },
     ],
   },
   'member-2': {
