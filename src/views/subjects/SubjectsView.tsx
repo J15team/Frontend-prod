@@ -90,6 +90,157 @@ const DeadlineModal: React.FC<DeadlineModalProps> = ({
   );
 };
 
+interface ProgressSidebarProps {
+  subjects: Subject[];
+  progress: Record<number, number>;
+  deadlines: Record<number, string>;
+  getDaysRemaining: (subjectId: number) => number | null;
+  onClose: () => void;
+  onSubjectClick: (subject: Subject) => void;
+}
+
+const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
+  subjects,
+  progress,
+  deadlines,
+  getDaysRemaining,
+  onClose,
+  onSubjectClick,
+}) => {
+  // 進捗でカテゴリ分け
+  const inProgress = subjects.filter((s) => {
+    const p = progress[s.subjectId] || 0;
+    return p > 0 && p < 100;
+  });
+  const completed = subjects.filter((s) => (progress[s.subjectId] || 0) === 100);
+  const notStarted = subjects.filter((s) => (progress[s.subjectId] || 0) === 0);
+
+  // 全体の進捗計算
+  const totalProgress = subjects.length > 0
+    ? Math.round(subjects.reduce((sum, s) => sum + (progress[s.subjectId] || 0), 0) / subjects.length)
+    : 0;
+
+  const getDeadlineClass = (daysRemaining: number | null): string => {
+    if (daysRemaining === null) return '';
+    if (daysRemaining < 0) return 'deadline-overdue';
+    if (daysRemaining <= 3) return 'deadline-urgent';
+    return '';
+  };
+
+  return (
+    <>
+      <div className="sidebar-overlay" onClick={onClose} />
+      <div className="progress-sidebar">
+        <div className="sidebar-header">
+          <h2>学習進捗</h2>
+          <button className="sidebar-close" onClick={onClose}>×</button>
+        </div>
+
+        <div className="sidebar-summary">
+          <div className="summary-circle">
+            <svg viewBox="0 0 36 36" className="circular-chart">
+              <path
+                className="circle-bg"
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="circle-progress"
+                strokeDasharray={`${totalProgress}, 100`}
+                d="M18 2.0845
+                  a 15.9155 15.9155 0 0 1 0 31.831
+                  a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <text x="18" y="20.35" className="percentage">{totalProgress}%</text>
+            </svg>
+          </div>
+          <div className="summary-stats">
+            <div className="stat-item">
+              <span className="stat-value">{completed.length}</span>
+              <span className="stat-label">完了</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value">{inProgress.length}</span>
+              <span className="stat-label">進行中</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-value">{notStarted.length}</span>
+              <span className="stat-label">未着手</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="sidebar-content">
+          {inProgress.length > 0 && (
+            <div className="sidebar-section">
+              <h3>🔥 進行中</h3>
+              {inProgress.map((subject) => {
+                const p = progress[subject.subjectId] || 0;
+                const deadline = deadlines[subject.subjectId];
+                const daysRemaining = getDaysRemaining(subject.subjectId);
+                return (
+                  <div
+                    key={subject.subjectId}
+                    className="sidebar-item"
+                    onClick={() => onSubjectClick(subject)}
+                  >
+                    <div className="sidebar-item-header">
+                      <span className="sidebar-item-title">{subject.title}</span>
+                      <span className="sidebar-item-progress">{p}%</span>
+                    </div>
+                    <div className="mini-progress-bar">
+                      <div className="mini-progress-fill" style={{ width: `${p}%` }} />
+                    </div>
+                    {deadline && daysRemaining !== null && daysRemaining <= 3 && (
+                      <span className={`sidebar-deadline ${getDeadlineClass(daysRemaining)}`}>
+                        {daysRemaining < 0 ? `${Math.abs(daysRemaining)}日超過` : daysRemaining === 0 ? '今日まで' : `残り${daysRemaining}日`}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {completed.length > 0 && (
+            <div className="sidebar-section">
+              <h3>✅ 完了</h3>
+              {completed.map((subject) => (
+                <div
+                  key={subject.subjectId}
+                  className="sidebar-item completed"
+                  onClick={() => onSubjectClick(subject)}
+                >
+                  <span className="sidebar-item-title">{subject.title}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {notStarted.length > 0 && (
+            <div className="sidebar-section">
+              <h3>📚 未着手</h3>
+              {notStarted.slice(0, 5).map((subject) => (
+                <div
+                  key={subject.subjectId}
+                  className="sidebar-item not-started"
+                  onClick={() => onSubjectClick(subject)}
+                >
+                  <span className="sidebar-item-title">{subject.title}</span>
+                </div>
+              ))}
+              {notStarted.length > 5 && (
+                <p className="sidebar-more">他 {notStarted.length - 5} 件</p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
+
 export const SubjectsView: React.FC = () => {
   const navigate = useNavigate();
   const {
@@ -105,6 +256,7 @@ export const SubjectsView: React.FC = () => {
   } = useSubjectsViewModel();
   const { handleSignout } = useAuthViewModel();
   const [modalSubject, setModalSubject] = useState<Subject | null>(null);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const onSubjectClick = (subject: Subject) => {
     navigate(`/subjects/${subject.subjectId}/sections`);
@@ -166,7 +318,18 @@ export const SubjectsView: React.FC = () => {
   return (
     <div className="subjects-container">
       <header className="subjects-header">
-        <h1>題材一覧</h1>
+        <div className="header-left">
+          <button
+            className="hamburger-btn"
+            onClick={() => setShowSidebar(true)}
+            aria-label="進捗を表示"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <h1>題材一覧</h1>
+        </div>
         <div className="header-actions">
           <button onClick={() => navigate('/profile')} className="btn-profile">
             プロフィール
@@ -239,6 +402,20 @@ export const SubjectsView: React.FC = () => {
           onClear={handleClearDeadline}
           onClose={() => setModalSubject(null)}
           googleCalendarUrl={getGoogleCalendarUrl(modalSubject)}
+        />
+      )}
+
+      {showSidebar && (
+        <ProgressSidebar
+          subjects={subjects}
+          progress={progress}
+          deadlines={deadlines}
+          getDaysRemaining={getDaysRemaining}
+          onClose={() => setShowSidebar(false)}
+          onSubjectClick={(subject) => {
+            setShowSidebar(false);
+            onSubjectClick(subject);
+          }}
         />
       )}
     </div>
