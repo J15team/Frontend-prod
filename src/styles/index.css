@@ -381,19 +381,89 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  padding-top: 80px; /* ヘッダー分の余白 */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .subjects-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #ddd;
+  padding: 16px 24px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .subjects-header h1 {
-  color: #333;
+  color: #1f2937;
+  font-size: 1.25rem;
+}
+
+/* フッター */
+.subjects-footer {
+  margin-top: auto;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #1f2937, #111827);
+  color: white;
+  border-radius: 24px 24px 0 0;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.footer-tagline {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-link {
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #22c55e;
+}
+
+.footer-copyright {
+  color: #6b7280;
+  font-size: 0.8rem;
 }
 
 .subjects-grid {

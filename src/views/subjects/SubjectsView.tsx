@@ -472,6 +472,26 @@ export const SubjectsView: React.FC = () => {
           }}
         />
       )}
+
+      <footer className="subjects-footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <span className="footer-logo">🌿 Pathly</span>
+            <p className="footer-tagline">学習の道筋を、あなたと共に</p>
+          </div>
+          <div className="footer-links">
+            <a href="mailto:support@pathly.example.com" className="footer-link">
+              📧 お問い合わせ
+            </a>
+            <a href="/" className="footer-link">
+              🏠 トップページ
+            </a>
+          </div>
+          <div className="footer-copyright">
+            © 2026 Pathly. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
