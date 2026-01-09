@@ -20,13 +20,6 @@ const TUTORIAL_SUBJECT_ID = 100;
 // 題材一覧ページ用のステップ
 const subjectsTutorialSteps: TutorialStep[] = [
   {
-    target: '.hamburger-btn',
-    title: '進捗を確認しよう',
-    description: 'ここをクリックすると、全体の学習進捗を確認できます。試してみてください！',
-    position: 'bottom',
-    action: 'click',
-  },
-  {
     target: '.star-filter-btn:first-child',
     title: '難易度でフィルター',
     description: '星をクリックすると、その難易度の題材だけを表示できます。',
@@ -38,6 +31,20 @@ const subjectsTutorialSteps: TutorialStep[] = [
     title: 'フィルターを解除',
     description: 'クリアボタンでフィルターを解除できます。',
     position: 'bottom',
+    action: 'click',
+  },
+  {
+    target: '.hamburger-btn',
+    title: '進捗を確認しよう',
+    description: 'ここをクリックすると、全体の学習進捗を確認できます。',
+    position: 'bottom',
+    action: 'click',
+  },
+  {
+    target: '.sidebar-close',
+    title: 'サイドバーを閉じる',
+    description: '確認できたら閉じましょう。',
+    position: 'right',
     action: 'click',
   },
   {
