@@ -381,8 +381,10 @@ export const SubjectsView: React.FC = () => {
                   📅
                 </button>
               </div>
-              <h2>{subject.title}</h2>
-              <p>{subject.description}</p>
+              <div className="subject-card-body">
+                <h2>{subject.title}</h2>
+                <p>{subject.description}</p>
+              </div>
               {deadline && (
                 <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
                   {daysRemaining !== null && daysRemaining < 0
@@ -406,7 +408,7 @@ export const SubjectsView: React.FC = () => {
                 <span className="section-count">
                   {subject.maxSections} セクション
                 </span>
-                <span className="created-at">作成日: {formatDate(subject.createdAt)}</span>
+                <span className="created-at">{formatDate(subject.createdAt)}</span>
               </div>
             </div>
           );
