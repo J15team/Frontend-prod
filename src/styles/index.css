@@ -2667,3 +2667,82 @@ body {
 .btn-view-repo:hover {
   background: #1b1f23;
 }
+
+
+/* Editor Panel Tabs */
+.editor-panel-tabs {
+  display: flex;
+  background: #252526;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: #808080;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn:hover {
+  color: #cccccc;
+  background: #2d2d2d;
+}
+
+.tab-btn.active {
+  color: #ffffff;
+  background: #1e1e1e;
+  border-bottom-color: #22c55e;
+}
+
+/* Code Preview */
+.code-preview-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 380px);
+  background: #ffffff;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.btn-refresh-preview {
+  padding: 0.25rem 0.75rem;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-refresh-preview:hover {
+  background: #d1d5db;
+}
+
+.preview-error {
+  padding: 0.5rem 1rem;
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 0.75rem;
+  border-bottom: 1px solid #fecaca;
+}
+
+.preview-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #ffffff;
+}

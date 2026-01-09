@@ -9,6 +9,7 @@ import { ProgressBar } from '@/views/components/ProgressBar';
 import { Sidebar } from '@/views/components/Sidebar';
 import { ContentArea } from '@/views/components/ContentArea';
 import { CodeEditor } from '@/views/components/CodeEditor';
+import { CodePreview } from '@/views/components/CodePreview';
 import { ConfettiEffect } from '@/views/components/ConfettiEffect';
 import { GitHubExportModal } from '@/views/components/GitHubExportModal';
 import { isGitHubConnected } from '@/utils/githubStorage';
@@ -34,6 +35,7 @@ export const SectionsView: React.FC = () => {
   // リサイズ用の状態
   const [leftWidth, setLeftWidth] = useState(50); // パーセント
   const [showExportModal, setShowExportModal] = useState(false);
+  const [rightTab, setRightTab] = useState<'editor' | 'preview'>('editor');
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
@@ -181,16 +183,34 @@ export const SectionsView: React.FC = () => {
           <div className="split-right" style={{ width: `${100 - leftWidth}%` }}>
             {currentSection && (
               <div className="editor-panel">
-                <div className="editor-panel-header">
-                  <span>📝 コードエディタ</span>
+                <div className="editor-panel-tabs">
+                  <button
+                    className={`tab-btn ${rightTab === 'editor' ? 'active' : ''}`}
+                    onClick={() => setRightTab('editor')}
+                  >
+                    📝 エディタ
+                  </button>
+                  <button
+                    className={`tab-btn ${rightTab === 'preview' ? 'active' : ''}`}
+                    onClick={() => setRightTab('preview')}
+                  >
+                    👁️ プレビュー
+                  </button>
                 </div>
-                <CodeEditor
-                  subjectId={Number(subjectId)}
-                  sectionId={currentSection.sectionId}
-                  defaultCode={defaultCode}
-                  language={language}
-                  height="calc(100vh - 350px)"
-                />
+                {rightTab === 'editor' ? (
+                  <CodeEditor
+                    subjectId={Number(subjectId)}
+                    sectionId={currentSection.sectionId}
+                    defaultCode={defaultCode}
+                    language={language}
+                    height="calc(100vh - 380px)"
+                  />
+                ) : (
+                  <CodePreview
+                    subjectId={Number(subjectId)}
+                    currentSectionId={currentSection.sectionId}
+                  />
+                )}
               </div>
             )}
           </div>
