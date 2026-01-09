@@ -263,6 +263,14 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
           if (target) {
             target.click();
           }
+          // 次のステップへ進む
+          if (step.action === 'click') {
+            if (currentStep < tutorialSteps.length - 1) {
+              setCurrentStep(prev => prev + 1);
+            } else {
+              handleComplete();
+            }
+          }
         }}
       />
 
