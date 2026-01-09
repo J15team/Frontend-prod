@@ -480,20 +480,22 @@ export const SubjectsView: React.FC = () => {
               <option value="progress">進捗率順</option>
             </select>
           </div>
-          <div className="effect-toggle">
-            <label className="toggle-switch">
-              <input
-                type="checkbox"
-                checked={effectsEnabled}
-                onChange={(e) => setEffectsEnabled(e.target.checked)}
-              />
-              <span className="toggle-slider"></span>
-            </label>
-            <span className="toggle-label">✨ エフェクト</span>
-          </div>
           <div className="filter-result">
             {filteredSubjects.length} 件表示中
           </div>
+        </div>
+
+        {/* 浮遊エフェクトトグル */}
+        <div className="floating-effect-toggle">
+          <label className="toggle-switch">
+            <input
+              type="checkbox"
+              checked={effectsEnabled}
+              onChange={(e) => setEffectsEnabled(e.target.checked)}
+            />
+            <span className="toggle-slider"></span>
+          </label>
+          <span className="toggle-label">エフェクト</span>
         </div>
         {sortedWeights.map((weight) => {
           const category = categoryLabels[weight] || { label: `レベル${weight}`, emoji: '📚' };
