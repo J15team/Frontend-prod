@@ -326,12 +326,27 @@ export const SubjectsView: React.FC = () => {
     return <div className="error-container">エラー: {error}</div>;
   }
 
-  // 重み昇順（星1が上、星5が下）、同じ重みならsubjectId昇順
-  const sortedSubjects = [...subjects].sort((a, b) => {
-    const weightDiff = (a.weight || 0) - (b.weight || 0);
-    if (weightDiff !== 0) return weightDiff;
-    return a.subjectId - b.subjectId;
-  });
+  // 重みでカテゴリ分け
+  const categoryLabels: Record<number, { label: string; emoji: string }> = {
+    1: { label: '入門', emoji: '🌱' },
+    2: { label: '基礎', emoji: '📖' },
+    3: { label: '中級', emoji: '🚀' },
+    4: { label: '応用', emoji: '💡' },
+    5: { label: '発展', emoji: '🏆' },
+  };
+
+  // 重みでグループ化
+  const groupedSubjects = subjects.reduce((acc, subject) => {
+    const weight = subject.weight || 1;
+    if (!acc[weight]) acc[weight] = [];
+    acc[weight].push(subject);
+    return acc;
+  }, {} as Record<number, Subject[]>);
+
+  // 重み順にソート（1→5）
+  const sortedWeights = Object.keys(groupedSubjects)
+    .map(Number)
+    .sort((a, b) => a - b);
 
   return (
     <div className="subjects-container">
@@ -357,63 +372,81 @@ export const SubjectsView: React.FC = () => {
           </button>
         </div>
       </header>
-      <div className="subjects-grid">
-        {sortedSubjects.map((subject) => {
-          const progressPercent = progress[subject.subjectId] || 0;
-          const deadline = deadlines[subject.subjectId];
-          const daysRemaining = getDaysRemaining(subject.subjectId);
 
-          return (
-            <div
-              key={subject.subjectId}
-              className="subject-card"
-              onClick={() => onSubjectClick(subject)}
-            >
-              <div className="subject-card-header">
-                <div className="subject-weight">
-                  <StarRating weight={subject.weight || 0} />
-                </div>
-                <button
-                  className={`deadline-btn ${deadline ? 'has-deadline' : ''}`}
-                  onClick={(e) => handleDeadlineClick(e, subject)}
-                  title="目標期限を設定"
-                >
-                  📅
-                </button>
-              </div>
-              <div className="subject-card-body">
-                <h2>{subject.title}</h2>
-                <p>{subject.description}</p>
-              </div>
-              {deadline && (
-                <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
-                  {daysRemaining !== null && daysRemaining < 0
-                    ? `⚠️ ${Math.abs(daysRemaining)}日超過`
-                    : daysRemaining === 0
-                    ? '🔥 今日まで'
-                    : `📅 ${formatDeadline(deadline)}まで（残り${daysRemaining}日）`}
-                </div>
-              )}
-              <div className="subject-progress">
-                <span className="progress-label">進捗率</span>
-                <div className="progress-container">
-                  <div
-                    className="progress-bar"
-                    style={{ width: `${progressPercent}%` }}
-                  />
-                </div>
-                <span className="progress-percentage">{progressPercent}%</span>
-              </div>
-              <div className="subject-footer">
-                <span className="section-count">
-                  {subject.maxSections} セクション
-                </span>
-                <span className="created-at">{formatDate(subject.createdAt)}</span>
+      {sortedWeights.map((weight) => {
+        const category = categoryLabels[weight] || { label: `レベル${weight}`, emoji: '📚' };
+        const categorySubjects = groupedSubjects[weight];
+
+        return (
+          <div key={weight} className="subject-category">
+            <div className="category-header">
+              <span className="category-emoji">{category.emoji}</span>
+              <h2 className="category-title">{category.label}</h2>
+              <span className="category-count">{categorySubjects.length}件</span>
+              <div className="category-stars">
+                <StarRating weight={weight} />
               </div>
             </div>
-          );
-        })}
-      </div>
+            <div className="subjects-grid">
+              {categorySubjects.map((subject) => {
+                const progressPercent = progress[subject.subjectId] || 0;
+                const deadline = deadlines[subject.subjectId];
+                const daysRemaining = getDaysRemaining(subject.subjectId);
+
+                return (
+                  <div
+                    key={subject.subjectId}
+                    className="subject-card"
+                    onClick={() => onSubjectClick(subject)}
+                  >
+                    <div className="subject-card-header">
+                      <div className="subject-weight">
+                        <StarRating weight={subject.weight || 0} />
+                      </div>
+                      <button
+                        className={`deadline-btn ${deadline ? 'has-deadline' : ''}`}
+                        onClick={(e) => handleDeadlineClick(e, subject)}
+                        title="目標期限を設定"
+                      >
+                        📅
+                      </button>
+                    </div>
+                    <div className="subject-card-body">
+                      <h2>{subject.title}</h2>
+                      <p>{subject.description}</p>
+                    </div>
+                    {deadline && (
+                      <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
+                        {daysRemaining !== null && daysRemaining < 0
+                          ? `⚠️ ${Math.abs(daysRemaining)}日超過`
+                          : daysRemaining === 0
+                          ? '🔥 今日まで'
+                          : `📅 ${formatDeadline(deadline)}まで（残り${daysRemaining}日）`}
+                      </div>
+                    )}
+                    <div className="subject-progress">
+                      <span className="progress-label">進捗率</span>
+                      <div className="progress-container">
+                        <div
+                          className="progress-bar"
+                          style={{ width: `${progressPercent}%` }}
+                        />
+                      </div>
+                      <span className="progress-percentage">{progressPercent}%</span>
+                    </div>
+                    <div className="subject-footer">
+                      <span className="section-count">
+                        {subject.maxSections} セクション
+                      </span>
+                      <span className="created-at">{formatDate(subject.createdAt)}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
 
       {modalSubject && (
         <DeadlineModal
