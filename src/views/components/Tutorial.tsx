@@ -162,6 +162,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   const getTooltipStyle = (): React.CSSProperties => {
     const padding = 16;
     const tooltipWidth = 320;
+    const viewportWidth = window.innerWidth;
     
     switch (step.position) {
       case 'right':
@@ -183,12 +184,28 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
           transform: 'translate(-50%, -100%)',
         };
       case 'bottom':
-      default:
+      default: {
+        // 左端に近い場合は左寄せ、右端に近い場合は右寄せ
+        const centerX = targetRect.left + targetRect.width / 2;
+        let left = centerX;
+        let transform = 'translateX(-50%)';
+        
+        if (centerX < tooltipWidth / 2 + padding) {
+          // 左端に近い場合
+          left = targetRect.left;
+          transform = 'none';
+        } else if (centerX > viewportWidth - tooltipWidth / 2 - padding) {
+          // 右端に近い場合
+          left = targetRect.right - tooltipWidth;
+          transform = 'none';
+        }
+        
         return {
           top: targetRect.bottom + padding,
-          left: targetRect.left + targetRect.width / 2,
-          transform: 'translateX(-50%)',
+          left,
+          transform,
         };
+      }
     }
   };
 
