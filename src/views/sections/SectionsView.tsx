@@ -101,7 +101,7 @@ export const SectionsView: React.FC = () => {
         />
         <div className="main-content">
           {currentSection ? (
-            <ContentArea section={currentSection} />
+            <ContentArea section={currentSection} subjectId={Number(subjectId)} />
           ) : (
             <div className="empty-section">セクションが登録されていません</div>
           )}

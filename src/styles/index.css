@@ -2442,3 +2442,66 @@ body {
   background: #cf222e;
   color: white;
 }
+
+
+/* Code Editor Styles */
+.content-editor-section {
+  margin-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+
+.editor-toggle {
+  margin-bottom: 1rem;
+}
+
+.btn-editor-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-editor-toggle:hover {
+  background: #e5e7eb;
+}
+
+.btn-editor-toggle.active {
+  background: #166534;
+  color: white;
+  border-color: #166534;
+}
+
+.code-editor-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #374151;
+}
+
+.code-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #1f2937;
+}
+
+.editor-language-badge {
+  background: #374151;
+  color: #9ca3af;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: monospace;
+}
+
+.editor-autosave {
+  color: #22c55e;
+  font-size: 0.75rem;
+}
