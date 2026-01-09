@@ -393,6 +393,7 @@ export const SubjectsView: React.FC = () => {
                 </div>
               )}
               <div className="subject-progress">
+                <span className="progress-label">進捗率</span>
                 <div className="progress-container">
                   <div
                     className="progress-bar"

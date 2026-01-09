@@ -1052,6 +1052,12 @@ body {
   margin: 12px 0;
 }
 
+.subject-progress .progress-label {
+  font-size: 0.8em;
+  color: #666;
+  min-width: 45px;
+}
+
 .subject-progress .progress-container {
   flex: 1;
 }
