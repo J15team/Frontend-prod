@@ -34,19 +34,17 @@ const membersData: Record<string, {
     ],
   },
   'member-2': {
-    name: 'メンバー2',
-    nameEn: 'Member Two',
+    name: 'HARUYA NAKATA',
+    nameEn: 'HARUYA NAKATA',
     role: 'Backend Engineer',
-    title: 'バックエンド担当',
+    title: 'チームリーダー(フロントエンド & デザイナー)',
     image: '/images/team/member-2.jpg',
     bio: [
-      'ここに経歴や紹介文を書きます。',
-      'Pathlyではバックエンド開発を担当しました。',
+      'チームリーダーさせてもらってます。',
+      'フロントエンドとデザイン触ってます。'
     ],
-    skills: ['Python', 'AWS', 'DynamoDB'],
-    links: [
-      { label: 'GitHub', url: 'https://github.com/' },
-    ],
+    skills: [],
+    links: [],
   },
   'member-3': {
     name: 'メンバー3',

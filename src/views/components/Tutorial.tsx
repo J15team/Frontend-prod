@@ -91,9 +91,15 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   const tutorialSteps = page === 'sections' ? sectionsTutorialSteps : subjectsTutorialSteps;
   const step = tutorialSteps[currentStep];
+
+  // ステップが変わったらスクロールフラグをリセット
+  useEffect(() => {
+    setHasScrolled(false);
+  }, [currentStep]);
 
   const updateTargetPosition = useCallback(() => {
     if (!step) return;
@@ -108,18 +114,21 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
     }
     
     if (target) {
-      // ターゲットが画面外の場合はスクロール
       const rect = target.getBoundingClientRect();
-      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+      
+      // ターゲットが画面外の場合は一度だけスクロール
+      if (!hasScrolled && (rect.top < 0 || rect.bottom > window.innerHeight)) {
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setHasScrolled(true);
       }
+      
       setTargetRect(target.getBoundingClientRect());
       setIsVisible(true);
     } else {
       // ターゲットが見つからない場合は待機
       setTargetRect(null);
     }
-  }, [step]);
+  }, [step, hasScrolled]);
 
   // 常に位置を再計算（60fps）
   useEffect(() => {
