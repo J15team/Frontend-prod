@@ -4,7 +4,7 @@
  */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup, signin, signout, refreshTokens } from '@/services/AuthService';
+import { signup, signin, signout, refreshTokens, googleSignin } from '@/services/AuthService';
 import { type SignupRequest, type SigninRequest, type User } from '@/models/User';
 import { getStoredUser, hasValidSession } from '@/utils/tokenStorage';
 
@@ -15,6 +15,7 @@ interface AuthViewModelReturn {
   isAuthenticated: boolean;
   handleSignup: (data: SignupRequest) => Promise<void>;
   handleSignin: (data: SigninRequest) => Promise<void>;
+  handleGoogleSignin: (credential: string) => Promise<void>;
   handleSignout: () => void;
   handleRefresh: () => Promise<boolean>;
 }
@@ -73,6 +74,32 @@ export const useAuthViewModel = (): AuthViewModelReturn => {
   };
 
   /**
+   * Googleサインイン処理
+   */
+  const handleGoogleSignin = async (credential: string): Promise<void> => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await googleSignin(credential);
+      setUser(response.user);
+      // サインイン成功後、題材一覧ページへ遷移
+      navigate('/subjects');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        if (err.message.includes('409')) {
+          setError('このメールアドレスは既に登録されています');
+        } else {
+          setError(err.message);
+        }
+      } else {
+        setError('Googleサインインに失敗しました');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
    * サインアウト処理
    */
   const handleSignout = (): void => {
@@ -110,6 +137,7 @@ export const useAuthViewModel = (): AuthViewModelReturn => {
     isAuthenticated,
     handleSignup,
     handleSignin,
+    handleGoogleSignin,
     handleSignout,
     handleRefresh,
   };
