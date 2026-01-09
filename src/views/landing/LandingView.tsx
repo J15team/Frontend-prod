@@ -253,6 +253,50 @@ export const LandingView: React.FC = () => {
         </div>
       </section>
 
+      {/* チームメンバーセクション */}
+      <section className="team-section">
+        <div className="section-inner">
+          <div className="section-header">
+            <span className="section-label">Team</span>
+            <h2 className="section-title">製作チーム</h2>
+            <p className="section-subtitle">
+              Pathlyを作った6人のメンバーを紹介します
+            </p>
+          </div>
+
+          <div className="team-grid">
+            {[
+              { name: 'メンバー1', role: 'Frontend', desc: '紹介文をここに', link: '#' },
+              { name: 'メンバー2', role: 'Backend', desc: '紹介文をここに', link: '#' },
+              { name: 'メンバー3', role: 'Design', desc: '紹介文をここに', link: '#' },
+              { name: 'メンバー4', role: 'Frontend', desc: '紹介文をここに', link: '#' },
+              { name: 'メンバー5', role: 'Backend', desc: '紹介文をここに', link: '#' },
+              { name: 'メンバー6', role: 'PM', desc: '紹介文をここに', link: '#' },
+            ].map((member, i) => (
+              <a 
+                key={i} 
+                href={member.link} 
+                className="team-card"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="team-avatar">
+                  <div className="avatar-placeholder">
+                    <span>{member.name.charAt(0)}</span>
+                  </div>
+                </div>
+                <div className="team-info">
+                  <span className="team-role">{member.role}</span>
+                  <h3 className="team-name">{member.name}</h3>
+                  <p className="team-desc">{member.desc}</p>
+                </div>
+                <div className="team-arrow">→</div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTAセクション */}
       <section 
         ref={el => { sectionsRef.current[3] = el; }}
