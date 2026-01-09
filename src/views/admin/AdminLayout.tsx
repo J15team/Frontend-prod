@@ -29,8 +29,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             バックエンドAPI（docs/detailed）で定義された題材・セクション・進捗・管理者エンドポイントを操作できます。
           </p>
         </div>
-        <Link to="/" className="btn-secondary">
-          ルートへ戻る
+        <Link to="/admin/endpoints" className="btn-secondary">
+          エンドポイント一覧へ戻る
         </Link>
       </header>
 

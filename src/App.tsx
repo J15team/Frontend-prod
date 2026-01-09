@@ -5,6 +5,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingView } from '@/views/landing/LandingView';
+import { RootView } from '@/views/home/RootView';
 import { SignupView } from '@/views/auth/SignupView';
 import { SigninView } from '@/views/auth/SigninView';
 import { AdminSigninView } from '@/views/auth/AdminSigninView';
@@ -89,6 +90,14 @@ const App: React.FC = () => {
               <AdminLayout>
                 <AdminDashboardView />
               </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/endpoints"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <RootView />
             </ProtectedRoute>
           }
         />
