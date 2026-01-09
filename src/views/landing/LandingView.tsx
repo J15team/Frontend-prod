@@ -47,7 +47,6 @@ export const LandingView: React.FC = () => {
       <header className={`landing-header-v2 ${scrollY > 50 ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <div className="logo">
-            <span className="logo-icon">🌿</span>
             <span className="logo-text">Pathly</span>
           </div>
           <nav className="header-nav">
@@ -289,7 +288,6 @@ export const LandingView: React.FC = () => {
           <div className="footer-main">
             <div className="footer-brand">
               <div className="logo">
-                <span className="logo-icon">🌿</span>
                 <span className="logo-text">Pathly</span>
               </div>
               <p>Path + -ly: 学習の道筋</p>
