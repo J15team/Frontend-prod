@@ -2,12 +2,55 @@
  * Subjects View
  * 題材一覧ページのView
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSubjectsViewModel } from '@/viewmodels/useSubjectsViewModel';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
 import { type Subject } from '@/models/Subject';
 import { LoadingSpinner } from '@/views/components/LoadingSpinner';
+
+// スクロールアニメーション用フック
+const useScrollAnimation = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+};
+
+// アニメーション付きカードラッパー
+const AnimatedCard: React.FC<{ children: React.ReactNode; delay?: number }> = ({ 
+  children, 
+  delay = 0 
+}) => {
+  const { ref, isVisible } = useScrollAnimation();
+  
+  return (
+    <div
+      ref={ref}
+      className={`animated-card ${isVisible ? 'visible' : ''}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
   const stars = [];
@@ -455,59 +498,60 @@ export const SubjectsView: React.FC = () => {
                 </div>
               </div>
               <div className="subjects-grid">
-                {categorySubjects.map((subject) => {
+                {categorySubjects.map((subject, index) => {
                   const progressPercent = progress[subject.subjectId] || 0;
                   const deadline = deadlines[subject.subjectId];
                   const daysRemaining = getDaysRemaining(subject.subjectId);
 
                   return (
-                    <div
-                      key={subject.subjectId}
-                      className="subject-card"
-                      onClick={() => onSubjectClick(subject)}
-                    >
-                      <div className="subject-card-header">
-                        <div className="subject-weight">
-                          <StarRating weight={subject.weight || 0} />
+                    <AnimatedCard key={subject.subjectId} delay={index * 50}>
+                      <div
+                        className="subject-card"
+                        onClick={() => onSubjectClick(subject)}
+                      >
+                        <div className="subject-card-header">
+                          <div className="subject-weight">
+                            <StarRating weight={subject.weight || 0} />
+                          </div>
+                          <button
+                            className={`deadline-btn ${deadline ? 'has-deadline' : ''}`}
+                            onClick={(e) => handleDeadlineClick(e, subject)}
+                            title="目標期限を設定"
+                          >
+                            📅
+                          </button>
                         </div>
-                        <button
-                          className={`deadline-btn ${deadline ? 'has-deadline' : ''}`}
-                          onClick={(e) => handleDeadlineClick(e, subject)}
-                          title="目標期限を設定"
-                        >
-                          📅
-                        </button>
-                      </div>
-                      <div className="subject-card-body">
-                        <h2>{subject.title}</h2>
-                        <p>{subject.description}</p>
-                      </div>
-                      {deadline && (
-                        <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
-                          {daysRemaining !== null && daysRemaining < 0
-                            ? `⚠️ ${Math.abs(daysRemaining)}日超過`
-                            : daysRemaining === 0
-                            ? '🔥 今日まで'
-                            : `📅 ${formatDeadline(deadline)}まで（残り${daysRemaining}日）`}
+                        <div className="subject-card-body">
+                          <h2>{subject.title}</h2>
+                          <p>{subject.description}</p>
                         </div>
-                      )}
-                      <div className="subject-progress">
-                        <span className="progress-label">進捗率</span>
-                        <div className="progress-container">
-                          <div
-                            className="progress-bar"
-                            style={{ width: `${progressPercent}%` }}
-                          />
+                        {deadline && (
+                          <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
+                            {daysRemaining !== null && daysRemaining < 0
+                              ? `⚠️ ${Math.abs(daysRemaining)}日超過`
+                              : daysRemaining === 0
+                              ? '🔥 今日まで'
+                              : `📅 ${formatDeadline(deadline)}まで（残り${daysRemaining}日）`}
+                          </div>
+                        )}
+                        <div className="subject-progress">
+                          <span className="progress-label">進捗率</span>
+                          <div className="progress-container">
+                            <div
+                              className="progress-bar"
+                              style={{ width: `${progressPercent}%` }}
+                            />
+                          </div>
+                          <span className="progress-percentage">{progressPercent}%</span>
                         </div>
-                        <span className="progress-percentage">{progressPercent}%</span>
+                        <div className="subject-footer">
+                          <span className="section-count">
+                            {subject.maxSections} セクション
+                          </span>
+                          <span className="created-at">{formatDate(subject.createdAt)}</span>
+                        </div>
                       </div>
-                      <div className="subject-footer">
-                        <span className="section-count">
-                          {subject.maxSections} セクション
-                        </span>
-                        <span className="created-at">{formatDate(subject.createdAt)}</span>
-                      </div>
-                    </div>
+                    </AnimatedCard>
                   );
                 })}
               </div>
