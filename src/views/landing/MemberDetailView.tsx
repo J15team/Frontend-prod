@@ -27,7 +27,7 @@ const membersData: Record<string, {
       '最近の趣味は、お酒と小説を読むことらしい。森博嗣って人の"S&Mシリーズ"面白いよ。',
       'なんかOS作る本買ったらしい(オレンジ本)'
     ],
-    skills: ['Kotlin(Spring Framework)', 'Go', 'Python', 'AWS(ECSとかRDSとかそこら)','TypeScript()'],
+    skills: ['Kotlin(Spring Framework)', 'Go', 'Python','TypeScript(苦手意識あり)', 'AWS(ECSとかRDSとかそこら)'],
     links: [
       { label: 'GitHub', url: 'https://github.com/S4AK4N' },
     ],
@@ -118,8 +118,8 @@ export const MemberDetailView: React.FC = () => {
     <div className="member-detail-page">
       {/* ヘッダー */}
       <header className="member-header">
-        <button className="btn-back" onClick={() => navigate('/')}>
-          ← トップに戻る
+        <button className="btn-back" onClick={() => navigate('/#team')}>
+          ← チーム一覧に戻る
         </button>
         <span className="header-title">Team Member</span>
       </header>

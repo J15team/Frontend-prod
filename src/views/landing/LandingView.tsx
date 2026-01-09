@@ -3,10 +3,11 @@
  * ランディングページ（トップページ）- モダンデザイン
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const LandingView: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
@@ -14,6 +15,13 @@ export const LandingView: React.FC = () => {
 
   useEffect(() => {
     setIsVisible(true);
+    
+    // ハッシュがある場合はそのセクションにスクロール
+    if (location.hash === '#team') {
+      setTimeout(() => {
+        sectionsRef.current[3]?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
     
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -31,7 +39,7 @@ export const LandingView: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.hash]);
 
   const handleGetStarted = () => navigate('/auth/signup');
   const handleSignIn = () => navigate('/auth/signin');
@@ -52,7 +60,8 @@ export const LandingView: React.FC = () => {
           <nav className="header-nav">
             <button onClick={() => scrollToSection(1)}>特徴</button>
             <button onClick={() => scrollToSection(2)}>学習の流れ</button>
-            <button onClick={() => scrollToSection(3)}>始め方</button>
+            <button onClick={() => scrollToSection(3)}>チーム</button>
+            <button onClick={() => scrollToSection(4)}>始め方</button>
           </nav>
           <div className="header-actions">
             <button className="btn-text" onClick={handleAdminSignIn}>管理者</button>
@@ -64,7 +73,7 @@ export const LandingView: React.FC = () => {
 
       {/* サイドナビゲーション */}
       <nav className="side-nav">
-        {['TOP', '特徴', '流れ', '始める'].map((label, i) => (
+        {['TOP', '特徴', '流れ', 'チーム', '始める'].map((label, i) => (
           <button
             key={i}
             className={activeSection === i ? 'active' : ''}
@@ -254,7 +263,11 @@ export const LandingView: React.FC = () => {
       </section>
 
       {/* チームメンバーセクション */}
-      <section className="team-section">
+      <section 
+        ref={el => { sectionsRef.current[3] = el; }}
+        className="team-section"
+        id="team"
+      >
         <div className="section-inner">
           <div className="section-header">
             <span className="section-label">Team</span>
@@ -299,7 +312,7 @@ export const LandingView: React.FC = () => {
 
       {/* CTAセクション */}
       <section 
-        ref={el => { sectionsRef.current[3] = el; }}
+        ref={el => { sectionsRef.current[4] = el; }}
         className="cta-section"
       >
         <div className="cta-bg">
