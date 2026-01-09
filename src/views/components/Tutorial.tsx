@@ -285,14 +285,9 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
           <button className="tutorial-skip" onClick={handleSkip}>
             スキップ
           </button>
-          {step.action === 'none' && (
-            <button className="tutorial-next" onClick={handleNext}>
-              次へ →
-            </button>
-          )}
-          {step.action === 'click' && (
-            <span className="tutorial-hint">↑ クリックして進む</span>
-          )}
+          <button className="tutorial-next" onClick={handleNext}>
+            次へ →
+          </button>
         </div>
       </div>
     </div>
