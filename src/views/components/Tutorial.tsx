@@ -126,21 +126,8 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   }, [updateTargetPosition]);
 
   useEffect(() => {
-    if (!step || step.action !== 'click') return;
-
-    const target = document.querySelector(step.target);
-    if (!target) return;
-
-    const handleClick = () => {
-      if (currentStep < tutorialSteps.length - 1) {
-        setCurrentStep(prev => prev + 1);
-      } else {
-        handleComplete();
-      }
-    };
-
-    target.addEventListener('click', handleClick);
-    return () => target.removeEventListener('click', handleClick);
+    // クリックリスナーは使わない（handleNextで制御）
+    return;
   }, [currentStep, step]);
 
   const handleComplete = () => {
@@ -257,35 +244,6 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
           left: targetRect.left - 8,
           width: targetRect.width + 16,
           height: targetRect.height + 16,
-        }}
-      />
-
-      {/* クリック可能エリア（ターゲット要素の上に配置） */}
-      <div
-        className="tutorial-clickable"
-        style={{
-          position: 'fixed',
-          top: targetRect.top - 8,
-          left: targetRect.left - 8,
-          width: targetRect.width + 16,
-          height: targetRect.height + 16,
-          cursor: 'pointer',
-          zIndex: 10002,
-        }}
-        onClick={() => {
-          // 実際のターゲット要素をクリック
-          const target = document.querySelector(step.target) as HTMLElement;
-          if (target) {
-            target.click();
-          }
-          // 次のステップへ進む
-          if (step.action === 'click') {
-            if (currentStep < tutorialSteps.length - 1) {
-              setCurrentStep(prev => prev + 1);
-            } else {
-              handleComplete();
-            }
-          }
         }}
       />
 
