@@ -32,9 +32,21 @@ export const SigninView: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h1>サインイン</h1>
+    <div className="auth-page">
+      <div className="auth-page-bg" />
+      
+      <Link to="/" className="auth-back-link">
+        <span>←</span> トップページへ戻る
+      </Link>
+
+      <div className="auth-card-modern">
+        <div className="auth-logo">
+          <span className="auth-logo-icon">🛤️</span>
+          <span className="auth-logo-text">Pathly</span>
+        </div>
+        
+        <h1>おかえりなさい</h1>
+        <p className="auth-subtitle">アカウントにサインインして学習を続けましょう</p>
         
         <GoogleSignInButton
           onSuccess={onGoogleSuccess}
@@ -45,8 +57,8 @@ export const SigninView: React.FC = () => {
           <span>または</span>
         </div>
 
-        <form onSubmit={onSubmit} className="auth-form">
-          <div className="form-group">
+        <form onSubmit={onSubmit} className="auth-form-modern">
+          <div className="form-group-modern">
             <label htmlFor="email">メールアドレス</label>
             <input
               type="email"
@@ -58,7 +70,7 @@ export const SigninView: React.FC = () => {
               placeholder="example@example.com"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group-modern">
             <label htmlFor="password">パスワード</label>
             <input
               type="password"
@@ -70,12 +82,13 @@ export const SigninView: React.FC = () => {
               placeholder="パスワード"
             />
           </div>
-          {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="btn-primary" disabled={loading}>
+          {error && <div className="auth-error">{error}</div>}
+          <button type="submit" className="btn-auth-primary" disabled={loading}>
             {loading ? 'サインイン中...' : 'サインイン'}
           </button>
         </form>
-        <div className="auth-footer">
+        
+        <div className="auth-footer-modern">
           アカウントをお持ちでないですか？{' '}
           <Link to="/auth/signup">アカウント作成</Link>
         </div>

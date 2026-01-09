@@ -28,11 +28,24 @@ export const SignupView: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h1>アカウント作成</h1>
-        <form onSubmit={onSubmit} className="auth-form">
-          <div className="form-group">
+    <div className="auth-page">
+      <div className="auth-page-bg" />
+      
+      <Link to="/" className="auth-back-link">
+        <span>←</span> トップページへ戻る
+      </Link>
+
+      <div className="auth-card-modern">
+        <div className="auth-logo">
+          <span className="auth-logo-icon">🛤️</span>
+          <span className="auth-logo-text">Pathly</span>
+        </div>
+        
+        <h1>はじめまして</h1>
+        <p className="auth-subtitle">アカウントを作成して学習を始めましょう</p>
+
+        <form onSubmit={onSubmit} className="auth-form-modern">
+          <div className="form-group-modern">
             <label htmlFor="username">ユーザー名</label>
             <input
               type="text"
@@ -41,10 +54,10 @@ export const SignupView: React.FC = () => {
               value={formData.username}
               onChange={onChange}
               required
-              placeholder="testuser"
+              placeholder="あなたの名前"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group-modern">
             <label htmlFor="email">メールアドレス</label>
             <input
               type="email"
@@ -56,7 +69,7 @@ export const SignupView: React.FC = () => {
               placeholder="example@example.com"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group-modern">
             <label htmlFor="password">パスワード</label>
             <input
               type="password"
@@ -68,12 +81,13 @@ export const SignupView: React.FC = () => {
               placeholder="8文字以上"
             />
           </div>
-          {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="btn-primary" disabled={loading}>
+          {error && <div className="auth-error">{error}</div>}
+          <button type="submit" className="btn-auth-primary" disabled={loading}>
             {loading ? '登録中...' : 'アカウント作成'}
           </button>
         </form>
-        <div className="auth-footer">
+        
+        <div className="auth-footer-modern">
           すでにアカウントをお持ちですか？{' '}
           <Link to="/auth/signin">サインイン</Link>
         </div>

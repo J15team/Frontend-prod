@@ -26,12 +26,26 @@ export const AdminSigninView: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h1>Admin Portalへサインイン</h1>
-        <p className="auth-subtitle">管理者専用ページへのアクセス</p>
-        <form onSubmit={onSubmit} className="auth-form">
-          <div className="form-group">
+    <div className="auth-page admin-auth-page">
+      <div className="auth-page-bg admin-bg" />
+      
+      <Link to="/" className="auth-back-link">
+        <span>←</span> トップページへ戻る
+      </Link>
+
+      <div className="auth-card-modern admin-card">
+        <div className="auth-logo">
+          <span className="auth-logo-icon">🔐</span>
+          <span className="auth-logo-text">Pathly Admin</span>
+        </div>
+        
+        <div className="admin-badge-auth">管理者専用</div>
+        
+        <h1>Admin Portal</h1>
+        <p className="auth-subtitle">管理者アカウントでサインイン</p>
+
+        <form onSubmit={onSubmit} className="auth-form-modern">
+          <div className="form-group-modern">
             <label htmlFor="email">メールアドレス</label>
             <input
               type="email"
@@ -43,7 +57,7 @@ export const AdminSigninView: React.FC = () => {
               placeholder="admin@example.com"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group-modern">
             <label htmlFor="password">パスワード</label>
             <input
               type="password"
@@ -55,14 +69,15 @@ export const AdminSigninView: React.FC = () => {
               placeholder="パスワード"
             />
           </div>
-          {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="btn-primary" disabled={loading}>
+          {error && <div className="auth-error">{error}</div>}
+          <button type="submit" className="btn-auth-admin" disabled={loading}>
             {loading ? 'サインイン中...' : 'Admin Portalへサインイン'}
           </button>
         </form>
-        <div className="auth-footer">
-          通常のユーザーの方はこちら:{' '}
-          <Link to="/auth/signin">マイアカウントへサインイン</Link>
+        
+        <div className="auth-footer-modern">
+          一般ユーザーの方はこちら{' '}
+          <Link to="/auth/signin">ユーザーログイン</Link>
         </div>
       </div>
     </div>
