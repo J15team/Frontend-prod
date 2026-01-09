@@ -416,8 +416,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background: var(--color-forest);
-  box-shadow: 0 4px 12px rgba(30, 58, 47, 0.2);
+  background: linear-gradient(135deg, #2d5a47 0%, #3d7a5a 100%);
+  box-shadow: 0 4px 12px rgba(30, 58, 47, 0.25);
 }
 
 .subjects-header h1 {
