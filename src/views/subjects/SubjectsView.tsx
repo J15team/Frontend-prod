@@ -323,6 +323,7 @@ export const SubjectsView: React.FC = () => {
   // フィルター・ソート用の状態
   const [selectedWeight, setSelectedWeight] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<'weight' | 'sections' | 'progress'>('weight');
+  const [effectsEnabled, setEffectsEnabled] = useState(true);
 
   const onSubjectClick = (subject: Subject) => {
     navigate(`/subjects/${subject.subjectId}/sections`);
@@ -420,7 +421,7 @@ export const SubjectsView: React.FC = () => {
   };
 
   return (
-    <div className="subjects-page-wrapper">
+    <div className={`subjects-page-wrapper ${effectsEnabled ? 'effects-on' : 'effects-off'}`}>
       <header className="subjects-header">
         <div className="header-left">
           <button
@@ -478,6 +479,17 @@ export const SubjectsView: React.FC = () => {
               <option value="sections">セクション数順</option>
               <option value="progress">進捗率順</option>
             </select>
+          </div>
+          <div className="effect-toggle">
+            <label className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={effectsEnabled}
+                onChange={(e) => setEffectsEnabled(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <span className="toggle-label">✨ エフェクト</span>
           </div>
           <div className="filter-result">
             {filteredSubjects.length} 件表示中
