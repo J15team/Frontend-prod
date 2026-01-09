@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
 import { GoogleSignInButton } from '@/views/components/GoogleSignInButton';
+import { GitHubSignInButton } from '@/views/components/GitHubSignInButton';
 import { type SigninRequest } from '@/models/User';
 
 export const SigninView: React.FC = () => {
@@ -52,6 +53,8 @@ export const SigninView: React.FC = () => {
           onSuccess={onGoogleSuccess}
           onError={(err) => console.error('Google Sign-In error:', err)}
         />
+        
+        <GitHubSignInButton />
         
         <div className="auth-divider">
           <span>または</span>

@@ -10,6 +10,7 @@ import { SignupView } from '@/views/auth/SignupView';
 import { SigninView } from '@/views/auth/SigninView';
 import { AdminSigninView } from '@/views/auth/AdminSigninView';
 import { TokenRefreshView } from '@/views/auth/TokenRefreshView';
+import { GitHubCallbackView } from '@/views/auth/GitHubCallbackView';
 import { SubjectsView } from '@/views/subjects/SubjectsView';
 import { SubjectManagementView } from '@/views/subjects/SubjectManagementView';
 import { SectionsView } from '@/views/sections/SectionsView';
@@ -37,6 +38,7 @@ const App: React.FC = () => {
         <Route path="/signin" element={<Navigate to="/auth/signin" replace />} />
         <Route path="/auth/admin-signin" element={<AdminSigninView />} />
         <Route path="/auth/token-refresh" element={<TokenRefreshView />} />
+        <Route path="/auth/github/callback" element={<GitHubCallbackView />} />
 
         {/* エラーページ */}
         <Route path="/error/forbidden" element={<ForbiddenView />} />
