@@ -2445,43 +2445,69 @@ body {
 
 
 /* Code Editor Styles */
-.content-editor-section {
-  margin-top: 2rem;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 1.5rem;
+.main-content-split {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  position: relative;
 }
 
-.editor-toggle {
-  margin-bottom: 1rem;
+.split-left {
+  overflow-y: auto;
+  padding: 1rem;
+  min-width: 0;
 }
 
-.btn-editor-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s;
+.split-right {
+  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.btn-editor-toggle:hover {
+.split-resizer {
+  width: 8px;
   background: #e5e7eb;
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background 0.2s;
+  position: relative;
 }
 
-.btn-editor-toggle.active {
-  background: #166534;
-  color: white;
-  border-color: #166534;
+.split-resizer:hover {
+  background: #22c55e;
+}
+
+.split-resizer::after {
+  content: '⋮';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #9ca3af;
+  font-size: 1rem;
+}
+
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1e1e1e;
+}
+
+.editor-panel-header {
+  padding: 0.75rem 1rem;
+  background: #252526;
+  color: #cccccc;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid #3c3c3c;
 }
 
 .code-editor-container {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #374151;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .code-editor-header {
