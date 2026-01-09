@@ -8,9 +8,9 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f5f5f5;
@@ -82,7 +82,7 @@ body {
   display: flex;
   gap: 12px;
   align-items: center;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .http-method {
@@ -93,10 +93,18 @@ body {
   color: #fff;
 }
 
-.http-method.get { background-color: #28a745; }
-.http-method.post { background-color: #007bff; }
-.http-method.put { background-color: #ff9800; }
-.http-method.delete { background-color: #e53935; }
+.http-method.get {
+  background-color: #28a745;
+}
+.http-method.post {
+  background-color: #007bff;
+}
+.http-method.put {
+  background-color: #ff9800;
+}
+.http-method.delete {
+  background-color: #e53935;
+}
 
 .root-links {
   display: flex;
@@ -204,7 +212,7 @@ body {
 }
 
 .admin-card-endpoint {
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   color: #888;
 }
 
@@ -625,7 +633,7 @@ body {
   background-color: #f5f5f5;
   padding: 2px 6px;
   border-radius: 3px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .content-area pre {
@@ -804,7 +812,7 @@ body {
 .cleared-section-list li {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .cleared-section-list li:last-child {
@@ -1020,7 +1028,6 @@ body {
   opacity: 0.5;
 }
 
-
 /* ====================================================================
    Star Rating (重み表示)
    ==================================================================== */
@@ -1036,7 +1043,6 @@ body {
 .subject-card .star-rating {
   font-size: 1.2rem;
 }
-
 
 /* 題材カード内の進捗ゲージ */
 .subject-progress {
@@ -1056,7 +1062,6 @@ body {
   min-width: 40px;
   text-align: right;
 }
-
 
 /* ====================================================================
    プロフィールページ
@@ -1200,7 +1205,6 @@ body {
   font-size: 0.9rem;
 }
 
-
 /* ヘッダーアクション */
 .header-actions {
   display: flex;
@@ -1222,7 +1226,6 @@ body {
   background: #007bff;
   color: white;
 }
-
 
 /* ====================================================================
    期限設定モーダル
@@ -1366,7 +1369,6 @@ body {
   color: white;
 }
 
-
 /* プロフィール内の期限バッジ（小さめ） */
 .deadline-badge-small {
   padding: 4px 8px;
@@ -1375,7 +1377,6 @@ body {
   font-weight: 500;
   margin: 6px 0;
 }
-
 
 /* ====================================================================
    Google Sign-In
@@ -1401,7 +1402,7 @@ body {
 
 .auth-divider::before,
 .auth-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
   background: #ddd;
@@ -1410,7 +1411,6 @@ body {
 .auth-divider span {
   padding: 0 16px;
 }
-
 
 /* ====================================================================
    プロフィール設定モーダル
@@ -1508,7 +1508,6 @@ body {
   font-size: 0.85rem;
   color: #888;
 }
-
 
 /* ====================================================================
    ハンバーガーメニュー & 進捗サイドバー
@@ -1774,4 +1773,23 @@ body {
   color: #888;
   text-align: center;
   margin-top: 8px;
+}
+
+.sidebar-show-more {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: transparent;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  color: #007bff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebar-show-more:hover {
+  background: #f0f7ff;
+  border-color: #007bff;
 }

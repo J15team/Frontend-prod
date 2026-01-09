@@ -107,6 +107,8 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
   onClose,
   onSubjectClick,
 }) => {
+  const [showAllNotStarted, setShowAllNotStarted] = useState(false);
+
   // 進捗でカテゴリ分け
   const inProgress = subjects.filter((s) => {
     const p = progress[s.subjectId] || 0;
@@ -126,6 +128,9 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
     if (daysRemaining <= 3) return 'deadline-urgent';
     return '';
   };
+
+  const displayedNotStarted = showAllNotStarted ? notStarted : notStarted.slice(0, 5);
+  const hiddenCount = notStarted.length - 5;
 
   return (
     <>
@@ -221,7 +226,7 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
           {notStarted.length > 0 && (
             <div className="sidebar-section">
               <h3>📚 未着手</h3>
-              {notStarted.slice(0, 5).map((subject) => (
+              {displayedNotStarted.map((subject) => (
                 <div
                   key={subject.subjectId}
                   className="sidebar-item not-started"
@@ -230,8 +235,21 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
                   <span className="sidebar-item-title">{subject.title}</span>
                 </div>
               ))}
-              {notStarted.length > 5 && (
-                <p className="sidebar-more">他 {notStarted.length - 5} 件</p>
+              {hiddenCount > 0 && !showAllNotStarted && (
+                <button
+                  className="sidebar-show-more"
+                  onClick={() => setShowAllNotStarted(true)}
+                >
+                  他 {hiddenCount} 件を表示
+                </button>
+              )}
+              {showAllNotStarted && notStarted.length > 5 && (
+                <button
+                  className="sidebar-show-more"
+                  onClick={() => setShowAllNotStarted(false)}
+                >
+                  折りたたむ
+                </button>
               )}
             </div>
           )}
