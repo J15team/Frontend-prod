@@ -266,12 +266,12 @@ export const LandingView: React.FC = () => {
 
           <div className="team-grid">
             {[
-              { id: 'member-1', name: 'メンバー1', role: 'Frontend', desc: '紹介文をここに' },
-              { id: 'member-2', name: 'メンバー2', role: 'Backend', desc: '紹介文をここに' },
-              { id: 'member-3', name: 'メンバー3', role: 'Design', desc: '紹介文をここに' },
-              { id: 'member-4', name: 'メンバー4', role: 'Frontend', desc: '紹介文をここに' },
-              { id: 'member-5', name: 'メンバー5', role: 'Backend', desc: '紹介文をここに' },
-              { id: 'member-6', name: 'メンバー6', role: 'PM', desc: '紹介文をここに' },
+              { id: 'member-1', name: '吉田 力輝', role: 'Tech Lead', desc: '開発責任者（Frontend & Backend）', image: '/images/team/member-1.jpg' },
+              { id: 'member-2', name: 'メンバー2', role: 'Backend', desc: '紹介文をここに', image: '' },
+              { id: 'member-3', name: 'メンバー3', role: 'Design', desc: '紹介文をここに', image: '' },
+              { id: 'member-4', name: 'メンバー4', role: 'Frontend', desc: '紹介文をここに', image: '' },
+              { id: 'member-5', name: 'メンバー5', role: 'Backend', desc: '紹介文をここに', image: '' },
+              { id: 'member-6', name: 'メンバー6', role: 'PM', desc: '紹介文をここに', image: '' },
             ].map((member, i) => (
               <div 
                 key={i} 
@@ -280,9 +280,13 @@ export const LandingView: React.FC = () => {
                 style={{ cursor: 'pointer' }}
               >
                 <div className="team-avatar">
-                  <div className="avatar-placeholder">
-                    <span>{member.name.charAt(0)}</span>
-                  </div>
+                  {member.image ? (
+                    <img src={member.image} alt={member.name} />
+                  ) : (
+                    <div className="avatar-placeholder">
+                      <span>{member.name.charAt(0)}</span>
+                    </div>
+                  )}
                 </div>
                 <div className="team-info">
                   <span className="team-role">{member.role}</span>

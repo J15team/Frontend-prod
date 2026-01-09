@@ -17,20 +17,18 @@ const membersData: Record<string, {
   links: { label: string; url: string }[];
 }> = {
   'member-1': {
-    name: 'メンバー1',
-    nameEn: 'Member One',
-    role: 'Frontend Engineer',
-    title: 'フロントエンド担当',
+    name: '吉田 力輝',
+    nameEn: 'RIKI YOSHIDA',
+    role: 'Tech Lead',
+    title: '開発責任者（Frontend & Backend）',
     image: '/images/team/member-1.jpg',
     bio: [
-      'ここに経歴や紹介文を書きます。',
-      '複数段落で書くことができます。',
-      'Pathlyではフロントエンド開発を担当しました。',
+      'Pathlyの開発責任者として、フロントエンドとバックエンドの両方を担当。',
+      '紹介文をここに追加できます。',
     ],
-    skills: ['React', 'TypeScript', 'CSS'],
+    skills: ['React', 'TypeScript', 'AWS', 'Python'],
     links: [
       { label: 'GitHub', url: 'https://github.com/' },
-      { label: 'Twitter', url: 'https://twitter.com/' },
     ],
   },
   'member-2': {
