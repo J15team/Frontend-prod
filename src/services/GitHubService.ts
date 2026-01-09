@@ -26,6 +26,8 @@ export const createRepository = async (options: CreateRepoOptions): Promise<{ ht
     throw new Error('GitHub連携が必要です');
   }
 
+  console.log('Creating repository with token:', token.substring(0, 10) + '...');
+
   const response = await fetch(`${GITHUB_API_BASE}/user/repos`, {
     method: 'POST',
     headers: {
@@ -41,9 +43,19 @@ export const createRepository = async (options: CreateRepoOptions): Promise<{ ht
     }),
   });
 
+  console.log('Response status:', response.status);
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'リポジトリの作成に失敗しました');
+    const errorText = await response.text();
+    console.error('GitHub API error:', errorText);
+    let errorMessage = 'リポジトリの作成に失敗しました';
+    try {
+      const error = JSON.parse(errorText);
+      errorMessage = error.message || errorMessage;
+    } catch {
+      // テキストのまま使用
+    }
+    throw new Error(errorMessage);
   }
 
   return response.json();
