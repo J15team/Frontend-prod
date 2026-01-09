@@ -58,6 +58,10 @@ export const signup = async (data: SignupRequest): Promise<User> => {
  */
 export const signin = async (data: SigninRequest): Promise<SigninResponse> => {
   const response = await apiClient.post<SigninResponse>('/auth/signin', data);
+  
+  // デバッグ用: レスポンス内容を確認
+  console.log('=== signin response ===', response.data);
+  
   const normalizedUser = normalizeUser(response.data.user);
 
   // JWTトークンからroleを取得してユーザーオブジェクトに追加
