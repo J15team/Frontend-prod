@@ -37,7 +37,7 @@ export const createRepository = async (options: CreateRepoOptions): Promise<{ ht
       name: options.name,
       description: options.description || '',
       private: options.isPrivate || false,
-      auto_init: true,
+      auto_init: true, // 最初のコミットを作成（READMEで初期化）
     }),
   });
 
@@ -84,6 +84,62 @@ export const addFileToRepo = async (
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || 'ファイルの追加に失敗しました');
+  }
+};
+
+/**
+ * 既存ファイルを更新（SHAを取得して上書き）
+ */
+export const updateFileInRepo = async (
+  owner: string,
+  repo: string,
+  file: RepoFile
+): Promise<void> => {
+  const token = getGitHubToken();
+  if (!token) {
+    throw new Error('GitHub連携が必要です');
+  }
+
+  // 既存ファイルのSHAを取得
+  const getResponse = await fetch(
+    `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${file.path}`,
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+    }
+  );
+
+  let sha: string | undefined;
+  if (getResponse.ok) {
+    const existingFile = await getResponse.json();
+    sha = existingFile.sha;
+  }
+
+  // Base64エンコード
+  const content = btoa(unescape(encodeURIComponent(file.content)));
+
+  const response = await fetch(
+    `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${file.path}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Update ${file.path}`,
+        content,
+        ...(sha && { sha }),
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'ファイルの更新に失敗しました');
   }
 };
 
