@@ -22,15 +22,8 @@ const subjectsTutorialSteps: TutorialStep[] = [
   {
     target: '.hamburger-btn',
     title: '進捗を確認しよう',
-    description: 'ここをクリックすると、全体の学習進捗を確認できます。',
+    description: 'ここをクリックすると、全体の学習進捗を確認できます。試してみてください！',
     position: 'bottom',
-    action: 'click',
-  },
-  {
-    target: '.sidebar-close',
-    title: 'サイドバーを閉じる',
-    description: '確認できたら閉じましょう。',
-    position: 'left',
     action: 'click',
   },
   {
@@ -51,7 +44,7 @@ const subjectsTutorialSteps: TutorialStep[] = [
     target: `[data-subject-id="${TUTORIAL_SUBJECT_ID}"], .subject-card:first-child`,
     title: 'チュートリアル題材を始めよう',
     description: '「はじめてのPathly」をクリックして、基本操作を学びましょう！',
-    position: 'right',
+    position: 'bottom',
     action: 'click',
     navigateTo: 'sections',
   },
@@ -149,6 +142,12 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   };
 
   const handleNext = () => {
+    // ターゲット要素をクリック
+    const target = document.querySelector(step.target) as HTMLElement;
+    if (target) {
+      target.click();
+    }
+    // 次のステップへ
     if (currentStep < tutorialSteps.length - 1) {
       setCurrentStep(prev => prev + 1);
     } else {
