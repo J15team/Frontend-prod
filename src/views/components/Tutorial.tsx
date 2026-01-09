@@ -154,10 +154,12 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   };
 
   const handleNext = () => {
-    // ターゲット要素をクリック
-    const target = document.querySelector(step.target) as HTMLElement;
-    if (target) {
-      target.click();
+    // ターゲット要素をクリック（クリアボタンは除く）
+    if (!step.target.includes('clear-filter')) {
+      const target = document.querySelector(step.target) as HTMLElement;
+      if (target) {
+        target.click();
+      }
     }
     // 少し遅延してから次のステップへ（DOMの更新を待つ）
     setTimeout(() => {
