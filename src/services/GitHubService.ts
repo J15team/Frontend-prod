@@ -51,7 +51,13 @@ export const createRepository = async (options: CreateRepoOptions): Promise<{ ht
     let errorMessage = 'リポジトリの作成に失敗しました';
     try {
       const error = JSON.parse(errorText);
-      errorMessage = error.message || errorMessage;
+      // 同名リポジトリが存在する場合
+      if (error.errors?.some((e: { field: string; message: string }) => 
+        e.field === 'name' && e.message.includes('already exists'))) {
+        errorMessage = '同じ名前のリポジトリが既に存在します。別の名前を入力してください。';
+      } else {
+        errorMessage = error.message || errorMessage;
+      }
     } catch {
       // テキストのまま使用
     }
