@@ -2,7 +2,7 @@
  * Sections ViewModel
  * セクション一覧と進捗管理のロジックを管理するViewModel
  */
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { getSubjectById, getSectionsBySubjectId } from '@/services/SubjectService';
 import { getProgress, markSectionComplete, unmarkSectionComplete } from '@/services/ProgressService';
 import { type Subject } from '@/models/Subject';
@@ -16,10 +16,12 @@ interface SectionsViewModelReturn {
   currentSection: Section | null;
   loading: boolean;
   error: string | null;
+  showCelebration: boolean;
   fetchData: (subjectId: number) => Promise<void>;
   selectSection: (section: Section) => void;
   toggleSectionComplete: (sectionId: number) => Promise<void>;
   isSectionCleared: (sectionId: number) => boolean;
+  dismissCelebration: () => void;
 }
 
 export const useSectionsViewModel = (): SectionsViewModelReturn => {
@@ -29,6 +31,8 @@ export const useSectionsViewModel = (): SectionsViewModelReturn => {
   const [currentSection, setCurrentSection] = useState<Section | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [showCelebration, setShowCelebration] = useState<boolean>(false);
+  const previousPercentage = useRef<number>(0);
 
   /**
    * 題材、セクション、進捗データを取得
@@ -48,10 +52,12 @@ export const useSectionsViewModel = (): SectionsViewModelReturn => {
       setSections(sectionsData);
 
       // 進捗データを整形
-      setProgressData({
+      const newProgressData = {
         ...progressResponse,
         totalSections: progressResponse.totalSections || subjectData.maxSections,
-      });
+      };
+      setProgressData(newProgressData);
+      previousPercentage.current = newProgressData.progressPercentage;
 
       // 最初のセクションを選択
       if (sectionsData.length > 0) {
@@ -94,10 +100,18 @@ export const useSectionsViewModel = (): SectionsViewModelReturn => {
 
       // 進捗データを再取得
       const progressResponse = await getProgress(subject.subjectId);
-      setProgressData({
+      const newProgressData = {
         ...progressResponse,
         totalSections: progressResponse.totalSections || subject.maxSections,
-      });
+      };
+      
+      // 100%達成時にお祝いエフェクトを表示
+      if (newProgressData.progressPercentage === 100 && previousPercentage.current < 100) {
+        setShowCelebration(true);
+      }
+      
+      previousPercentage.current = newProgressData.progressPercentage;
+      setProgressData(newProgressData);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -115,6 +129,13 @@ export const useSectionsViewModel = (): SectionsViewModelReturn => {
     return progressData.clearedSections.some(cs => cs.sectionId === sectionId);
   };
 
+  /**
+   * お祝いエフェクトを非表示にする
+   */
+  const dismissCelebration = (): void => {
+    setShowCelebration(false);
+  };
+
   return {
     subject,
     sections,
@@ -122,9 +143,11 @@ export const useSectionsViewModel = (): SectionsViewModelReturn => {
     currentSection,
     loading,
     error,
+    showCelebration,
     fetchData,
     selectSection,
     toggleSectionComplete,
     isSectionCleared,
+    dismissCelebration,
   };
 };

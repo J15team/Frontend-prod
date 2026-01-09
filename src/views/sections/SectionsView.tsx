@@ -8,6 +8,7 @@ import { useSectionsViewModel } from '@/viewmodels/useSectionsViewModel';
 import { ProgressBar } from '@/views/components/ProgressBar';
 import { Sidebar } from '@/views/components/Sidebar';
 import { ContentArea } from '@/views/components/ContentArea';
+import { ConfettiEffect } from '@/views/components/ConfettiEffect';
 
 export const SectionsView: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -19,10 +20,12 @@ export const SectionsView: React.FC = () => {
     currentSection,
     loading,
     error,
+    showCelebration,
     fetchData,
     selectSection,
     toggleSectionComplete,
     isSectionCleared,
+    dismissCelebration,
   } = useSectionsViewModel();
 
   useEffect(() => {
@@ -104,6 +107,8 @@ export const SectionsView: React.FC = () => {
           )}
         </div>
       </div>
+
+      <ConfettiEffect isActive={showCelebration} onComplete={dismissCelebration} />
     </div>
   );
 };
