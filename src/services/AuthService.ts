@@ -69,11 +69,19 @@ export const signin = async (data: SigninRequest): Promise<SigninResponse> => {
   saveTokens({ accessToken: response.data.accessToken, refreshToken: response.data.refreshToken });
   saveUser(normalizedUser);
 
+  // isFirstLoginの判定: バックエンドから直接返るか、loginCount/remainingCountで判定
+  const rawData = response.data as any;
+  const isFirstLogin = rawData.isFirstLogin === true || 
+    rawData.loginCount === 1 || 
+    rawData.remainingCount === 1;
+
   return {
     accessToken: response.data.accessToken,
     refreshToken: response.data.refreshToken,
     user: normalizedUser,
     message: response.data.message,
+    isFirstLogin,
+    loginCount: rawData.loginCount ?? rawData.remainingCount,
   };
 };
 
@@ -95,11 +103,19 @@ export const googleSignin = async (credential: string): Promise<GoogleSigninResp
   saveTokens({ accessToken: response.data.accessToken, refreshToken: response.data.refreshToken });
   saveUser(normalizedUser);
 
+  // isFirstLoginの判定
+  const rawData = response.data as any;
+  const isFirstLogin = rawData.isFirstLogin === true || 
+    rawData.isNewUser === true || 
+    rawData.loginCount === 1 || 
+    rawData.remainingCount === 1;
+
   return {
     accessToken: response.data.accessToken,
     refreshToken: response.data.refreshToken,
     user: normalizedUser,
     isNewUser: response.data.isNewUser,
+    isFirstLogin,
     message: response.data.message,
   };
 };
