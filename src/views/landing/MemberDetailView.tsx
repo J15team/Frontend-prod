@@ -21,7 +21,7 @@ const membersData: Record<string, {
     nameEn: 'RIKI YOSHIDA',
     role: 'Tech Lead',
     title: 'Tech Lead (Frontend & Backend)',
-    image: '/images/team/member-1-detail.jpg',
+    image: '/images/team/member-1-detail.png',
     bio: [
       'この作品における大体なんでもやったなんでも屋さんです。',
       '最近の趣味は、お酒と小説を読むことらしい。(森博嗣って人の"S&Mシリーズ"面白いよ。)',
