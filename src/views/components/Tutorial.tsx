@@ -4,7 +4,6 @@
  * 特定の要素をハイライトして他を触れなくする
  */
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface TutorialStep {
   target: string;        // CSSセレクタ
@@ -89,7 +88,6 @@ interface TutorialProps {
 }
 
 export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects' }) => {
-  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -143,13 +141,13 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   };
 
   const handleNext = () => {
-    // 最後のステップでnavigateToがある場合は遷移
+    // navigateToがある場合（最後のステップ）
     if (step.navigateTo === 'sections') {
-      localStorage.setItem('tutorial_completed', 'true');
-      navigate(`/subjects/${TUTORIAL_SUBJECT_ID}/sections`, { 
-        state: { continueTutorial: true } 
-      });
-      onComplete();
+      // チュートリアル題材をクリック
+      const target = document.querySelector(`[data-subject-id="${TUTORIAL_SUBJECT_ID}"]`) as HTMLElement;
+      if (target) {
+        target.click();
+      }
       return;
     }
     
@@ -162,6 +160,15 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
     }
     // 少し遅延してから次のステップへ（DOMの更新を待つ）
     setTimeout(() => {
+      // 次のステップのターゲットにスクロール
+      const nextStep = tutorialSteps[currentStep + 1];
+      if (nextStep) {
+        const nextTarget = document.querySelector(nextStep.target) as HTMLElement;
+        if (nextTarget) {
+          nextTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      
       if (currentStep < tutorialSteps.length - 1) {
         setCurrentStep(prev => prev + 1);
       } else {
