@@ -6,6 +6,9 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfileViewModel } from '@/viewmodels/useProfileViewModel';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
+import { isGitHubConnected, getGitHubUser, clearGitHubConnection } from '@/utils/githubStorage';
+
+const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || 'Ov23li1eg2wFShx5hmTd';
 
 const getDeadlineClass = (daysRemaining: number | null): string => {
   if (daysRemaining === null) return '';
@@ -168,6 +171,20 @@ export const ProfileView: React.FC = () => {
   } = useProfileViewModel();
   const { handleSignout } = useAuthViewModel();
   const [showSettings, setShowSettings] = useState(false);
+  const [githubConnected, setGithubConnected] = useState(isGitHubConnected());
+  const githubUser = getGitHubUser();
+
+  const handleGitHubConnect = () => {
+    const redirectUri = `${window.location.origin}/github/connect/callback`;
+    const scope = 'repo user:email';
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+    window.location.href = githubAuthUrl;
+  };
+
+  const handleGitHubDisconnect = () => {
+    clearGitHubConnection();
+    setGithubConnected(false);
+  };
 
   if (loading) {
     return <div className="loading-container">読み込み中...</div>;
@@ -328,6 +345,45 @@ export const ProfileView: React.FC = () => {
             </button>
           </div>
         )}
+
+        {/* GitHub連携セクション */}
+        <section className="profile-section-fancy github-section">
+          <div className="section-header">
+            <h2>🐙 GitHub連携</h2>
+          </div>
+          <div className="github-connect-card">
+            {githubConnected && githubUser ? (
+              <div className="github-connected">
+                <div className="github-user-info">
+                  <img src={githubUser.avatar_url} alt={githubUser.login} className="github-avatar" />
+                  <div>
+                    <p className="github-username">@{githubUser.login}</p>
+                    <p className="github-status">✓ 連携済み</p>
+                  </div>
+                </div>
+                <p className="github-description">
+                  学習で作成したプロジェクトをGitHubリポジトリとして保存できます。
+                </p>
+                <button className="btn-github-disconnect" onClick={handleGitHubDisconnect}>
+                  連携を解除
+                </button>
+              </div>
+            ) : (
+              <div className="github-not-connected">
+                <p className="github-description">
+                  GitHubアカウントを連携すると、学習で作成したプロジェクトを<br />
+                  ワンクリックでGitHubリポジトリとして保存できます。
+                </p>
+                <button className="btn-github-connect" onClick={handleGitHubConnect}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  GitHubと連携する
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
 
         <div className="profile-bottom-actions">
           <button onClick={() => navigate('/subjects')} className="btn-back-bottom">
