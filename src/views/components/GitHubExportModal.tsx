@@ -1,10 +1,11 @@
 /**
  * GitHub Export Modal
  * 学習コードをGitHubリポジトリにエクスポートするモーダル
+ * 最終セクションのコードのみをエクスポート
  */
 import React, { useState } from 'react';
 import { createRepository, addFileToRepo, updateFileInRepo } from '@/services/GitHubService';
-import { getSubjectCodes } from '@/utils/codeStorage';
+import { getSubjectFinalCode } from '@/utils/codeStorage';
 import { isGitHubConnected, getGitHubUser } from '@/utils/githubStorage';
 
 interface GitHubExportModalProps {
@@ -31,7 +32,8 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
   const [success, setSuccess] = useState<{ url: string } | null>(null);
 
   const githubUser = getGitHubUser();
-  const codes = getSubjectCodes(subjectId);
+  const finalCode = getSubjectFinalCode(subjectId);
+  const hasCode = finalCode !== null;
 
   const handleExport = async () => {
     if (!isGitHubConnected() || !githubUser) {
@@ -39,7 +41,7 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
       return;
     }
 
-    if (codes.length === 0) {
+    if (!finalCode) {
       setError('エクスポートするコードがありません。まずコードを書いてください。');
       return;
     }
@@ -48,7 +50,7 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
     setError(null);
 
     try {
-      // リポジトリ作成（auto_initなし）
+      // リポジトリ作成
       const repo = await createRepository({
         name: repoName,
         description,
@@ -58,36 +60,33 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
       // 少し待機（GitHub APIの反映待ち）
       await delay(1500);
 
-      // README.mdを更新（auto_initで作成されたものを上書き）
-      const readmeContent = generateReadme(subjectTitle, codes);
+      // README.mdを更新
+      const readmeContent = generateReadme(subjectTitle);
       await updateFileInRepo(githubUser.login, repoName, {
         path: 'README.md',
         content: readmeContent,
       });
 
-      // 各セクションのコードをファイルとして追加
-      for (const codeData of codes) {
-        // HTML
-        if (codeData.html) {
-          await addFileToRepo(githubUser.login, repoName, {
-            path: `src/section-${codeData.sectionId}/index.html`,
-            content: codeData.html,
-          });
-        }
-        // CSS
-        if (codeData.css) {
-          await addFileToRepo(githubUser.login, repoName, {
-            path: `src/section-${codeData.sectionId}/style.css`,
-            content: codeData.css,
-          });
-        }
-        // JS
-        if (codeData.js) {
-          await addFileToRepo(githubUser.login, repoName, {
-            path: `src/section-${codeData.sectionId}/script.js`,
-            content: codeData.js,
-          });
-        }
+      // HTML
+      if (finalCode.html) {
+        await addFileToRepo(githubUser.login, repoName, {
+          path: 'index.html',
+          content: finalCode.html,
+        });
+      }
+      // CSS
+      if (finalCode.css) {
+        await addFileToRepo(githubUser.login, repoName, {
+          path: 'style.css',
+          content: finalCode.css,
+        });
+      }
+      // JS
+      if (finalCode.js) {
+        await addFileToRepo(githubUser.login, repoName, {
+          path: 'script.js',
+          content: finalCode.js,
+        });
       }
 
       setSuccess({ url: repo.html_url });
@@ -99,26 +98,24 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
     }
   };
 
-  const generateReadme = (title: string, codes: { sectionId: number; html: string; css: string; js: string }[]) => {
+  const generateReadme = (title: string) => {
     return `# ${title}
 
 このプロジェクトは [Pathly](https://frontend-prod-xi.vercel.app) で学習した内容です。
 
-## 📚 学習内容
-
-${codes.map((c) => `- セクション ${c.sectionId}`).join('\n')}
-
 ## 📁 ファイル構成
 
 \`\`\`
-src/
-${codes.map(c => `  section-${c.sectionId}/
-    index.html
-    style.css
-    script.js`).join('\n')}
+index.html  - HTML
+style.css   - CSS
+script.js   - JavaScript
 \`\`\`
 
-## 🚀 作成日
+## 🚀 使い方
+
+\`index.html\` をブラウザで開いてください。
+
+## 📅 作成日
 
 ${new Date().toLocaleDateString('ja-JP')}
 
@@ -169,13 +166,8 @@ ${new Date().toLocaleDateString('ja-JP')}
           <>
             <div className="export-info">
               <p>
-                <strong>{codes.length}</strong> セクションのコードをエクスポートします
+                {hasCode ? '最終セクションのコードをエクスポートします' : 'コードがありません'}
               </p>
-              {codes.length > 0 && (
-                <p className="export-sections">
-                  セクション: {codes.map(c => c.sectionId).join(', ')}
-                </p>
-              )}
               <p className="export-user">
                 エクスポート先: <strong>@{githubUser?.login}</strong>
               </p>
@@ -221,7 +213,7 @@ ${new Date().toLocaleDateString('ja-JP')}
               <button
                 className="btn-github-export"
                 onClick={handleExport}
-                disabled={loading || codes.length === 0}
+                disabled={loading || !hasCode}
               >
                 {loading ? 'エクスポート中...' : 'エクスポート'}
               </button>

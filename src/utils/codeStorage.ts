@@ -68,47 +68,37 @@ export const getCode = (
 };
 
 /**
- * 題材の全セクションのコードを取得（エクスポート用）
- * HTML/CSS/JSをまとめて取得
- * 
- * コードエディタの保存形式: sectionId * 10 + fileIndex
- * - HTML: sectionId * 10 + 0
- * - CSS:  sectionId * 10 + 1
- * - JS:   sectionId * 10 + 2
+ * 題材の最終セクションのコードを取得（エクスポート用）
+ * 一番最後のセクションのHTML/CSS/JSのみ取得
  */
-export const getSubjectCodes = (
+export const getSubjectFinalCode = (
   subjectId: number
-): { sectionId: number; html: string; css: string; js: string }[] => {
+): { html: string; css: string; js: string } | null => {
   const data = getAllCodeData();
   const subjectData = data[subjectId];
   
-  if (!subjectData) return [];
+  if (!subjectData) return null;
 
-  // セクションIDを抽出（10で割って元のセクションIDを取得）
-  const sectionIds = new Set<number>();
+  // セクションIDを抽出して最大値を取得
+  let maxSectionId = 0;
   Object.keys(subjectData).forEach(key => {
     const id = parseInt(key);
     const sectionId = Math.floor(id / 10);
-    if (sectionId > 0) {
-      sectionIds.add(sectionId);
+    if (sectionId > maxSectionId) {
+      maxSectionId = sectionId;
     }
   });
 
-  // コードがあるセクションのみ返す
-  const results: { sectionId: number; html: string; css: string; js: string }[] = [];
-  
-  Array.from(sectionIds).sort((a, b) => a - b).forEach(sectionId => {
-    const html = subjectData[sectionId * 10 + 0]?.code || '';
-    const css = subjectData[sectionId * 10 + 1]?.code || '';
-    const js = subjectData[sectionId * 10 + 2]?.code || '';
-    
-    // 少なくとも1つのファイルにコードがある場合のみ追加
-    if (html || css || js) {
-      results.push({ sectionId, html, css, js });
-    }
-  });
+  if (maxSectionId === 0) return null;
 
-  return results;
+  const html = subjectData[maxSectionId * 10 + 0]?.code || '';
+  const css = subjectData[maxSectionId * 10 + 1]?.code || '';
+  const js = subjectData[maxSectionId * 10 + 2]?.code || '';
+
+  // コードがない場合はnull
+  if (!html && !css && !js) return null;
+
+  return { html, css, js };
 };
 
 /**
