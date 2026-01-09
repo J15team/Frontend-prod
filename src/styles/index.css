@@ -377,14 +377,20 @@ body {
 /* ====================================================================
    題材一覧ページ（Subjects）
    ==================================================================== */
+.subjects-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .subjects-container {
+  flex: 1;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   padding-top: 80px; /* ヘッダー分の余白 */
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .subjects-header {
@@ -406,13 +412,12 @@ body {
   font-size: 1.25rem;
 }
 
-/* フッター */
+/* フッター - 画面幅いっぱい */
 .subjects-footer {
-  margin-top: auto;
+  width: 100%;
   padding: 40px 20px;
   background: linear-gradient(135deg, #1f2937, #111827);
   color: white;
-  border-radius: 24px 24px 0 0;
 }
 
 .footer-content {

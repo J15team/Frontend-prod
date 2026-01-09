@@ -349,7 +349,7 @@ export const SubjectsView: React.FC = () => {
     .sort((a, b) => a - b);
 
   return (
-    <div className="subjects-container">
+    <div className="subjects-page-wrapper">
       <header className="subjects-header">
         <div className="header-left">
           <button
@@ -373,80 +373,102 @@ export const SubjectsView: React.FC = () => {
         </div>
       </header>
 
-      {sortedWeights.map((weight) => {
-        const category = categoryLabels[weight] || { label: `レベル${weight}`, emoji: '📚' };
-        const categorySubjects = groupedSubjects[weight];
+      <main className="subjects-container">
+        {sortedWeights.map((weight) => {
+          const category = categoryLabels[weight] || { label: `レベル${weight}`, emoji: '📚' };
+          const categorySubjects = groupedSubjects[weight];
 
-        return (
-          <div key={weight} className="subject-category">
-            <div className="category-header">
-              <span className="category-emoji">{category.emoji}</span>
-              <h2 className="category-title">{category.label}</h2>
-              <span className="category-count">{categorySubjects.length}件</span>
-              <div className="category-stars">
-                <StarRating weight={weight} />
+          return (
+            <div key={weight} className="subject-category">
+              <div className="category-header">
+                <span className="category-emoji">{category.emoji}</span>
+                <h2 className="category-title">{category.label}</h2>
+                <span className="category-count">{categorySubjects.length}件</span>
+                <div className="category-stars">
+                  <StarRating weight={weight} />
+                </div>
+              </div>
+              <div className="subjects-grid">
+                {categorySubjects.map((subject) => {
+                  const progressPercent = progress[subject.subjectId] || 0;
+                  const deadline = deadlines[subject.subjectId];
+                  const daysRemaining = getDaysRemaining(subject.subjectId);
+
+                  return (
+                    <div
+                      key={subject.subjectId}
+                      className="subject-card"
+                      onClick={() => onSubjectClick(subject)}
+                    >
+                      <div className="subject-card-header">
+                        <div className="subject-weight">
+                          <StarRating weight={subject.weight || 0} />
+                        </div>
+                        <button
+                          className={`deadline-btn ${deadline ? 'has-deadline' : ''}`}
+                          onClick={(e) => handleDeadlineClick(e, subject)}
+                          title="目標期限を設定"
+                        >
+                          📅
+                        </button>
+                      </div>
+                      <div className="subject-card-body">
+                        <h2>{subject.title}</h2>
+                        <p>{subject.description}</p>
+                      </div>
+                      {deadline && (
+                        <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
+                          {daysRemaining !== null && daysRemaining < 0
+                            ? `⚠️ ${Math.abs(daysRemaining)}日超過`
+                            : daysRemaining === 0
+                            ? '🔥 今日まで'
+                            : `📅 ${formatDeadline(deadline)}まで（残り${daysRemaining}日）`}
+                        </div>
+                      )}
+                      <div className="subject-progress">
+                        <span className="progress-label">進捗率</span>
+                        <div className="progress-container">
+                          <div
+                            className="progress-bar"
+                            style={{ width: `${progressPercent}%` }}
+                          />
+                        </div>
+                        <span className="progress-percentage">{progressPercent}%</span>
+                      </div>
+                      <div className="subject-footer">
+                        <span className="section-count">
+                          {subject.maxSections} セクション
+                        </span>
+                        <span className="created-at">{formatDate(subject.createdAt)}</span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <div className="subjects-grid">
-              {categorySubjects.map((subject) => {
-                const progressPercent = progress[subject.subjectId] || 0;
-                const deadline = deadlines[subject.subjectId];
-                const daysRemaining = getDaysRemaining(subject.subjectId);
+          );
+        })}
+      </main>
 
-                return (
-                  <div
-                    key={subject.subjectId}
-                    className="subject-card"
-                    onClick={() => onSubjectClick(subject)}
-                  >
-                    <div className="subject-card-header">
-                      <div className="subject-weight">
-                        <StarRating weight={subject.weight || 0} />
-                      </div>
-                      <button
-                        className={`deadline-btn ${deadline ? 'has-deadline' : ''}`}
-                        onClick={(e) => handleDeadlineClick(e, subject)}
-                        title="目標期限を設定"
-                      >
-                        📅
-                      </button>
-                    </div>
-                    <div className="subject-card-body">
-                      <h2>{subject.title}</h2>
-                      <p>{subject.description}</p>
-                    </div>
-                    {deadline && (
-                      <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>
-                        {daysRemaining !== null && daysRemaining < 0
-                          ? `⚠️ ${Math.abs(daysRemaining)}日超過`
-                          : daysRemaining === 0
-                          ? '🔥 今日まで'
-                          : `📅 ${formatDeadline(deadline)}まで（残り${daysRemaining}日）`}
-                      </div>
-                    )}
-                    <div className="subject-progress">
-                      <span className="progress-label">進捗率</span>
-                      <div className="progress-container">
-                        <div
-                          className="progress-bar"
-                          style={{ width: `${progressPercent}%` }}
-                        />
-                      </div>
-                      <span className="progress-percentage">{progressPercent}%</span>
-                    </div>
-                    <div className="subject-footer">
-                      <span className="section-count">
-                        {subject.maxSections} セクション
-                      </span>
-                      <span className="created-at">{formatDate(subject.createdAt)}</span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+      <footer className="subjects-footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <span className="footer-logo">🌿 Pathly</span>
+            <p className="footer-tagline">学習の道筋を、あなたと共に</p>
           </div>
-        );
-      })}
+          <div className="footer-links">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScxw4sQcRCVQ5e8bHqe0Fl_G5e0PHER_fdWazzTR1aBqR6zZA/viewform" target="_blank" rel="noopener noreferrer" className="footer-link">
+              📧 お問い合わせ
+            </a>
+            <a href="/" className="footer-link">
+              🏠 トップページ
+            </a>
+          </div>
+          <div className="footer-copyright">
+            © 2026 Pathly. All rights reserved.
+          </div>
+        </div>
+      </footer>
 
       {modalSubject && (
         <DeadlineModal
@@ -472,26 +494,6 @@ export const SubjectsView: React.FC = () => {
           }}
         />
       )}
-
-      <footer className="subjects-footer">
-        <div className="footer-content">
-          <div className="footer-brand">
-            <span className="footer-logo">🌿 Pathly</span>
-            <p className="footer-tagline">学習の道筋を、あなたと共に</p>
-          </div>
-          <div className="footer-links">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScxw4sQcRCVQ5e8bHqe0Fl_G5e0PHER_fdWazzTR1aBqR6zZA/viewform" target="_blank" rel="noopener noreferrer" className="footer-link">
-              📧 お問い合わせ
-            </a>
-            <a href="/" className="footer-link">
-              🏠 トップページ
-            </a>
-          </div>
-          <div className="footer-copyright">
-            © 2026 Pathly. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
