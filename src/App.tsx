@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { RootView } from '@/views/home/RootView';
+import { LandingView } from '@/views/landing/LandingView';
 import { SignupView } from '@/views/auth/SignupView';
 import { SigninView } from '@/views/auth/SigninView';
 import { AdminSigninView } from '@/views/auth/AdminSigninView';
@@ -26,14 +26,8 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute requireAdmin={true}>
-              <RootView />
-            </ProtectedRoute>
-          }
-        />
+        {/* ランディングページ（公開） */}
+        <Route path="/" element={<LandingView />} />
 
         {/* 認証ルート */}
         <Route path="/auth/signup" element={<SignupView />} />
