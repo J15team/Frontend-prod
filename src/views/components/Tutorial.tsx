@@ -118,7 +118,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
       
       // ターゲットが画面外の場合は一度だけスクロール
       if (!hasScrolled && (rect.top < 0 || rect.bottom > window.innerHeight)) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.scrollIntoView({ behavior: 'smooth', block: 'end' });
         setHasScrolled(true);
       }
       

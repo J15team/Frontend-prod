@@ -36,8 +36,8 @@ export const SectionsView: React.FC = () => {
   } = useSectionsViewModel();
 
   // リサイズ用の状態
-  const [sidebarWidth, setSidebarWidth] = useState(200); // px
-  const [contentWidth, setContentWidth] = useState(50); // パーセント（残りの中での割合）
+  const [sidebarWidth, setSidebarWidth] = useState(320); // px
+  const [contentWidth, setContentWidth] = useState(45); // パーセント（残りの中での割合）
   const [showExportModal, setShowExportModal] = useState(false);
   const [rightTab, setRightTab] = useState<'editor' | 'preview'>('editor');
   

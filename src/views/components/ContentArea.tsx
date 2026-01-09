@@ -26,15 +26,20 @@ export const ContentArea: React.FC<ContentAreaProps> = ({
   hasPrev
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.innerHTML = marked.parse(section.description) as string;
     }
+    // セクションが変わったらコンテンツエリアの先頭にスクロール
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
   }, [section.description]);
 
   return (
-    <div className="content-area">
+    <div className="content-area" ref={containerRef}>
       <header className="content-header">
         <p className="content-section-id">セクション #{section.sectionId}</p>
         <h2>{section.title}</h2>
