@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSubjectsViewModel } from '@/viewmodels/useSubjectsViewModel';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
 import { type Subject } from '@/models/Subject';
+import { LoadingSpinner } from '@/views/components/LoadingSpinner';
 
 const StarRating: React.FC<{ weight: number }> = ({ weight }) => {
   const stars = [];
@@ -323,7 +324,7 @@ export const SubjectsView: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading-container">読み込み中...</div>;
+    return <LoadingSpinner message="題材を読み込んでいます..." />;
   }
 
   if (error) {

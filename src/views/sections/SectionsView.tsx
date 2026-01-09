@@ -12,6 +12,7 @@ import { CodeEditor } from '@/views/components/CodeEditor';
 import { CodePreview } from '@/views/components/CodePreview';
 import { ConfettiEffect } from '@/views/components/ConfettiEffect';
 import { GitHubExportModal } from '@/views/components/GitHubExportModal';
+import { LoadingSpinner } from '@/views/components/LoadingSpinner';
 import { isGitHubConnected } from '@/utils/githubStorage';
 
 export const SectionsView: React.FC = () => {
@@ -127,7 +128,7 @@ export const SectionsView: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading-container">読み込み中...</div>;
+    return <LoadingSpinner message="セクションを読み込んでいます..." />;
   }
 
   if (error) {
