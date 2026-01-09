@@ -272,7 +272,7 @@ export const SectionsView: React.FC = () => {
         </div>
       </div>
 
-      <ConfettiEffect isActive={showCelebration} onComplete={dismissCelebration} />
+      <ConfettiEffect isActive={showCelebration && !showExportModal} onComplete={dismissCelebration} />
 
       {showExportModal && (
         <GitHubExportModal

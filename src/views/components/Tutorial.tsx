@@ -4,6 +4,7 @@
  * 特定の要素をハイライトして他を触れなくする
  */
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface TutorialStep {
   target: string;        // CSSセレクタ
@@ -60,25 +61,32 @@ const subjectsTutorialSteps: TutorialStep[] = [
 // セクションページ用のステップ
 const sectionsTutorialSteps: TutorialStep[] = [
   {
-    target: '.sidebar-item:first-child',
-    title: 'セクションを選択',
-    description: '左のリストからセクションを選んで学習を進めましょう。',
+    target: '.sidebar-item:nth-child(1) .complete-btn',
+    title: 'セクション1を完了',
+    description: '「完了にする」ボタンを押してセクション1を完了させましょう。',
     position: 'right',
     action: 'click',
   },
   {
-    target: '.tab-btn:nth-child(2)',
-    title: 'コードを書いてみよう',
-    description: 'エディタタブをクリックして、実際にコードを書いてみましょう。',
-    position: 'top',
+    target: '.sidebar-item:nth-child(2) .complete-btn',
+    title: 'セクション2を完了',
+    description: 'セクション2も完了させましょう。',
+    position: 'right',
     action: 'click',
   },
   {
-    target: '.btn-complete-section',
-    title: 'セクション完了',
-    description: '学習が終わったら「完了」ボタンを押して次に進みましょう！これでチュートリアルは終了です。',
-    position: 'top',
+    target: '.sidebar-item:nth-child(3) .complete-btn',
+    title: 'セクション3を完了',
+    description: '最後のセクションを完了させましょう。',
+    position: 'right',
     action: 'click',
+  },
+  {
+    target: '.btn-github-export-small',
+    title: 'お疲れ様でした！🎉',
+    description: 'GitHubアカウントと連携すれば、学習した題材をリポジトリとして残せます。チュートリアルは以上です！',
+    position: 'bottom',
+    action: 'none',
   },
 ];
 
@@ -88,6 +96,7 @@ interface TutorialProps {
 }
 
 export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects' }) => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -162,18 +171,18 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   };
 
   const handleNext = () => {
-    // navigateToがある場合（最後のステップ）
+    // navigateToがある場合（最後のステップ）- 直接遷移
     if (step.navigateTo === 'sections') {
-      // チュートリアル題材をクリック
-      const target = document.querySelector(`[data-subject-id="${TUTORIAL_SUBJECT_ID}"]`) as HTMLElement;
-      if (target) {
-        target.click();
-      }
+      navigate(`/subjects/${TUTORIAL_SUBJECT_ID}/sections`, {
+        state: { continueTutorial: true }
+      });
+      onComplete();
       return;
     }
     
+    // action: 'none'の場合はクリックしない
     // ターゲット要素をクリック（クリアボタンは除く）
-    if (!step.target.includes('clear-filter')) {
+    if (step.action === 'click' && !step.target.includes('clear-filter')) {
       const target = document.querySelector(step.target) as HTMLElement;
       if (target) {
         target.click();
@@ -309,13 +318,13 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
 
 /**
  * チュートリアルが必要かどうかを判定
- * TODO: バックエンド修正後に isFirstLogin === true に戻す
+ * バックエンドのisFirstLoginを優先し、localStorageはスキップ時のフォールバック
  */
-export const shouldShowTutorial = (_isFirstLogin?: boolean): boolean => {
-  // すでに完了している場合は表示しない
+export const shouldShowTutorial = (isFirstLogin?: boolean): boolean => {
+  // セッション中にスキップ/完了した場合は表示しない
   if (localStorage.getItem('tutorial_completed') === 'true') {
     return false;
   }
-  // 強制表示モード（テスト用）
-  return true;
+  // バックエンドからisFirstLogin=trueが返ってきた場合のみ表示
+  return isFirstLogin === true;
 };
