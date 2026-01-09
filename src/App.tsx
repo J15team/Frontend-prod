@@ -5,6 +5,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingView } from '@/views/landing/LandingView';
+import { MemberDetailView } from '@/views/landing/MemberDetailView';
 import { RootView } from '@/views/home/RootView';
 import { SignupView } from '@/views/auth/SignupView';
 import { SigninView } from '@/views/auth/SigninView';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
       <Routes>
         {/* ランディングページ（公開） */}
         <Route path="/" element={<LandingView />} />
+        <Route path="/team/:memberId" element={<MemberDetailView />} />
 
         {/* 認証ルート */}
         <Route path="/auth/signup" element={<SignupView />} />

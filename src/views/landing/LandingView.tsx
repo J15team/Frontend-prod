@@ -266,19 +266,18 @@ export const LandingView: React.FC = () => {
 
           <div className="team-grid">
             {[
-              { name: 'メンバー1', role: 'Frontend', desc: '紹介文をここに', link: '#' },
-              { name: 'メンバー2', role: 'Backend', desc: '紹介文をここに', link: '#' },
-              { name: 'メンバー3', role: 'Design', desc: '紹介文をここに', link: '#' },
-              { name: 'メンバー4', role: 'Frontend', desc: '紹介文をここに', link: '#' },
-              { name: 'メンバー5', role: 'Backend', desc: '紹介文をここに', link: '#' },
-              { name: 'メンバー6', role: 'PM', desc: '紹介文をここに', link: '#' },
+              { id: 'member-1', name: 'メンバー1', role: 'Frontend', desc: '紹介文をここに' },
+              { id: 'member-2', name: 'メンバー2', role: 'Backend', desc: '紹介文をここに' },
+              { id: 'member-3', name: 'メンバー3', role: 'Design', desc: '紹介文をここに' },
+              { id: 'member-4', name: 'メンバー4', role: 'Frontend', desc: '紹介文をここに' },
+              { id: 'member-5', name: 'メンバー5', role: 'Backend', desc: '紹介文をここに' },
+              { id: 'member-6', name: 'メンバー6', role: 'PM', desc: '紹介文をここに' },
             ].map((member, i) => (
-              <a 
+              <div 
                 key={i} 
-                href={member.link} 
                 className="team-card"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => navigate(`/team/${member.id}`)}
+                style={{ cursor: 'pointer' }}
               >
                 <div className="team-avatar">
                   <div className="avatar-placeholder">
@@ -291,7 +290,7 @@ export const LandingView: React.FC = () => {
                   <p className="team-desc">{member.desc}</p>
                 </div>
                 <div className="team-arrow">→</div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
