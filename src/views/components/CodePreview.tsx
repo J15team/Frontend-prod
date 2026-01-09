@@ -38,9 +38,6 @@ export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSect
         jsCode += code + '\n';
       }
     });
-
-    // 現在のセクションのコードも取得（まだ保存されていない場合用）
-    const currentCode = codes.find(c => c.sectionId === currentSectionId);
     
     // HTMLドキュメントを生成
     const previewHtml = `
