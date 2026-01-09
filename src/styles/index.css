@@ -377,10 +377,23 @@ body {
 /* ====================================================================
    題材一覧ページ（Subjects）
    ==================================================================== */
+
+/* テーマカラー変数 */
+:root {
+  --color-primary: #22c55e;       /* メイングリーン - 成長・進捗 */
+  --color-primary-light: #dcfce7;
+  --color-primary-dark: #16a34a;
+  --color-cream: #fef9e7;         /* ソフトクリーム - 背景・温かみ */
+  --color-cream-dark: #fdf6d8;
+  --color-forest: #1e3a2f;        /* ディープフォレスト - アクセント */
+  --color-forest-light: #2d5a47;
+}
+
 .subjects-page-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(180deg, var(--color-cream) 0%, #f0fdf4 100%);
 }
 
 .subjects-container {
@@ -403,20 +416,42 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--color-forest);
+  box-shadow: 0 4px 12px rgba(30, 58, 47, 0.2);
 }
 
 .subjects-header h1 {
-  color: #1f2937;
+  color: white;
   font-size: 1.25rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hamburger-btn span {
+  background: white;
+}
+
+.header-actions .btn-profile,
+.header-actions .btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header-actions .btn-profile:hover,
+.header-actions .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* フッター - 画面幅いっぱい */
 .subjects-footer {
   width: 100%;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #1f2937, #111827);
+  background: var(--color-forest);
   color: white;
 }
 
@@ -487,8 +522,10 @@ body {
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #e5e7eb;
+  padding: 12px 16px;
+  background: var(--color-forest);
+  border-radius: 12px;
+  color: white;
 }
 
 .category-emoji {
@@ -498,13 +535,13 @@ body {
 .category-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1f2937;
+  color: white;
   margin: 0;
 }
 
 .category-count {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 0.8rem;
@@ -524,8 +561,9 @@ body {
   padding: 16px 20px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(30, 58, 47, 0.08);
   margin-bottom: 24px;
+  border-left: 4px solid var(--color-primary);
 }
 
 .filter-section,
@@ -652,7 +690,7 @@ body {
 .subject-card {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(30, 58, 47, 0.08);
   cursor: pointer;
   transition: all 0.3s ease;
   overflow: hidden;
@@ -666,7 +704,7 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
   opacity: 0;
   transition: opacity 0.3s;
 }
