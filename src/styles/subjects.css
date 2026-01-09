@@ -337,3 +337,14 @@
 /* スクロールアニメーション */
 .animated-card { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .animated-card.visible { opacity: 1; transform: translateY(0); }
+
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+  .filter-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .filter-section, .sort-section { width: 100%; flex-wrap: wrap; }
+  .star-filter { width: 100%; }
+  .star-filter-btn { flex: 1; min-width: 50px; padding: 6px 8px; }
+  .filter-emoji { font-size: 1rem; }
+  .filter-result { margin-left: 0; width: 100%; text-align: center; }
+}
