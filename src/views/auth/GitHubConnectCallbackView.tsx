@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { saveGitHubToken, saveGitHubUser } from '@/utils/githubStorage';
+import { LoadingSpinner } from '@/views/components/LoadingSpinner';
 
 export const GitHubConnectCallbackView: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -77,17 +78,6 @@ export const GitHubConnectCallbackView: React.FC = () => {
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-page-bg" />
-      <div className="auth-card-modern">
-        <div className="auth-logo">
-          <span className="auth-logo-icon">🛤️</span>
-          <span className="auth-logo-text">Pathly</span>
-        </div>
-        <h1>連携中...</h1>
-        <p className="auth-subtitle">GitHubアカウントを連携しています</p>
-        <div className="loading-spinner" />
-      </div>
-    </div>
+    <LoadingSpinner message="GitHubアカウントを連携しています..." />
   );
 };

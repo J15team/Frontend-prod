@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProfileViewModel } from '@/viewmodels/useProfileViewModel';
 import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
 import { isGitHubConnected, getGitHubUser, clearGitHubConnection } from '@/utils/githubStorage';
+import { LoadingSpinner } from '@/views/components/LoadingSpinner';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || 'Ov23li1eg2wFShx5hmTd';
 
@@ -187,7 +188,7 @@ export const ProfileView: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading-container">読み込み中...</div>;
+    return <LoadingSpinner message="プロフィールを読み込んでいます..." />;
   }
 
   if (error) {

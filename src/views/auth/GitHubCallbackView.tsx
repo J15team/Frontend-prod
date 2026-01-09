@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { saveTokens, saveUser } from '@/utils/tokenStorage';
+import { LoadingSpinner } from '@/views/components/LoadingSpinner';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://zu9mkxoir4.execute-api.ap-northeast-1.amazonaws.com';
 
@@ -79,17 +80,6 @@ export const GitHubCallbackView: React.FC = () => {
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-page-bg" />
-      <div className="auth-card-modern">
-        <div className="auth-logo">
-          <span className="auth-logo-icon">🛤️</span>
-          <span className="auth-logo-text">Pathly</span>
-        </div>
-        <h1>認証中...</h1>
-        <p className="auth-subtitle">GitHubアカウントを確認しています</p>
-        <div className="loading-spinner" />
-      </div>
-    </div>
+    <LoadingSpinner message="GitHubアカウントを確認しています..." />
   );
 };
