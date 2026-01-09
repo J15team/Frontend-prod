@@ -3,7 +3,7 @@
  * HTML/CSS/JSのライブプレビュー
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { getSubjectCodes } from '@/utils/codeStorage';
+import { getCode } from '@/utils/codeStorage';
 
 interface CodePreviewProps {
   subjectId: number;
@@ -13,32 +13,16 @@ interface CodePreviewProps {
 export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSectionId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [error, setError] = useState<string | null>(null);
-  const [lastUpdate, setLastUpdate] = useState<number>(Date.now());
 
   // プレビューを更新
   const updatePreview = () => {
     if (!iframeRef.current) return;
 
-    const codes = getSubjectCodes(subjectId);
-    
-    // 言語ごとにコードを分類
-    let htmlCode = '';
-    let cssCode = '';
-    let jsCode = '';
+    // 各ファイルタイプのコードを取得（sectionId * 10 + fileIndex）
+    const htmlCode = getCode(subjectId, currentSectionId * 10 + 0)?.code || '';
+    const cssCode = getCode(subjectId, currentSectionId * 10 + 1)?.code || '';
+    const jsCode = getCode(subjectId, currentSectionId * 10 + 2)?.code || '';
 
-    codes.forEach((codeData) => {
-      const code = codeData.code;
-      const lang = codeData.language.toLowerCase();
-
-      if (lang === 'html') {
-        htmlCode += code + '\n';
-      } else if (lang === 'css') {
-        cssCode += code + '\n';
-      } else if (lang === 'javascript' || lang === 'js') {
-        jsCode += code + '\n';
-      }
-    });
-    
     // HTMLドキュメントを生成
     const previewHtml = `
 <!DOCTYPE html>
@@ -58,9 +42,8 @@ export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSect
   </style>
 </head>
 <body>
-  ${htmlCode || '<p style="color: #999;">HTMLコードを書くとここにプレビューが表示されます</p>'}
+  ${htmlCode || '<p style="color: #999;">HTMLタブでコードを書くとここにプレビューが表示されます</p>'}
   <script>
-    // エラーをキャッチして親に通知
     window.onerror = function(msg, url, line) {
       window.parent.postMessage({ type: 'preview-error', message: msg, line: line }, '*');
       return true;
@@ -99,17 +82,12 @@ export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSect
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  // 定期的にプレビューを更新（コード変更を検知）
+  // 定期的にプレビューを更新
   useEffect(() => {
     updatePreview();
-    
-    const interval = setInterval(() => {
-      setLastUpdate(Date.now());
-      updatePreview();
-    }, 1000);
-
+    const interval = setInterval(updatePreview, 1000);
     return () => clearInterval(interval);
-  }, [subjectId, currentSectionId, lastUpdate]);
+  }, [subjectId, currentSectionId]);
 
   return (
     <div className="code-preview-container">

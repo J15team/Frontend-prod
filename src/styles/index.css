@@ -2746,3 +2746,49 @@ body {
   border: none;
   background: #ffffff;
 }
+
+
+/* Code Editor File Tabs */
+.code-editor-tabs {
+  display: flex;
+  align-items: center;
+  background: #252526;
+  border-bottom: 1px solid #3c3c3c;
+  padding: 0 0.5rem;
+}
+
+.editor-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  color: #808080;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.editor-tab:hover {
+  color: #cccccc;
+  background: #2d2d2d;
+}
+
+.editor-tab.active {
+  color: #ffffff;
+  background: #1e1e1e;
+  border-bottom-color: #22c55e;
+}
+
+.tab-icon {
+  font-size: 0.9rem;
+}
+
+.code-editor-tabs .editor-autosave {
+  margin-left: auto;
+  color: #22c55e;
+  font-size: 0.7rem;
+  padding-right: 0.5rem;
+}

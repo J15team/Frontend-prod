@@ -83,19 +83,6 @@ export const SectionsView: React.FC = () => {
     navigate('/subjects');
   };
 
-  // セクションの説明からデフォルトコードを抽出
-  const extractDefaultCode = (description: string): { code: string; language: string } => {
-    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/;
-    const match = description.match(codeBlockRegex);
-    if (match) {
-      return {
-        language: match[1] || 'javascript',
-        code: match[2].trim(),
-      };
-    }
-    return { code: '', language: 'javascript' };
-  };
-
   if (loading) {
     return <div className="loading-container">読み込み中...</div>;
   }
@@ -113,10 +100,6 @@ export const SectionsView: React.FC = () => {
     const date = new Date(value);
     return date.toLocaleString();
   };
-
-  const { code: defaultCode, language } = currentSection 
-    ? extractDefaultCode(currentSection.description)
-    : { code: '', language: 'javascript' };
 
   return (
     <div className="sections-container">
@@ -201,9 +184,7 @@ export const SectionsView: React.FC = () => {
                   <CodeEditor
                     subjectId={Number(subjectId)}
                     sectionId={currentSection.sectionId}
-                    defaultCode={defaultCode}
-                    language={language}
-                    height="calc(100vh - 380px)"
+                    height="calc(100vh - 420px)"
                   />
                 ) : (
                   <CodePreview
