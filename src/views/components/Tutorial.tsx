@@ -245,6 +245,27 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
         }}
       />
 
+      {/* クリック可能エリア（ターゲット要素の上に配置） */}
+      <div
+        className="tutorial-clickable"
+        style={{
+          position: 'fixed',
+          top: targetRect.top - 8,
+          left: targetRect.left - 8,
+          width: targetRect.width + 16,
+          height: targetRect.height + 16,
+          cursor: 'pointer',
+          zIndex: 10002,
+        }}
+        onClick={() => {
+          // 実際のターゲット要素をクリック
+          const target = document.querySelector(step.target) as HTMLElement;
+          if (target) {
+            target.click();
+          }
+        }}
+      />
+
       {/* ツールチップ */}
       <div className="tutorial-tooltip" style={getTooltipStyle()}>
         <div className="tutorial-step-indicator">
