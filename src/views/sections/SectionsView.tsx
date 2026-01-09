@@ -33,11 +33,15 @@ export const SectionsView: React.FC = () => {
   } = useSectionsViewModel();
 
   // リサイズ用の状態
-  const [leftWidth, setLeftWidth] = useState(50); // パーセント
+  const [sidebarWidth, setSidebarWidth] = useState(200); // px
+  const [contentWidth, setContentWidth] = useState(50); // パーセント（残りの中での割合）
   const [showExportModal, setShowExportModal] = useState(false);
   const [rightTab, setRightTab] = useState<'editor' | 'preview'>('editor');
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
+  
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const contentContainerRef = useRef<HTMLDivElement>(null);
+  const draggingSidebar = useRef(false);
+  const draggingContent = useRef(false);
 
   useEffect(() => {
     if (subjectId) {
@@ -45,27 +49,41 @@ export const SectionsView: React.FC = () => {
     }
   }, [subjectId]);
 
-  // ドラッグでリサイズ
-  const handleMouseDown = useCallback(() => {
-    isDragging.current = true;
+  // サイドバーリサイズ
+  const handleSidebarMouseDown = useCallback(() => {
+    draggingSidebar.current = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  }, []);
+
+  // コンテンツリサイズ
+  const handleContentMouseDown = useCallback(() => {
+    draggingContent.current = true;
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }, []);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!isDragging.current || !containerRef.current) return;
+    if (draggingSidebar.current && mainContainerRef.current) {
+      const containerRect = mainContainerRef.current.getBoundingClientRect();
+      const newWidth = e.clientX - containerRect.left;
+      if (newWidth >= 150 && newWidth <= 400) {
+        setSidebarWidth(newWidth);
+      }
+    }
     
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-    
-    // 20%〜80%の範囲に制限
-    if (newWidth >= 20 && newWidth <= 80) {
-      setLeftWidth(newWidth);
+    if (draggingContent.current && contentContainerRef.current) {
+      const containerRect = contentContainerRef.current.getBoundingClientRect();
+      const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+      if (newWidth >= 25 && newWidth <= 75) {
+        setContentWidth(newWidth);
+      }
     }
   }, []);
 
   const handleMouseUp = useCallback(() => {
-    isDragging.current = false;
+    draggingSidebar.current = false;
+    draggingContent.current = false;
     document.body.style.cursor = '';
     document.body.style.userSelect = '';
   }, []);
@@ -81,6 +99,31 @@ export const SectionsView: React.FC = () => {
 
   const handleBackClick = () => {
     navigate('/subjects');
+  };
+
+  // 次のセクションへ
+  const handleNextSection = () => {
+    if (!currentSection || !sections.length) return;
+    const currentIndex = sections.findIndex(s => s.sectionId === currentSection.sectionId);
+    if (currentIndex < sections.length - 1) {
+      selectSection(sections[currentIndex + 1]);
+    }
+  };
+
+  // 前のセクションへ
+  const handlePrevSection = () => {
+    if (!currentSection || !sections.length) return;
+    const currentIndex = sections.findIndex(s => s.sectionId === currentSection.sectionId);
+    if (currentIndex > 0) {
+      selectSection(sections[currentIndex - 1]);
+    }
+  };
+
+  // 完了して次へ
+  const handleComplete = () => {
+    if (currentSection) {
+      toggleSectionComplete(currentSection.sectionId);
+    }
   };
 
   if (loading) {
@@ -100,6 +143,12 @@ export const SectionsView: React.FC = () => {
     const date = new Date(value);
     return date.toLocaleString();
   };
+
+  const currentIndex = currentSection 
+    ? sections.findIndex(s => s.sectionId === currentSection.sectionId)
+    : -1;
+  const hasNext = currentIndex < sections.length - 1;
+  const hasPrev = currentIndex > 0;
 
   return (
     <div className="sections-container">
@@ -143,27 +192,36 @@ export const SectionsView: React.FC = () => {
         </button>
       </div>
 
-      <div className="sections-content">
-        <Sidebar
-          sections={sections}
-          currentSection={currentSection}
-          onSectionClick={selectSection}
-          onCompleteClick={toggleSectionComplete}
-          isSectionCleared={isSectionCleared}
-        />
-        <div className="main-content-split" ref={containerRef}>
-          <div className="split-left" style={{ width: `${leftWidth}%` }}>
+      <div className="sections-content" ref={mainContainerRef}>
+        <div className="sidebar-wrapper" style={{ width: sidebarWidth }}>
+          <Sidebar
+            sections={sections}
+            currentSection={currentSection}
+            onSectionClick={selectSection}
+            onCompleteClick={toggleSectionComplete}
+            isSectionCleared={isSectionCleared}
+          />
+        </div>
+        <div className="sidebar-resizer" onMouseDown={handleSidebarMouseDown} />
+        
+        <div className="main-content-split" ref={contentContainerRef}>
+          <div className="split-left" style={{ width: `${contentWidth}%` }}>
             {currentSection ? (
-              <ContentArea section={currentSection} />
+              <ContentArea 
+                section={currentSection}
+                isCleared={isSectionCleared(currentSection.sectionId)}
+                onComplete={handleComplete}
+                onNext={handleNextSection}
+                onPrev={handlePrevSection}
+                hasNext={hasNext}
+                hasPrev={hasPrev}
+              />
             ) : (
               <div className="empty-section">セクションが登録されていません</div>
             )}
           </div>
-          <div 
-            className="split-resizer"
-            onMouseDown={handleMouseDown}
-          />
-          <div className="split-right" style={{ width: `${100 - leftWidth}%` }}>
+          <div className="split-resizer" onMouseDown={handleContentMouseDown} />
+          <div className="split-right" style={{ width: `${100 - contentWidth}%` }}>
             {currentSection && (
               <div className="editor-panel">
                 <div className="editor-panel-tabs">
