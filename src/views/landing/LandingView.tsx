@@ -104,7 +104,7 @@ export const LandingView: React.FC = () => {
         <div className="features-inner">
           <h2 className="section-title">
             <span className="title-accent">Features</span>
-            CodeSproutの特徴
+            Pathlyの特徴
           </h2>
           <div className="features-grid">
             <div className="feature-card">
