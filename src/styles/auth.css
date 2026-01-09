@@ -327,3 +327,20 @@
     font-size: 0.875rem;
   }
 }
+
+
+/* Google Sign-In Button */
+.google-signin-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.google-signin-button {
+  display: flex;
+  justify-content: center;
+}
+
+.google-signin-button > div {
+  width: 100% !important;
+}
