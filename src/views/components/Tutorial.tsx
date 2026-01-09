@@ -48,7 +48,7 @@ const subjectsTutorialSteps: TutorialStep[] = [
     action: 'click',
   },
   {
-    target: `[data-subject-id="${TUTORIAL_SUBJECT_ID}"], .subject-card:first-child`,
+    target: `[data-subject-id="${TUTORIAL_SUBJECT_ID}"]`,
     title: 'チュートリアル題材を始めよう',
     description: '「はじめてのPathly」をクリックして、基本操作を学びましょう！',
     position: 'bottom',
@@ -98,13 +98,25 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   const updateTargetPosition = useCallback(() => {
     if (!step) return;
     
-    const target = document.querySelector(step.target);
+    // 複数のセレクタがある場合、最初に見つかったものを使う
+    const selectors = step.target.split(', ');
+    let target: Element | null = null;
+    
+    for (const selector of selectors) {
+      target = document.querySelector(selector);
+      if (target) break;
+    }
+    
     if (target) {
+      // ターゲットが画面外の場合はスクロール
       const rect = target.getBoundingClientRect();
-      setTargetRect(rect);
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      setTargetRect(target.getBoundingClientRect());
       setIsVisible(true);
     } else {
-      // ターゲットが見つからない場合は待機（非表示にしない）
+      // ターゲットが見つからない場合は待機
       setTargetRect(null);
     }
   }, [step]);
