@@ -44,7 +44,7 @@ const subjectsTutorialSteps: TutorialStep[] = [
     target: '.sidebar-close',
     title: 'サイドバーを閉じる',
     description: '確認できたら閉じましょう。',
-    position: 'right',
+    position: 'bottom',
     action: 'click',
   },
   {
