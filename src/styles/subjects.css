@@ -348,3 +348,55 @@
   .filter-emoji { font-size: 1rem; }
   .filter-result { margin-left: 0; width: 100%; text-align: center; }
 }
+
+
+/* ====================================================================
+   タグフィルター・タグ表示
+   ==================================================================== */
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-filter-btn {
+  padding: 6px 14px;
+  background: #f3f4f6;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.tag-filter-btn:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.tag-filter-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.02);
+}
+
+/* 題材カード内のタグ表示 */
+.subject-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.subject-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  color: #5b4b8a;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}

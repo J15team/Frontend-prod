@@ -22,6 +22,7 @@ import { ProfileView } from '@/views/profile/ProfileView';
 import { AdminUsersView } from '@/views/admin/AdminUsersView';
 import { AdminLayout } from '@/views/admin/AdminLayout';
 import { AdminDashboardView } from '@/views/admin/AdminDashboardView';
+import { TagManagementView } from '@/views/admin/TagManagementView';
 import { ForbiddenView } from '@/views/error/ForbiddenView';
 import { AdminKeyRequiredView } from '@/views/error/AdminKeyRequiredView';
 import { ProtectedRoute } from '@/views/components/ProtectedRoute';
@@ -123,6 +124,16 @@ const App: React.FC = () => {
             <ProtectedRoute requireAdmin={true}>
               <AdminLayout>
                 <SectionManagementView />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/tags"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <TagManagementView />
               </AdminLayout>
             </ProtectedRoute>
           }

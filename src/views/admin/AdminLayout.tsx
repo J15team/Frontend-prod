@@ -13,6 +13,7 @@ const adminNavItems = [
   { path: '/admin', label: 'ダッシュボード' },
   { path: '/admin/subjects', label: '題材管理' },
   { path: '/admin/sections', label: 'セクション管理' },
+  { path: '/admin/tags', label: 'タグ管理' },
   { path: '/admin/users', label: '管理者ユーザー' },
 ];
 

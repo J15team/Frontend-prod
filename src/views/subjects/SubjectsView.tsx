@@ -311,12 +311,17 @@ export const SubjectsView: React.FC = () => {
     subjects,
     progress,
     deadlines,
+    allTags,
+    subjectTags,
+    selectedTags,
     loading,
     error,
     setDeadline,
     clearDeadline,
     getGoogleCalendarUrl,
     getDaysRemaining,
+    toggleTagFilter,
+    clearTagFilters,
   } = useSubjectsViewModel();
   const { handleSignout } = useAuthViewModel();
   const [modalSubject, setModalSubject] = useState<Subject | null>(null);
@@ -490,6 +495,30 @@ export const SubjectsView: React.FC = () => {
               )}
             </div>
           </div>
+
+          {/* タグフィルター */}
+          {allTags.length > 0 && (
+            <div className="filter-section">
+              <span className="filter-label">タグで絞り込み:</span>
+              <div className="tag-filter">
+                {allTags.map((tag) => (
+                  <button
+                    key={tag.id}
+                    className={`tag-filter-btn ${selectedTags.includes(tag.name) ? 'active' : ''}`}
+                    onClick={() => toggleTagFilter(tag.name)}
+                  >
+                    {tag.displayName}
+                  </button>
+                ))}
+                {selectedTags.length > 0 && (
+                  <button className="clear-filter-btn" onClick={clearTagFilters}>
+                    ✕ クリア
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="sort-section">
             <span className="filter-label">並び替え:</span>
             <select
@@ -538,6 +567,7 @@ export const SubjectsView: React.FC = () => {
                   const progressPercent = progress[subject.subjectId] || 0;
                   const deadline = deadlines[subject.subjectId];
                   const daysRemaining = getDaysRemaining(subject.subjectId);
+                  const tags = subjectTags[subject.subjectId] || [];
 
                   return (
                     <AnimatedCard key={subject.subjectId} delay={index * 50}>
@@ -561,6 +591,15 @@ export const SubjectsView: React.FC = () => {
                         <div className="subject-card-body">
                           <h2>{subject.title}</h2>
                           <p>{subject.description}</p>
+                          {tags.length > 0 && (
+                            <div className="subject-tags">
+                              {tags.map((tag) => (
+                                <span key={tag.id} className="subject-tag">
+                                  {tag.displayName}
+                                </span>
+                              ))}
+                            </div>
+                          )}
                         </div>
                         {deadline && (
                           <div className={`deadline-badge ${getDeadlineClass(daysRemaining)}`}>

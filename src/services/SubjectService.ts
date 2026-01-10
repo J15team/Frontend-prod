@@ -13,9 +13,11 @@ import type {
 
 /**
  * 全ての題材を取得
+ * @param tags タグ名の配列（AND条件でフィルタリング）
  */
-export const getAllSubjects = async (): Promise<Subject[]> => {
-  const response = await apiClient.get<Subject[]>('/subjects');
+export const getAllSubjects = async (tags?: string[]): Promise<Subject[]> => {
+  const params = tags && tags.length > 0 ? { tags: tags.join(',') } : {};
+  const response = await apiClient.get<Subject[]>('/subjects', { params });
   return response.data;
 };
 

@@ -19,6 +19,12 @@ const cards = [
     endpoint: '/api/subjects/{subjectId}/sections',
   },
   {
+    title: 'タグ管理',
+    description: 'タグの作成・削除と題材へのタグ付与。検索・フィルタリング用。',
+    link: '/admin/tags',
+    endpoint: '/api/tags',
+  },
+  {
     title: '進捗確認',
     description: 'GET/POST/DELETE /api/progress/subjects/{subjectId} を手動検証。',
     link: '/progress',
