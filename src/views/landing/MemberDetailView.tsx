@@ -2,7 +2,7 @@
  * Member Detail View
  * チームメンバー個人紹介ページ
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 // メンバーデータ（後で実際の情報に更新）
@@ -101,6 +101,11 @@ const membersData: Record<string, {
 export const MemberDetailView: React.FC = () => {
   const { memberId } = useParams<{ memberId: string }>();
   const navigate = useNavigate();
+  
+  // ページ遷移時にトップにスクロール
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [memberId]);
   
   const member = memberId ? membersData[memberId] : null;
 
