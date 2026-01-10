@@ -14,6 +14,7 @@ const membersData: Record<string, {
   image: string;
   bio: string[];
   skills: string[];
+  hobbies: string[];
   links: { label: string; url: string }[];
 }> = {
   'member-1': {
@@ -23,15 +24,18 @@ const membersData: Record<string, {
     title: 'Tech Lead (Frontend & Backend)',
     image: '/images/team/member-1-detail.png',
     bio: [
+      '徳島県出身。',
       'この作品における大体なんでもやったなんでも屋さんです。',
       '最近の趣味は、お酒と小説を読むことらしい。(森博嗣って人の"S&Mシリーズ"面白いよ。)',
       '一緒に遊んでくれる方(お酒飲める方)募集してます。なんか適当にご連絡ください。'
     ],
-    skills: ['Kotlin(Spring Framework)', 'Go', 'TypeScript(勉強中)', 'AWS(ECSとかRDSとかそこら)', '阪神ファン(10年近く)'],
+    skills: ['Kotlin(一番好き)', 'Go', 'TypeScript(勉強中)', 'AWS(ECSとかRDSとかそこら)', ],
+    hobbies: ['阪神ファン(10年近く)'],
     links: [
       { label: 'GitHub', url: 'https://github.com/S4AK4N' },
       { label: 'Qiita', url: 'https://qiita.com/nanashi39' },
     ],
+
   },
   'member-2': {
     name: 'HARUYA NAKATA',
@@ -44,6 +48,7 @@ const membersData: Record<string, {
       'フロントエンドとデザイン触ってます。'
     ],
     skills: [],
+    hobbies: [],
     links: [],
   },
   'member-3': {
@@ -57,6 +62,7 @@ const membersData: Record<string, {
       'PathlyではUI/UXデザインを担当しました。',
     ],
     skills: ['Figma', 'UI/UX', 'Illustration'],
+    hobbies: [],
     links: [],
   },
   'member-4': {
@@ -69,6 +75,7 @@ const membersData: Record<string, {
       'ここに経歴や紹介文を書きます。',
     ],
     skills: ['React', 'JavaScript'],
+    hobbies: [],
     links: [],
   },
   'member-5': {
@@ -81,6 +88,7 @@ const membersData: Record<string, {
       'ここに経歴や紹介文を書きます。',
     ],
     skills: ['Node.js', 'AWS'],
+    hobbies: [],
     links: [],
   },
   'member-6': {
@@ -94,6 +102,7 @@ const membersData: Record<string, {
       'Pathlyではプロジェクト管理を担当しました。',
     ],
     skills: ['Scrum', 'Communication'],
+    hobbies: [],
     links: [],
   },
 };
@@ -171,6 +180,17 @@ export const MemberDetailView: React.FC = () => {
               <div className="member-skills">
                 {member.skills.map((skill, i) => (
                   <span key={i} className="skill-tag">{skill}</span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {member.hobbies.length > 0 && (
+            <section className="member-section">
+              <h2>Hobbies</h2>
+              <div className="member-hobbies">
+                {member.hobbies.map((hobby, i) => (
+                  <span key={i} className="skill-tag">{hobby}</span>
                 ))}
               </div>
             </section>

@@ -1194,6 +1194,12 @@
   gap: 0.75rem;
 }
 
+.member-hobbys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 .skill-tag {
   font-size: 0.9rem;
   color: #1e3a2f;
