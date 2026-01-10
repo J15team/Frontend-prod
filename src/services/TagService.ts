@@ -67,7 +67,7 @@ export const getSubjectTags = async (subjectId: number): Promise<Tag[]> => {
  * 題材にタグを付与
  */
 export const addTagToSubject = async (subjectId: number, tagName: string): Promise<void> => {
-  await apiClient.post(`/subjects/${subjectId}/tags/${encodeURIComponent(tagName)}`);
+  await apiClient.post(`/subjects/${subjectId}/tags`, { tagName });
 };
 
 /**

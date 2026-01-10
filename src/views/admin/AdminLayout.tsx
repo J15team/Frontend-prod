@@ -35,10 +35,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         </Link>
       </header>
 
-      <div className="admin-warning">
-        本番環境へはサンプル管理者アカウントやデフォルトの <code>ADMIN_API_KEY</code> を絶対に配置しないでください。
-      </div>
-
       <nav className="admin-nav">
         {adminNavItems.map((item) => (
           <Link
