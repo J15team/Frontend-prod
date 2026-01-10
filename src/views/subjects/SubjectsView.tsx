@@ -411,7 +411,7 @@ export const SubjectsView: React.FC = () => {
     5: { label: '発展', emoji: '🏆' },
   };
 
-  // フィルタリング
+  // 重みフィルタリング（タグフィルタリングはバックエンドで実行済み）
   const filteredSubjects = selectedWeight
     ? subjects.filter(s => (s.weight || 1) === selectedWeight)
     : subjects;
