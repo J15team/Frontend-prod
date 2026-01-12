@@ -135,14 +135,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              maxLength={20}
+              maxLength={50}
               required
             />
             <button type="submit" className="btn-primary" disabled={updating || username === user.username}>
               {updating ? '更新中...' : '更新'}
             </button>
           </form>
-          <p className="settings-hint">1〜20文字で入力してください</p>
+          <p className="settings-hint">1〜50文字で入力してください（日本語OK）</p>
         </div>
 
         <div className="modal-actions">
