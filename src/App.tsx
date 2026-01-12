@@ -4,6 +4,9 @@
  */
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { ThemeToggle } from '@/components/common/ThemeToggle';
+import { ScrollToTop } from '@/components/common/ScrollToTop';
 import { LandingView } from '@/views/landing/LandingView';
 import { MemberDetailView } from '@/views/landing/MemberDetailView';
 import { RootView } from '@/views/RootView';
@@ -29,8 +32,9 @@ import { ProtectedRoute } from '@/components/common/ProtectedRoute';
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
+    <ThemeProvider>
+      <Router>
+        <Routes>
         {/* ランディングページ（公開） */}
         <Route path="/" element={<LandingView />} />
         <Route path="/team/:memberId" element={<MemberDetailView />} />
@@ -150,8 +154,11 @@ const App: React.FC = () => {
         />
 
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+        </Routes>
+        <ThemeToggle />
+        <ScrollToTop />
+      </Router>
+    </ThemeProvider>
   );
 };
 

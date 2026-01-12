@@ -13,7 +13,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* 共通ボタン */
@@ -99,7 +101,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--modal-overlay);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,7 +109,8 @@ body {
 }
 
 .modal-content {
-  background: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   padding: 24px;
   border-radius: 12px;
   max-width: 500px;

@@ -3,13 +3,13 @@
    ==================================================================== */
 .sections-container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: var(--bg-primary);
 }
 
 .sections-header {
-  background: white;
+  background: var(--bg-secondary);
   padding: 20px 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow-color);
   display: flex;
   align-items: flex-start;
   gap: 20px;
@@ -17,7 +17,7 @@
 
 .sections-header h1 {
   flex: 1;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.5em;
 }
 
@@ -35,22 +35,22 @@
   gap: 8px;
 }
 
-.subject-description { color: #555; }
+.subject-description { color: var(--text-secondary); }
 
 .subject-meta {
   display: flex;
   gap: 16px;
-  color: #777;
+  color: var(--text-muted);
   font-size: 0.9em;
 }
 
 .progress-summary {
-  background: #fff;
+  background: var(--bg-secondary);
   padding: 16px 30px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 12px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sections-content {
@@ -61,14 +61,14 @@
 /* サイドバー */
 .sidebar {
   width: 300px;
-  background: white;
+  background: var(--bg-secondary);
   overflow-y: auto;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--border-color);
 }
 
 .sidebar-item {
   padding: 16px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -77,12 +77,12 @@
   transition: background-color 0.2s;
 }
 
-.sidebar-item:hover { background-color: #f8f9fa; }
+.sidebar-item:hover { background-color: var(--bg-tertiary); }
 .sidebar-item.active { background-color: #e7f3ff; border-left: 4px solid #007bff; }
 .sidebar-item.cleared { background-color: #f0f8f0; }
 
 .finish-icon { color: #28a745; font-weight: bold; font-size: 1.2em; }
-.item-text { flex: 1; min-width: 100px; color: #333; font-weight: 500; }
+.item-text { flex: 1; min-width: 100px; color: var(--text-primary); font-weight: 500; }
 
 .complete-btn {
   padding: 6px 12px;
@@ -104,7 +104,7 @@
 .main-content {
   flex: 1;
   overflow-y: auto;
-  background: white;
+  background: var(--bg-secondary);
 }
 
 .content-area {
@@ -114,17 +114,17 @@
 }
 
 .content-header { margin-bottom: 20px; }
-.content-section-id { color: #888; margin-bottom: 8px; }
-.content-body { line-height: 1.8; color: #555; }
+.content-section-id { color: var(--text-muted); margin-bottom: 8px; }
+.content-body { line-height: 1.8; color: var(--text-secondary); }
 
 .section-image-wrapper { margin-bottom: 20px; text-align: center; }
-.section-image { max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+.section-image { max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px var(--shadow-color); }
 
-.content-area h1 { margin-bottom: 20px; color: #333; }
-.content-area h2 { margin-top: 30px; margin-bottom: 15px; color: #444; }
-.content-area p { line-height: 1.8; color: #555; margin-bottom: 16px; }
-.content-area code { background-color: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; }
-.content-area pre { background-color: #f5f5f5; padding: 16px; border-radius: 4px; overflow-x: auto; margin-bottom: 16px; }
+.content-area h1 { margin-bottom: 20px; color: var(--text-primary); }
+.content-area h2 { margin-top: 30px; margin-bottom: 15px; color: var(--text-primary); }
+.content-area p { line-height: 1.8; color: var(--text-secondary); margin-bottom: 16px; }
+.content-area code { background-color: var(--bg-tertiary); padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; color: var(--text-primary); }
+.content-area pre { background-color: var(--bg-tertiary); padding: 16px; border-radius: 4px; overflow-x: auto; margin-bottom: 16px; }
 
 /* 進捗バー */
 .progress-info { display: flex; align-items: center; gap: 16px; }
