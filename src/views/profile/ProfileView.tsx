@@ -164,14 +164,17 @@ export const ProfileView: React.FC = () => {
     totalSubjects,
     loading,
     updating,
+    deleting,
     error,
     updateError,
     handleUpdateUsername,
     handleUploadImage,
     handleDeleteImage,
+    handleDeleteAccount,
   } = useProfileViewModel();
   const { handleSignout } = useAuthViewModel();
   const [showSettings, setShowSettings] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [githubConnected, setGithubConnected] = useState(isGitHubConnected());
   const githubUser = getGitHubUser();
 
@@ -185,6 +188,13 @@ export const ProfileView: React.FC = () => {
   const handleGitHubDisconnect = () => {
     clearGitHubConnection();
     setGithubConnected(false);
+  };
+
+  const onDeleteAccount = async () => {
+    const success = await handleDeleteAccount();
+    if (success) {
+      navigate('/');
+    }
   };
 
   if (loading) {
@@ -394,7 +404,56 @@ export const ProfileView: React.FC = () => {
             サインアウト
           </button>
         </div>
+
+        {/* アカウント削除セクション */}
+        <section className="profile-section-fancy danger-section">
+          <div className="section-header">
+            <h2>⚠️ アカウント削除</h2>
+          </div>
+          <div className="danger-zone-card">
+            <p className="danger-description">
+              アカウントを削除すると、すべての学習データ・進捗が完全に削除されます。<br />
+              この操作は取り消せません。
+            </p>
+            <button 
+              className="btn-danger-outline" 
+              onClick={() => setShowDeleteConfirm(true)}
+            >
+              アカウントを削除する
+            </button>
+          </div>
+        </section>
       </div>
+
+      {/* アカウント削除確認モーダル */}
+      {showDeleteConfirm && (
+        <div className="modal-overlay" onClick={() => setShowDeleteConfirm(false)}>
+          <div className="modal-content delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>⚠️ アカウント削除の確認</h3>
+            <p>本当にアカウントを削除しますか？</p>
+            <p className="delete-warning">
+              この操作は取り消せません。すべてのデータが完全に削除されます。
+            </p>
+            {updateError && <div className="error-message">{updateError}</div>}
+            <div className="modal-actions">
+              <button 
+                className="btn-secondary" 
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleting}
+              >
+                キャンセル
+              </button>
+              <button 
+                className="btn-danger" 
+                onClick={onDeleteAccount}
+                disabled={deleting}
+              >
+                {deleting ? '削除中...' : '削除する'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showSettings && user && (
         <SettingsModal

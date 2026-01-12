@@ -11,8 +11,10 @@ import {
   uploadProfileImage,
   deleteProfileImage,
   updateUsername,
+  deleteAccount,
 } from '@/services/profile/ProfileService';
 import { getAllDeadlines, getDaysRemaining } from '@/utils/storage/deadlineStorage';
+import { clearSession } from '@/utils/storage/tokenStorage';
 import { type User } from '@/models/User';
 import { type Subject } from '@/models/Subject';
 
@@ -30,12 +32,14 @@ interface ProfileViewModelReturn {
   totalSubjects: number;
   loading: boolean;
   updating: boolean;
+  deleting: boolean;
   error: string | null;
   updateError: string | null;
   refreshProfile: () => Promise<void>;
   handleUpdateUsername: (newUsername: string) => Promise<boolean>;
   handleUploadImage: (file: File) => Promise<boolean>;
   handleDeleteImage: () => Promise<boolean>;
+  handleDeleteAccount: () => Promise<boolean>;
 }
 
 export const useProfileViewModel = (): ProfileViewModelReturn => {
@@ -45,6 +49,7 @@ export const useProfileViewModel = (): ProfileViewModelReturn => {
   const [totalSubjects, setTotalSubjects] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [updating, setUpdating] = useState<boolean>(false);
+  const [deleting, setDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [updateError, setUpdateError] = useState<string | null>(null);
 
@@ -178,6 +183,25 @@ export const useProfileViewModel = (): ProfileViewModelReturn => {
     }
   }, []);
 
+  const handleDeleteAccount = useCallback(async (): Promise<boolean> => {
+    setDeleting(true);
+    setUpdateError(null);
+    try {
+      await deleteAccount();
+      clearSession();
+      return true;
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setUpdateError(err.message);
+      } else {
+        setUpdateError('アカウントの削除に失敗しました');
+      }
+      return false;
+    } finally {
+      setDeleting(false);
+    }
+  }, []);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -189,11 +213,13 @@ export const useProfileViewModel = (): ProfileViewModelReturn => {
     totalSubjects,
     loading,
     updating,
+    deleting,
     error,
     updateError,
     refreshProfile,
     handleUpdateUsername,
     handleUploadImage,
     handleDeleteImage,
+    handleDeleteAccount,
   };
 };

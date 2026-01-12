@@ -94,3 +94,10 @@ export const updateUsername = async (username: string): Promise<User> => {
   saveUser(user);
   return user;
 };
+
+/**
+ * アカウント削除
+ */
+export const deleteAccount = async (): Promise<void> => {
+  await apiClient.delete('/profile');
+};
