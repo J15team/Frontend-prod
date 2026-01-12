@@ -4,17 +4,17 @@
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useSectionsViewModel } from '@/viewmodels/useSectionsViewModel';
-import { ProgressBar } from '@/views/components/ProgressBar';
-import { Sidebar } from '@/views/components/Sidebar';
-import { ContentArea } from '@/views/components/ContentArea';
-import { CodeEditor } from '@/views/components/CodeEditor';
-import { CodePreview } from '@/views/components/CodePreview';
-import { ConfettiEffect } from '@/views/components/ConfettiEffect';
-import { GitHubExportModal } from '@/views/components/GitHubExportModal';
-import { LoadingSpinner } from '@/views/components/LoadingSpinner';
-import { isGitHubConnected } from '@/utils/githubStorage';
-import { Tutorial } from '@/views/components/Tutorial';
+import { useSectionsViewModel } from '@/viewmodels/sections/useSectionsViewModel';
+import { ProgressBar } from '@/components/common/ProgressBar';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
+import { Sidebar } from '@/components/features/Sidebar';
+import { ContentArea } from '@/components/features/ContentArea';
+import { CodeEditor } from '@/components/features/CodeEditor';
+import { CodePreview } from '@/components/features/CodePreview';
+import { ConfettiEffect } from '@/components/features/ConfettiEffect';
+import { GitHubExportModal } from '@/components/features/GitHubExportModal';
+import { Tutorial } from '@/components/features/Tutorial';
+import { isGitHubConnected } from '@/utils/storage/githubStorage';
 
 export const SectionsView: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();

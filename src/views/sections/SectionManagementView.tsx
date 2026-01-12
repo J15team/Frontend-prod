@@ -3,7 +3,7 @@
  * セクション一覧、作成、更新、削除
  */
 import React, { useEffect, useState } from 'react';
-import { useSectionManagementViewModel } from '@/viewmodels/useSectionManagementViewModel';
+import { useSectionManagementViewModel } from '@/viewmodels/sections/useSectionManagementViewModel';
 import { type Section } from '@/models/Section';
 
 interface SectionFormState {

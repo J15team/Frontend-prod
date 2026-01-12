@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "mcp__serena__list_dir",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

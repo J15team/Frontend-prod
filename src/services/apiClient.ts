@@ -3,8 +3,8 @@
  * Axiosのベース設定とインターセプター
  */
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from 'axios';
-import { getAccessToken, getRefreshToken, saveTokens, clearSession } from '@/utils/tokenStorage';
-import { getAdminKey } from '@/utils/adminKeyStorage';
+import { getAccessToken, getRefreshToken, saveTokens, clearSession } from '@/utils/storage/tokenStorage';
+import { getAdminKey } from '@/utils/storage/adminKeyStorage';
 import { type TokenRefreshResponse } from '@/models/User';
 
 // ベースURL設定

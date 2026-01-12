@@ -3,7 +3,7 @@
  * 題材作成/更新/削除のフォーム
  */
 import React, { useEffect, useState } from 'react';
-import { useSubjectManagementViewModel } from '@/viewmodels/useSubjectManagementViewModel';
+import { useSubjectManagementViewModel } from '@/viewmodels/subjects/useSubjectManagementViewModel';
 
 interface SubjectFormState {
   subjectId: string;

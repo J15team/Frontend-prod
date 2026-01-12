@@ -4,7 +4,7 @@
  */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAdminAuthViewModel } from '@/viewmodels/useAdminAuthViewModel';
+import { useAdminAuthViewModel } from '@/viewmodels/admin/useAdminAuthViewModel';
 
 export const AdminSigninView: React.FC = () => {
   const { loading, error, handleAdminSignin } = useAdminAuthViewModel();

@@ -3,7 +3,7 @@
  * タグ作成/削除と題材へのタグ付与管理
  */
 import React, { useState, useEffect } from 'react';
-import { useTagManagementViewModel } from '@/viewmodels/useTagManagementViewModel';
+import { useTagManagementViewModel } from '@/viewmodels/admin/useTagManagementViewModel';
 
 export const TagManagementView: React.FC = () => {
   const {

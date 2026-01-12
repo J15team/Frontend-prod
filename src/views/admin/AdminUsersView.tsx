@@ -3,7 +3,7 @@
  * 管理者APIの操作
  */
 import React, { useEffect, useState } from 'react';
-import { useAdminUsersViewModel } from '@/viewmodels/useAdminUsersViewModel';
+import { useAdminUsersViewModel } from '@/viewmodels/admin/useAdminUsersViewModel';
 
 interface AdminCreateForm {
   email: string;

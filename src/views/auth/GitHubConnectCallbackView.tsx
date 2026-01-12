@@ -4,8 +4,8 @@
  */
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { saveGitHubToken, saveGitHubUser } from '@/utils/githubStorage';
-import { LoadingSpinner } from '@/views/components/LoadingSpinner';
+import { saveGitHubToken, saveGitHubUser } from '@/utils/storage/githubStorage';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
 export const GitHubConnectCallbackView: React.FC = () => {
   const [searchParams] = useSearchParams();

@@ -3,7 +3,7 @@
  * リフレッシュトークンを使ってアクセストークンを取得
  */
 import React, { useState } from 'react';
-import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
+import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
 
 export const TokenRefreshView: React.FC = () => {
   const { loading, error, handleRefresh } = useAuthViewModel();

@@ -4,10 +4,10 @@
  */
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProfileViewModel } from '@/viewmodels/useProfileViewModel';
-import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
-import { isGitHubConnected, getGitHubUser, clearGitHubConnection } from '@/utils/githubStorage';
-import { LoadingSpinner } from '@/views/components/LoadingSpinner';
+import { useProfileViewModel } from '@/viewmodels/profile/useProfileViewModel';
+import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
+import { isGitHubConnected, getGitHubUser, clearGitHubConnection } from '@/utils/storage/githubStorage';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || 'Ov23li1eg2wFShx5hmTd';
 

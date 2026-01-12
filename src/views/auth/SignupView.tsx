@@ -4,7 +4,7 @@
  */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
+import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
 import { type SignupRequest } from '@/models/User';
 
 export const SignupView: React.FC = () => {

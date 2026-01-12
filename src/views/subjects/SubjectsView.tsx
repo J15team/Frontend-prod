@@ -4,11 +4,11 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSubjectsViewModel } from '@/viewmodels/useSubjectsViewModel';
-import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
+import { useSubjectsViewModel } from '@/viewmodels/subjects/useSubjectsViewModel';
+import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
 import { type Subject } from '@/models/Subject';
-import { LoadingSpinner } from '@/views/components/LoadingSpinner';
-import { Tutorial, shouldShowTutorial } from '@/views/components/Tutorial';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner';
+import { Tutorial, shouldShowTutorial } from '@/components/features/Tutorial';
 
 // スクロールアニメーション用フック
 const useScrollAnimation = () => {

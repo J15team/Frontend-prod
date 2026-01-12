@@ -3,7 +3,7 @@
  * 進捗APIを手動で呼び出し
  */
 import React, { useState } from 'react';
-import { useProgressInspectorViewModel } from '@/viewmodels/useProgressInspectorViewModel';
+import { useProgressInspectorViewModel } from '@/viewmodels/progress/useProgressInspectorViewModel';
 
 export const ProgressInspectorView: React.FC = () => {
   const { progress, loading, error, message, fetchProgress, markSection, unmarkSection } =

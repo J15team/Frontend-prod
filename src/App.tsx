@@ -6,7 +6,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingView } from '@/views/landing/LandingView';
 import { MemberDetailView } from '@/views/landing/MemberDetailView';
-import { RootView } from '@/views/home/RootView';
+import { RootView } from '@/views/RootView';
 import { SignupView } from '@/views/auth/SignupView';
 import { SigninView } from '@/views/auth/SigninView';
 import { AdminSigninView } from '@/views/auth/AdminSigninView';
@@ -25,7 +25,7 @@ import { AdminDashboardView } from '@/views/admin/AdminDashboardView';
 import { TagManagementView } from '@/views/admin/TagManagementView';
 import { ForbiddenView } from '@/views/error/ForbiddenView';
 import { AdminKeyRequiredView } from '@/views/error/AdminKeyRequiredView';
-import { ProtectedRoute } from '@/views/components/ProtectedRoute';
+import { ProtectedRoute } from '@/components/common/ProtectedRoute';
 
 const App: React.FC = () => {
   return (

@@ -4,9 +4,9 @@
  */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthViewModel } from '@/viewmodels/useAuthViewModel';
-import { GoogleSignInButton } from '@/views/components/GoogleSignInButton';
-import { GitHubSignInButton } from '@/views/components/GitHubSignInButton';
+import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
+import { GoogleSignInButton } from '@/components/features/GoogleSignInButton';
+import { GitHubSignInButton } from '@/components/features/GitHubSignInButton';
 import { type SigninRequest } from '@/models/User';
 
 export const SigninView: React.FC = () => {
