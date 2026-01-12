@@ -311,3 +311,78 @@
     transform: none !important;
   }
 }
+
+
+/* サイドバーフィルター */
+.sidebar-filters { border-top: 1px solid #eee; padding-top: 16px; margin-top: 8px; }
+.sidebar-filter-group { margin-bottom: 16px; }
+.filter-group-label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 8px; }
+
+.sidebar-star-filter { display: flex; flex-wrap: wrap; gap: 6px; }
+.sidebar-star-btn {
+  padding: 6px 10px;
+  background: #f3f4f6;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: #ffc107;
+  transition: all 0.2s;
+}
+.sidebar-star-btn:hover { background: #e5e7eb; }
+.sidebar-star-btn.active { background: #dcfce7; border-color: #22c55e; }
+
+.sidebar-tag-filter { display: flex; flex-wrap: wrap; gap: 6px; }
+.sidebar-tag-btn {
+  padding: 5px 10px;
+  background: #f3f4f6;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+.sidebar-tag-btn:hover { background: #e5e7eb; }
+.sidebar-tag-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.sidebar-deadline-info {
+  font-size: 0.85rem;
+  color: #666;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.sidebar-clear-filter {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sidebar-clear-filter:hover { background: #fecaca; }
+
+/* ダークモード対応 */
+[data-theme="dark"] .progress-sidebar { background: var(--bg-secondary); }
+[data-theme="dark"] .sidebar-header { border-bottom-color: var(--border-color); }
+[data-theme="dark"] .sidebar-header h2 { color: var(--text-primary); }
+[data-theme="dark"] .sidebar-summary { background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%); }
+[data-theme="dark"] .sidebar-section h3 { color: var(--text-muted); }
+[data-theme="dark"] .progress-sidebar .sidebar-item { background: var(--bg-tertiary); }
+[data-theme="dark"] .progress-sidebar .sidebar-item:hover { background: #3d3d3d; }
+[data-theme="dark"] .sidebar-item-title { color: var(--text-primary); }
+[data-theme="dark"] .sidebar-star-btn { background: var(--bg-tertiary); }
+[data-theme="dark"] .sidebar-star-btn:hover { background: #3d3d3d; }
+[data-theme="dark"] .sidebar-tag-btn { background: var(--bg-tertiary); color: var(--text-secondary); }
+[data-theme="dark"] .sidebar-tag-btn:hover { background: #3d3d3d; }
+[data-theme="dark"] .sidebar-deadline-info { background: var(--bg-tertiary); color: var(--text-secondary); }
+[data-theme="dark"] .sidebar-filters { border-top-color: var(--border-color); }

@@ -142,6 +142,13 @@ interface ProgressSidebarProps {
   getDaysRemaining: (subjectId: number) => number | null;
   onClose: () => void;
   onSubjectClick: (subject: Subject) => void;
+  // フィルター関連
+  allTags: { id: number; name: string }[];
+  selectedTags: string[];
+  onToggleTag: (tagName: string) => void;
+  onClearTags: () => void;
+  selectedWeight: number | null;
+  onSelectWeight: (weight: number | null) => void;
 }
 
 const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
@@ -151,6 +158,12 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
   getDaysRemaining,
   onClose,
   onSubjectClick,
+  allTags,
+  selectedTags,
+  onToggleTag,
+  onClearTags,
+  selectedWeight,
+  onSelectWeight,
 }) => {
   const [showAllNotStarted, setShowAllNotStarted] = useState(false);
 
@@ -298,6 +311,66 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
               )}
             </div>
           )}
+
+          {/* フィルターセクション */}
+          <div className="sidebar-section sidebar-filters">
+            <h3>🔍 絞り込み</h3>
+            
+            {/* 難易度フィルター */}
+            <div className="sidebar-filter-group">
+              <span className="filter-group-label">難易度</span>
+              <div className="sidebar-star-filter">
+                {[1, 2, 3, 4, 5].map((weight) => (
+                  <button
+                    key={weight}
+                    className={`sidebar-star-btn ${selectedWeight === weight ? 'active' : ''}`}
+                    onClick={() => onSelectWeight(selectedWeight === weight ? null : weight)}
+                  >
+                    {'★'.repeat(weight)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* タグフィルター */}
+            {allTags.length > 0 && (
+              <div className="sidebar-filter-group">
+                <span className="filter-group-label">タグ</span>
+                <div className="sidebar-tag-filter">
+                  {allTags.map((tag) => (
+                    <button
+                      key={tag.id}
+                      className={`sidebar-tag-btn ${selectedTags.includes(tag.name) ? 'active' : ''}`}
+                      onClick={() => onToggleTag(tag.name)}
+                    >
+                      {tag.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 期限フィルター */}
+            <div className="sidebar-filter-group">
+              <span className="filter-group-label">期限</span>
+              <div className="sidebar-deadline-info">
+                期限設定済み: {Object.keys(deadlines).length}件
+              </div>
+            </div>
+
+            {/* フィルタークリア */}
+            {(selectedTags.length > 0 || selectedWeight !== null) && (
+              <button
+                className="sidebar-clear-filter"
+                onClick={() => {
+                  onClearTags();
+                  onSelectWeight(null);
+                }}
+              >
+                フィルターをクリア
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </>
@@ -678,6 +751,12 @@ export const SubjectsView: React.FC = () => {
             setShowSidebar(false);
             onSubjectClick(subject);
           }}
+          allTags={allTags}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTagFilter}
+          onClearTags={clearTagFilters}
+          selectedWeight={selectedWeight}
+          onSelectWeight={setSelectedWeight}
         />
       )}
 
