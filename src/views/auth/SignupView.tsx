@@ -5,10 +5,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
+import { GoogleSignInButton } from '@/components/features/GoogleSignInButton';
+import { GitHubSignInButton } from '@/components/features/GitHubSignInButton';
 import { type SignupRequest } from '@/models/User';
 
 export const SignupView: React.FC = () => {
-  const { loading, error, handleSignup } = useAuthViewModel();
+  const { loading, error, handleSignup, handleGoogleSignin } = useAuthViewModel();
   const [formData, setFormData] = useState<SignupRequest>({
     email: '',
     password: '',
@@ -27,6 +29,10 @@ export const SignupView: React.FC = () => {
     });
   };
 
+  const onGoogleSuccess = async (credential: string) => {
+    await handleGoogleSignin(credential);
+  };
+
   return (
     <div className="auth-page">
       <div className="auth-page-bg" />
@@ -43,6 +49,17 @@ export const SignupView: React.FC = () => {
         
         <h1>はじめまして</h1>
         <p className="auth-subtitle">アカウントを作成して学習を始めましょう</p>
+
+        <GoogleSignInButton
+          onSuccess={onGoogleSuccess}
+          onError={(err) => console.error('Google Sign-In error:', err)}
+        />
+        
+        <GitHubSignInButton />
+        
+        <div className="auth-divider">
+          <span>または</span>
+        </div>
 
         <form onSubmit={onSubmit} className="auth-form-modern">
           <div className="form-group-modern">
