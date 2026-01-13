@@ -20,6 +20,7 @@ const membersData: Record<string, {
   rainbowFrom?: boolean;
   desertFrom?: boolean;
   rainbowSkills?: boolean;
+  onionEffect?: boolean;
 }> = {
   'member-1': {
     name: 'RIKI YOSHIDA',
@@ -111,7 +112,8 @@ const membersData: Record<string, {
     skills: ['運転'],
     hobbies: ['ドライブ'],
     links: [],
-    from:['淡路島']
+    from:['淡路島'],
+    onionEffect: true
   },
   'member-6': {
     name: 'KOUKI TANAKA',
@@ -138,11 +140,23 @@ export const MemberDetailView: React.FC = () => {
   const [showSlot, setShowSlot] = useState(false);
   const [slotNumbers, setSlotNumbers] = useState(['?', '?', '?']);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [showOnions, setShowOnions] = useState(false);
   
   // ページ遷移時にトップにスクロール
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [memberId]);
+
+  // member-5の玉ねぎエフェクト
+  const member = memberId ? membersData[memberId] : null;
+  
+  useEffect(() => {
+    if (member?.onionEffect) {
+      setShowOnions(true);
+      const timer = setTimeout(() => setShowOnions(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [memberId, member?.onionEffect]);
 
   // パチンコスロット演出
   const handlePachinkasClick = () => {
@@ -170,8 +184,6 @@ export const MemberDetailView: React.FC = () => {
       }
     }, 100);
   };
-  
-  const member = memberId ? membersData[memberId] : null;
 
   if (!member) {
     return (
@@ -184,6 +196,19 @@ export const MemberDetailView: React.FC = () => {
 
   return (
     <div className="member-detail-page">
+      {/* 玉ねぎエフェクト */}
+      {showOnions && (
+        <div className="onion-explosion">
+          {[...Array(15)].map((_, i) => (
+            <span key={i} className="onion" style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 0.5}s`,
+              fontSize: `${2 + Math.random() * 2}rem`
+            }}>🧅</span>
+          ))}
+        </div>
+      )}
+
       {/* ヘッダー */}
       <header className="member-header">
         <button className="btn-back" onClick={() => navigate('/#team')}>
