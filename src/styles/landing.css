@@ -1403,7 +1403,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1411,11 +1411,14 @@
 }
 
 .slot-modal {
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
-  border-radius: 20px;
-  padding: 2rem;
-  border: 4px solid #ffd700;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+  background: radial-gradient(ellipse at center, #1a0a2e, #0a0a1a);
+  border-radius: 30px;
+  padding: 2.5rem;
+  border: 6px solid #ff0066;
+  box-shadow: 
+    0 0 60px rgba(255, 0, 102, 0.6),
+    0 0 100px rgba(255, 0, 102, 0.3),
+    inset 0 0 30px rgba(255, 0, 102, 0.2);
 }
 
 .slot-machine {
@@ -1423,68 +1426,105 @@
 }
 
 .slot-header {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: #ffd700;
+  color: #ff0066;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  text-shadow: 
+    0 0 10px rgba(255, 0, 102, 1),
+    0 0 20px rgba(255, 0, 102, 0.8),
+    0 0 30px rgba(255, 0, 102, 0.6);
+  letter-spacing: 0.3rem;
+}
+
+.pachinko-frame {
+  background: linear-gradient(180deg, #2a1a3a, #1a0a2a);
+  border: 4px solid #ffd700;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 
+    inset 0 0 30px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .slot-reels {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   justify-content: center;
   margin-bottom: 1.5rem;
 }
 
 .slot-reel {
-  width: 80px;
-  height: 100px;
-  background: linear-gradient(180deg, #2d2d2d, #1a1a1a);
+  width: 90px;
+  height: 120px;
+  background: linear-gradient(180deg, #000, #1a1a1a, #000);
   border: 3px solid #ffd700;
-  border-radius: 10px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   color: #ff0000;
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  font-family: 'Arial Black', sans-serif;
+  box-shadow: 
+    inset 0 5px 15px rgba(0, 0, 0, 0.8),
+    inset 0 -5px 15px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 
 .slot-reel.spinning {
-  animation: slot-spin 0.1s linear infinite;
+  animation: pachinko-spin 0.08s linear infinite;
+  color: #ffff00;
+  text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
 }
 
-@keyframes slot-spin {
-  0% { transform: translateY(-5px); }
-  50% { transform: translateY(5px); }
-  100% { transform: translateY(-5px); }
+.slot-reel.stopped {
+  color: #ff0000;
+  text-shadow: 
+    0 0 20px rgba(255, 0, 0, 1),
+    0 0 40px rgba(255, 0, 0, 0.8);
+  animation: reel-flash 0.3s ease-out;
+}
+
+@keyframes pachinko-spin {
+  0% { transform: translateY(-100%); opacity: 0.7; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0.7; }
+}
+
+@keyframes reel-flash {
+  0% { transform: scale(1.2); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
 }
 
 .slot-jackpot {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #ffd700;
-  animation: jackpot-flash 0.5s ease infinite;
-  margin-bottom: 1rem;
+  animation: jackpot-flash 0.3s ease infinite;
+  margin: 1rem 0;
+  text-shadow: 
+    0 0 20px rgba(255, 215, 0, 1),
+    0 0 40px rgba(255, 215, 0, 0.8),
+    0 0 60px rgba(255, 0, 102, 0.6);
 }
 
 @keyframes jackpot-flash {
   0%, 100% { 
-    text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 215, 0, 0.8);
+    color: #ffd700;
     transform: scale(1);
   }
   50% { 
-    text-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 0, 0, 0.8);
-    transform: scale(1.1);
+    color: #ff0066;
+    transform: scale(1.15);
   }
 }
 
 .slot-close-btn {
-  background: linear-gradient(135deg, #ffd700, #ff8c00);
-  color: #1a1a2e;
+  background: linear-gradient(135deg, #ff0066, #ff3399);
+  color: #fff;
   border: none;
   padding: 0.75rem 2rem;
   border-radius: 25px;
@@ -1492,11 +1532,12 @@
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
 }
 
 .slot-close-btn:hover:not(:disabled) {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 30px rgba(255, 0, 102, 0.8);
 }
 
 .slot-close-btn:disabled {

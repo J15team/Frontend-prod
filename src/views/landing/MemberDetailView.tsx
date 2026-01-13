@@ -302,11 +302,13 @@ export const MemberDetailView: React.FC = () => {
         <div className="slot-modal-overlay" onClick={() => !isSpinning && setShowSlot(false)}>
           <div className="slot-modal" onClick={(e) => e.stopPropagation()}>
             <div className="slot-machine">
-              <div className="slot-header">🎰 PACHINKAS 🎰</div>
-              <div className="slot-reels">
-                <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[0]}</div>
-                <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[1]}</div>
-                <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[2]}</div>
+              <div className="slot-header">🔴 PACHINKAS 🔴</div>
+              <div className="pachinko-frame">
+                <div className="slot-reels">
+                  <div className={`slot-reel ${isSpinning ? 'spinning' : 'stopped'}`}>{slotNumbers[0]}</div>
+                  <div className={`slot-reel ${isSpinning ? 'spinning' : 'stopped'}`}>{slotNumbers[1]}</div>
+                  <div className={`slot-reel ${isSpinning ? 'spinning' : 'stopped'}`}>{slotNumbers[2]}</div>
+                </div>
               </div>
               {!isSpinning && slotNumbers[0] === '7' && (
                 <div className="slot-jackpot">🎊 確変突入！！ 🎊</div>
