@@ -15,7 +15,9 @@ const membersData: Record<string, {
   bio: string[];
   skills: string[];
   hobbies: string[];
+  from: string[];
   links: { label: string; url: string }[];
+  rainbowFrom?: boolean;
 }> = {
   'member-1': {
     name: 'RIKI YOSHIDA',
@@ -36,6 +38,7 @@ const membersData: Record<string, {
       { label: 'GitHub', url: 'https://github.com/S4AK4N' },
       { label: 'Qiita', url: 'https://qiita.com/nanashi39' },
     ],
+    from:[]
 
   },
   'member-2': {
@@ -51,60 +54,77 @@ const membersData: Record<string, {
     skills: [],
     hobbies: [],
     links: [],
+    from:[]
   },
   'member-3': {
-    name: 'Member 3',
-    nameEn: 'Member Three',
-    role: 'Designer',
-    title: 'Designer',
+    name: 'TAKUMA ARAKI',
+    nameEn: 'TAKUMA ARAKI',
+    role: 'Backend',
+    title: 'Backend',
     image: '/images/team/member-3.jpg',
     bio: [
-      'ここに経歴や紹介文を書きます。',
-      'PathlyではUI/UXデザインを担当しました。',
+      '鳥取県出身。',
+      '鳥取の読み方は取鳥の方が自然だろと他県の方に言われますが僕もそう思います。',
+      '最近の趣味は友達の影響で温泉めぐりとパチンコと映画鑑賞。',
+      '初詣のおみくじは大吉。',
+      '旅行先で旅費を稼ぐことができてホクホクです。'
     ],
-    skills: ['Figma', 'UI/UX', 'Illustration'],
+    skills: [],
     hobbies: [],
     links: [],
+    from:['鳥取'],
+    rainbowFrom: true
   },
   'member-4': {
-    name: 'Member 4',
-    nameEn: 'Member Four',
-    role: 'Frontend Engineer',
-    title: 'Frontend Engineer',
+    name: 'DAIKI MORIKAWA',
+    nameEn: 'DAIKI MORIKAWA',
+    role: 'Frontend',
+    title: 'Frontend',
     image: '/images/team/member-4.jpg',
     bio: [
-      'ここに経歴や紹介文を書きます。',
+      '麻雀が好きな自堕落専門学生です',
+      '眠気を抑えながら日々生活しています'
     ],
-    skills: ['React', 'JavaScript'],
-    hobbies: [],
+    skills: [],
+    hobbies: ['二度寝'],
     links: [],
+    from:[]
   },
   'member-5': {
-    name: 'Member 5',
-    nameEn: 'Member Five',
-    role: 'Backend Engineer',
-    title: 'Backend Engineer',
+    name: 'SEIYA HIROHATA',
+    nameEn: 'SEIYA HIROHATA',
+    role: "Leader's pet(frontend)",
+    title: "Leader's pet(frontend)",
     image: '/images/team/member-5.jpg',
     bio: [
-      'ここに経歴や紹介文を書きます。',
+      '来年から社会人になる淡路島出身のペットです',
+      '観光スポットのおいしいもの食べるのが好きです',
+      '最近倉敷に観光に行きました',
+      'あと、淡路島は自然豊かでおいしいものがたくさんあります！',
+      '田舎でスローライフをしたい人はぜひ淡路島に住みましょう'
+
     ],
-    skills: ['Node.js', 'AWS'],
-    hobbies: [],
+    skills: ['運転'],
+    hobbies: ['ドライブ'],
     links: [],
+    from:['淡路島']
   },
   'member-6': {
-    name: 'Member 6',
-    nameEn: 'Member Six',
-    role: 'Project Manager',
-    title: 'Project Manager',
+    name: 'KOUKI TANAKA',
+    nameEn: 'KOUKI TANAKA',
+    role: 'material',
+    title: 'material',
     image: '/images/team/member-6.jpg',
     bio: [
-      'ここに経歴や紹介文を書きます。',
-      'Pathlyではプロジェクト管理を担当しました。',
+      'どうも、当て馬で発表した人です。',
+      'パワポのセンスが壊滅的らしいんですがセンスって何なんでしょうね。',
+      '趣味はゲームと小説です。個人で書いてる小説が最近伸び始めて嬉しいですね。コミケ出たい。',
+      'どうせこんなとこ誰も見てないしガチの性癖書くんですけど、苦痛に歪む麗人の顔が好きです。'
     ],
-    skills: ['Scrum', 'Communication'],
+    skills: [],
     hobbies: [],
     links: [],
+    from:['大阪生まれの尼崎育ち']
   },
 };
 
@@ -174,6 +194,18 @@ export const MemberDetailView: React.FC = () => {
               ))}
             </div>
           </section>
+
+          {member.from.length > 0 && (
+            <section className="member-section">
+              <h2>From</h2>
+              <div className={`member-from ${member.rainbowFrom ? 'rainbow' : ''}`}>
+                {member.from.map((from, i) => (
+                  <span key={i} className="skill-tag">{from}</span>
+                ))}
+              </div>
+            </section>
+          )}
+
 
           {member.skills.length > 0 && (
             <section className="member-section">
