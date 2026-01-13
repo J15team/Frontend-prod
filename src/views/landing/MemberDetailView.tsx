@@ -309,7 +309,7 @@ export const MemberDetailView: React.FC = () => {
                 <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[2]}</div>
               </div>
               {!isSpinning && slotNumbers[0] === '7' && (
-                <div className="slot-jackpot">🎊 JACKPOT! 🎊</div>
+                <div className="slot-jackpot">🎊 確変突入！！ 🎊</div>
               )}
               <button 
                 className="slot-close-btn" 
