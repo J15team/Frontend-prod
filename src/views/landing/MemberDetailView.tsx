@@ -61,7 +61,7 @@ const membersData: Record<string, {
     nameEn: 'TAKUMA ARAKI',
     role: 'Backend',
     title: 'Backend',
-    image: '/images/team/member-3.jpg',
+    image: '/images/team/member-3-detail.jpg',
     bio: [
       '鳥取県出身。',
       '鳥取の読み方は取鳥の方が自然だろと他県の方に言われますが僕もそう思います。',
@@ -95,7 +95,7 @@ const membersData: Record<string, {
     nameEn: 'SEIYA HIROHATA',
     role: "Leader's pet(frontend)",
     title: "Leader's pet(frontend)",
-    image: '/images/team/member-5.jpg',
+    image: '/images/team/member-5-detail.jpg',
     bio: [
       '来年から社会人になる淡路島出身のペットです',
       '観光スポットのおいしいもの食べるのが好きです',
@@ -114,7 +114,7 @@ const membersData: Record<string, {
     nameEn: 'KOUKI TANAKA',
     role: 'material',
     title: 'material',
-    image: '/images/team/member-6.jpg',
+    image: '/images/team/member-6-detail.jpg',
     bio: [
       'どうも、当て馬で発表した人です。',
       'パワポのセンスが壊滅的らしいんですがセンスって何なんでしょうね。',
