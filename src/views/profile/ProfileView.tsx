@@ -6,6 +6,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProfileViewModel } from '@/viewmodels/profile/useProfileViewModel';
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
+import { useTheme } from '@/contexts/ThemeContext';
 import { isGitHubConnected, getGitHubUser, clearGitHubConnection } from '@/utils/storage/githubStorage';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 
@@ -31,6 +32,8 @@ interface SettingsModalProps {
   };
   updating: boolean;
   updateError: string | null;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
   onUpdateUsername: (username: string) => Promise<boolean>;
   onUploadImage: (file: File) => Promise<boolean>;
   onDeleteImage: () => Promise<boolean>;
@@ -41,6 +44,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   user,
   updating,
   updateError,
+  theme,
+  onToggleTheme,
   onUpdateUsername,
   onUploadImage,
   onDeleteImage,
@@ -145,6 +150,20 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
           <p className="settings-hint">1〜50文字で入力してください（日本語OK）</p>
         </div>
 
+        <div className="settings-section">
+          <h4>テーマ設定</h4>
+          <div className="theme-toggle-setting">
+            <span className="theme-label">ダークモード</span>
+            <button 
+              className={`theme-switch ${theme === 'dark' ? 'active' : ''}`}
+              onClick={onToggleTheme}
+              type="button"
+            >
+              <span className="theme-switch-slider" />
+            </button>
+          </div>
+        </div>
+
         <div className="modal-actions">
           <button className="btn-secondary" onClick={onClose}>
             閉じる
@@ -157,6 +176,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
 export const ProfileView: React.FC = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const {
     user,
     inProgressSubjects,
@@ -460,6 +480,8 @@ export const ProfileView: React.FC = () => {
           user={user}
           updating={updating}
           updateError={updateError}
+          theme={theme}
+          onToggleTheme={toggleTheme}
           onUpdateUsername={handleUpdateUsername}
           onUploadImage={handleUploadImage}
           onDeleteImage={handleDeleteImage}

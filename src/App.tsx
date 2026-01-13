@@ -5,7 +5,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { ThemeToggle } from '@/components/common/ThemeToggle';
 import { ScrollToTop } from '@/components/common/ScrollToTop';
 import { LandingView } from '@/views/landing/LandingView';
 import { MemberDetailView } from '@/views/landing/MemberDetailView';
@@ -155,7 +154,6 @@ const App: React.FC = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        <ThemeToggle />
         <ScrollToTop />
       </Router>
     </ThemeProvider>
