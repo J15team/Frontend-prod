@@ -145,8 +145,8 @@
 
 /* コンテンツ分割 */
 .main-content-split { display: flex; flex: 1; min-height: 0; position: relative; overflow: hidden; }
-.split-left { overflow-y: auto; padding: 1rem; min-width: 0; flex-shrink: 0; }
-.split-right { overflow: hidden; min-width: 0; display: flex; flex-direction: column; flex-shrink: 0; }
+.split-left { overflow-y: auto; padding: 1rem; min-width: 0; }
+.split-right { overflow: hidden; min-width: 0; display: flex; flex-direction: column; }
 .split-resizer { width: 8px; background: #e5e7eb; cursor: col-resize; flex-shrink: 0; transition: background 0.2s; position: relative; }
 .split-resizer:hover { background: #22c55e; }
 .split-resizer::after { content: '⋮'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #9ca3af; font-size: 1rem; }
@@ -179,7 +179,7 @@
 .btn-refresh-preview { padding: 0.25rem 0.75rem; background: #e5e7eb; border: none; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: background 0.2s; }
 .btn-refresh-preview:hover { background: #d1d5db; }
 .preview-error { padding: 0.5rem 1rem; background: #fef2f2; color: #dc2626; font-size: 0.75rem; border-bottom: 1px solid #fecaca; }
-.preview-iframe { flex: 1; width: 100%; border: none; background: #ffffff; }
+.preview-iframe { flex: 1; width: 100%; border: none; background: #ffffff; min-height: 300px; }
 
 /* コンテンツアクション */
 .content-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb; gap: 1rem; }

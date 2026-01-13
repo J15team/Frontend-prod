@@ -10,6 +10,34 @@ interface CodePreviewProps {
   currentSectionId: number;
 }
 
+const DEFAULT_CODE = {
+  html: `<div class="container">
+  <h1>Hello, World!</h1>
+  <button id="btn">クリック</button>
+</div>`,
+  css: `.container {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  color: #22c55e;
+}
+
+button {
+  padding: 10px 20px;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}`,
+  js: `const btn = document.getElementById('btn');
+btn.addEventListener('click', () => {
+  alert('ボタンがクリックされました！');
+});`,
+};
+
 export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSectionId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -19,8 +47,8 @@ export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSect
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    // 各ファイルタイプのコードを取得（前のセクションから引き継ぎ）
-    const getCodeWithFallback = (fileIndex: number): string => {
+    // 各ファイルタイプのコードを取得（前のセクションから引き継ぎ、なければデフォルト）
+    const getCodeWithFallback = (fileIndex: number, defaultCode: string): string => {
       // まず現在のセクションを確認
       const current = getCode(subjectId, currentSectionId * 10 + fileIndex);
       if (current?.code) return current.code;
@@ -30,12 +58,13 @@ export const CodePreview: React.FC<CodePreviewProps> = ({ subjectId, currentSect
         const prev = getCode(subjectId, prevSection * 10 + fileIndex);
         if (prev?.code) return prev.code;
       }
-      return '';
+      // なければデフォルト
+      return defaultCode;
     };
 
-    const htmlCode = getCodeWithFallback(0);
-    const cssCode = getCodeWithFallback(1);
-    const jsCode = getCodeWithFallback(2);
+    const htmlCode = getCodeWithFallback(0, DEFAULT_CODE.html);
+    const cssCode = getCodeWithFallback(1, DEFAULT_CODE.css);
+    const jsCode = getCodeWithFallback(2, DEFAULT_CODE.js);
 
     const previewHtml = `<!DOCTYPE html>
 <html lang="ja">
@@ -54,7 +83,7 @@ ${cssCode}
 </style>
 </head>
 <body>
-${htmlCode || '<p style="color: #999;">HTMLタブでコードを書くとここにプレビューが表示されます</p>'}
+${htmlCode}
 <script>
 try {
   ${jsCode}
@@ -70,11 +99,9 @@ try {
     setError(null);
   }, [subjectId, currentSectionId]);
 
-  // 定期的にプレビューを更新
+  // 初回のみプレビューを更新（自動更新は手動ボタンで）
   useEffect(() => {
     updatePreview();
-    const interval = setInterval(updatePreview, 1500);
-    return () => clearInterval(interval);
   }, [updatePreview]);
 
   return (
@@ -90,7 +117,7 @@ try {
         ref={iframeRef}
         className="preview-iframe"
         title="Code Preview"
-        sandbox="allow-scripts"
+        sandbox="allow-scripts allow-modals allow-same-origin"
       />
     </div>
   );
