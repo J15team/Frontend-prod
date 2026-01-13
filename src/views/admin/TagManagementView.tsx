@@ -4,6 +4,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useTagManagementViewModel } from '@/viewmodels/admin/useTagManagementViewModel';
+import { CopyableCode } from '@/components/common/CopyableCode';
 
 export const TagManagementView: React.FC = () => {
   const {
@@ -65,7 +66,7 @@ export const TagManagementView: React.FC = () => {
     <div className="management-container">
       <h1>タグ管理</h1>
       <p>
-        <code>/api/tags</code> 系エンドポイントに対応した管理画面です。
+        <CopyableCode>/api/tags</CopyableCode> 系エンドポイントに対応した管理画面です。
       </p>
 
       {success && <div className="success-message">{success}</div>}

@@ -68,8 +68,8 @@ export const getCode = (
 };
 
 /**
- * 題材の最終セクションのコードを取得（エクスポート用）
- * 一番最後のセクションのHTML/CSS/JSのみ取得
+ * 題材の最終コードを取得（エクスポート用）
+ * 各ファイルタイプ（HTML/CSS/JS）ごとに、最後に編集されたセクションのコードを取得
  */
 export const getSubjectFinalCode = (
   subjectId: number
@@ -79,21 +79,32 @@ export const getSubjectFinalCode = (
   
   if (!subjectData) return null;
 
-  // セクションIDを抽出して最大値を取得
-  let maxSectionId = 0;
+  // 各ファイルタイプごとに最新のコードを探す
+  // sectionId * 10 + 0 = HTML, + 1 = CSS, + 2 = JS
+  let latestHtml = { sectionId: 0, code: '' };
+  let latestCss = { sectionId: 0, code: '' };
+  let latestJs = { sectionId: 0, code: '' };
+
   Object.keys(subjectData).forEach(key => {
     const id = parseInt(key);
     const sectionId = Math.floor(id / 10);
-    if (sectionId > maxSectionId) {
-      maxSectionId = sectionId;
+    const fileType = id % 10;
+    const code = subjectData[id]?.code || '';
+
+    if (!code) return;
+
+    if (fileType === 0 && sectionId >= latestHtml.sectionId) {
+      latestHtml = { sectionId, code };
+    } else if (fileType === 1 && sectionId >= latestCss.sectionId) {
+      latestCss = { sectionId, code };
+    } else if (fileType === 2 && sectionId >= latestJs.sectionId) {
+      latestJs = { sectionId, code };
     }
   });
 
-  if (maxSectionId === 0) return null;
-
-  const html = subjectData[maxSectionId * 10 + 0]?.code || '';
-  const css = subjectData[maxSectionId * 10 + 1]?.code || '';
-  const js = subjectData[maxSectionId * 10 + 2]?.code || '';
+  const html = latestHtml.code;
+  const css = latestCss.code;
+  const js = latestJs.code;
 
   // コードがない場合はnull
   if (!html && !css && !js) return null;

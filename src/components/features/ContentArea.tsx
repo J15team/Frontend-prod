@@ -2,7 +2,7 @@
  * ContentArea Component
  * コンテンツ表示エリアコンポーネント
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { marked } from 'marked';
 import { type Section } from '@/models/Section';
 
@@ -28,15 +28,54 @@ export const ContentArea: React.FC<ContentAreaProps> = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // コードブロックにコピーボタンを追加
+  const addCopyButtons = useCallback(() => {
+    if (!contentRef.current) return;
+    
+    const codeBlocks = contentRef.current.querySelectorAll('pre');
+    codeBlocks.forEach((pre) => {
+      // 既にボタンがあればスキップ
+      if (pre.querySelector('.code-copy-btn')) return;
+      
+      // ラッパーで囲む
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+      
+      // コピーボタンを追加
+      const btn = document.createElement('button');
+      btn.className = 'code-copy-btn';
+      btn.textContent = '📋 コピー';
+      btn.title = 'コードをコピー';
+      btn.onclick = async () => {
+        const code = pre.querySelector('code')?.textContent || pre.textContent || '';
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.textContent = '✓ コピーしました';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = '📋 コピー';
+            btn.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('コピーに失敗:', err);
+        }
+      };
+      wrapper.appendChild(btn);
+    });
+  }, []);
+
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.innerHTML = marked.parse(section.description) as string;
+      addCopyButtons();
     }
     // セクションが変わったらコンテンツエリアの先頭にスクロール
     if (containerRef.current) {
       containerRef.current.scrollTop = 0;
     }
-  }, [section.description]);
+  }, [section.description, addCopyButtons]);
 
   return (
     <div className="content-area" ref={containerRef}>

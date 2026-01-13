@@ -4,6 +4,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { useAdminUsersViewModel } from '@/viewmodels/admin/useAdminUsersViewModel';
+import { CopyableCode } from '@/components/common/CopyableCode';
 
 interface AdminCreateForm {
   email: string;
@@ -83,7 +84,7 @@ export const AdminUsersView: React.FC = () => {
     <div className="management-container">
       <h1>管理者API</h1>
       <p>
-        <code>X-Admin-Key</code> ヘッダーを用いる <code>POST /api/admin/users</code> と、JWTで保護された管理者一覧/更新エンドポイントを操作します。
+        <CopyableCode>X-Admin-Key</CopyableCode> ヘッダーを用いる <CopyableCode>POST /api/admin/users</CopyableCode> と、JWTで保護された管理者一覧/更新エンドポイントを操作します。
       </p>
       {success && <div className="success-message">{success}</div>}
       {error && <div className="error-message">{error}</div>}

@@ -4,6 +4,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { useSubjectManagementViewModel } from '@/viewmodels/subjects/useSubjectManagementViewModel';
+import { CopyableCode } from '@/components/common/CopyableCode';
 
 interface SubjectFormState {
   subjectId: string;
@@ -108,7 +109,7 @@ export const SubjectManagementView: React.FC = () => {
     <div className="management-container">
       <h1>題材管理</h1>
       <p>
-        <code>/api/subjects</code> 系エンドポイントに対応した管理画面です。管理者トークンを所持した状態で実行してください。
+        <CopyableCode>/api/subjects</CopyableCode> 系エンドポイントに対応した管理画面です。管理者トークンを所持した状態で実行してください。
       </p>
       {success && <div className="success-message">{success}</div>}
       {error && <div className="error-message">{error}</div>}

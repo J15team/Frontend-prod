@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CopyableCode } from '@/components/common/CopyableCode';
 
 interface EndpointLink {
   label: string;
@@ -124,7 +125,7 @@ export const RootView: React.FC = () => {
                   <span className={`http-method ${endpoint.method.toLowerCase()}`}>
                     {endpoint.method}
                   </span>
-                  <code>{endpoint.path}</code>
+                  <CopyableCode>{endpoint.path}</CopyableCode>
                 </li>
               ))}
             </ul>

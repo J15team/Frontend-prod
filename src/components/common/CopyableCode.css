@@ -1,0 +1,40 @@
+.copyable-code-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.copyable-code {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.9em;
+}
+
+.copy-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 0.85em;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+  border-radius: 4px;
+}
+
+.copy-btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
+}
+
+.copy-btn.copied {
+  opacity: 1;
+  color: #22c55e;
+}
