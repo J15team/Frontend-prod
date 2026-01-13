@@ -25,6 +25,7 @@ import { AdminUsersView } from '@/views/admin/AdminUsersView';
 import { AdminLayout } from '@/views/admin/AdminLayout';
 import { AdminDashboardView } from '@/views/admin/AdminDashboardView';
 import { TagManagementView } from '@/views/admin/TagManagementView';
+import { RankingView } from '@/views/ranking/RankingView';
 import { ForbiddenView } from '@/views/error/ForbiddenView';
 import { AdminKeyRequiredView } from '@/views/error/AdminKeyRequiredView';
 import { ProtectedRoute } from '@/components/common/ProtectedRoute';
@@ -82,6 +83,14 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute>
               <ProgressInspectorView />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ranking"
+          element={
+            <ProtectedRoute>
+              <RankingView />
             </ProtectedRoute>
           }
         />

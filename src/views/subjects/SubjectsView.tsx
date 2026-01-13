@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSubjectsViewModel } from '@/viewmodels/subjects/useSubjectsViewModel';
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
+import { recordSubjectView, recordTagView } from '@/services/ranking/RankingService';
 import { type Subject } from '@/models/Subject';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { Tutorial, shouldShowTutorial } from '@/components/features/Tutorial';
@@ -426,6 +427,15 @@ export const SubjectsView: React.FC = () => {
   }, [location.state]);
 
   const onSubjectClick = (subject: Subject) => {
+    // 閲覧記録を送信（エラーは無視）
+    recordSubjectView(subject.subjectId).catch(() => {});
+    
+    // 紐づいてるタグの閲覧も記録
+    const tags = subjectTags[subject.subjectId] || [];
+    tags.forEach((tag) => {
+      recordTagView(tag.id).catch(() => {});
+    });
+    
     // チュートリアル中の場合はフラグを渡してセクションページでも継続
     if (showTutorial) {
       navigate(`/subjects/${subject.subjectId}/sections`, { 
@@ -543,6 +553,9 @@ export const SubjectsView: React.FC = () => {
           <h1>題材一覧</h1>
         </div>
         <div className="header-actions">
+          <button onClick={() => navigate('/ranking')} className="btn-ranking">
+            🏆 ランキング
+          </button>
           <button onClick={() => navigate('/profile')} className="btn-profile">
             プロフィール
           </button>

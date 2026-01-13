@@ -1,0 +1,510 @@
+/* ====================================================================
+   ランキングページ（リボンスタイル）
+   ==================================================================== */
+.ranking-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #c41e3a 0%, #8b0000 50%, #c41e3a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* キラキラエフェクト */
+.ranking-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 100%),
+    radial-gradient(2px 2px at 40% 70%, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(255, 255, 255, 0.7) 0%, transparent 100%),
+    radial-gradient(2px 2px at 60% 20%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
+    radial-gradient(2px 2px at 70% 60%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 50%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 80% 90%, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
+  animation: sparkle 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 紙吹雪 */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 20px;
+  background: linear-gradient(135deg, #ffd700, #daa520);
+  top: -20px;
+  animation: fall linear infinite;
+  z-index: 0;
+}
+
+.confetti:nth-child(1) { left: 5%; animation-duration: 6s; animation-delay: 0s; }
+.confetti:nth-child(2) { left: 15%; animation-duration: 8s; animation-delay: 1s; transform: rotate(30deg); }
+.confetti:nth-child(3) { left: 85%; animation-duration: 7s; animation-delay: 2s; transform: rotate(-20deg); }
+.confetti:nth-child(4) { left: 92%; animation-duration: 9s; animation-delay: 0.5s; }
+.confetti:nth-child(5) { left: 25%; animation-duration: 7s; animation-delay: 3s; transform: rotate(45deg); }
+.confetti:nth-child(6) { left: 75%; animation-duration: 8s; animation-delay: 1.5s; }
+
+@keyframes fall {
+  to { top: 100vh; transform: rotate(360deg); }
+}
+
+/* ヘッダー */
+.ranking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.ranking-header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ranking-header .btn-back,
+.ranking-header .btn-refresh {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.ranking-header .btn-back:hover,
+.ranking-header .btn-refresh:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* ナビゲーションタブ */
+.ranking-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 20px 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-tab {
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.nav-tab:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.nav-tab.active {
+  background: #fff;
+  color: #c41e3a;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* メインコンテンツ */
+.ranking-content {
+  padding: 0 20px 40px;
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 難易度フィルター */
+.difficulty-filter {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  background: #eee;
+  border-color: #ccc;
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #c41e3a, #a01830);
+  color: #fff;
+  border-color: transparent;
+}
+
+.filter-btn .stars {
+  color: #daa520;
+}
+
+/* ランキングリスト */
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ランキングアイテム */
+.ranking-item {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 240, 245, 0.95);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: visible;
+  min-height: 70px;
+  border: 2px solid #c41e3a;
+}
+
+.ranking-item:hover {
+  transform: translateX(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.ranking-item.tag-item {
+  cursor: default;
+}
+
+.ranking-item.tag-item:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* 順位リボン */
+.rank-badge {
+  position: relative;
+  min-width: 90px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: #666;
+  color: #333;
+  font-weight: 700;
+  clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+  margin-right: 8px;
+}
+
+.rank-badge .crown {
+  font-size: 0.9rem;
+  margin-right: 2px;
+}
+
+.rank-badge .rank-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.rank-badge .rank-suffix {
+  font-size: 0.9rem;
+  margin-left: 1px;
+  align-self: flex-end;
+  margin-bottom: 4px;
+}
+
+/* 1位: ゴールド */
+.ranking-item.top-1 .rank-badge {
+  background: linear-gradient(135deg, #ffd700 0%, #daa520 50%, #b8860b 100%);
+  min-width: 100px;
+}
+
+.ranking-item.top-1 .rank-badge .rank-num {
+  font-size: 2.2rem;
+}
+
+/* 2位: シルバー */
+.ranking-item.top-2 .rank-badge {
+  background: linear-gradient(135deg, #e8e8e8 0%, #c0c0c0 50%, #a8a8a8 100%);
+}
+
+/* 3位: ブロンズ */
+.ranking-item.top-3 .rank-badge {
+  background: linear-gradient(135deg, #deb887 0%, #cd7f32 50%, #8b4513 100%);
+}
+
+/* 4位以降 */
+.ranking-item:not(.top-1):not(.top-2):not(.top-3) .rank-badge {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.ranking-item:not(.top-1):not(.top-2):not(.top-3) .rank-badge .crown {
+  display: none;
+}
+
+/* アイテム情報 */
+.item-info {
+  flex: 1;
+  padding: 12px 16px 12px 8px;
+  min-width: 0;
+}
+
+.item-title {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ranking-item:hover .item-title {
+  color: #c41e3a;
+}
+
+.item-desc {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.meta-difficulty {
+  color: #666;
+}
+
+.meta-stars {
+  color: #daa520;
+  letter-spacing: 1px;
+}
+
+.meta-sections {
+  color: #666;
+}
+
+.meta-views {
+  color: #999;
+}
+
+.tag-badge {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.tag-badge.normal {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.tag-badge.premium {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+/* サムネイル非表示 */
+.item-thumbnail {
+  display: none;
+}
+
+/* エラー・空状態 */
+.ranking-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 10;
+}
+
+.btn-retry {
+  padding: 12px 32px;
+  background: #fff;
+  color: #c41e3a;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-retry:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.no-data {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .ranking-header {
+    padding: 12px 16px;
+  }
+
+  .ranking-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .ranking-nav {
+    padding: 0 16px 16px;
+  }
+
+  .nav-tab {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  .ranking-content {
+    padding: 0 12px 30px;
+  }
+
+  .ranking-item {
+    min-height: 60px;
+  }
+
+  .rank-badge {
+    min-width: 70px;
+    padding: 0 12px;
+  }
+
+  .rank-badge .rank-num {
+    font-size: 1.4rem;
+  }
+
+  .rank-badge .crown {
+    font-size: 0.75rem;
+  }
+
+  .rank-badge .rank-suffix {
+    font-size: 0.75rem;
+  }
+
+  .ranking-item.top-1 .rank-badge {
+    min-width: 80px;
+  }
+
+  .ranking-item.top-1 .rank-badge .rank-num {
+    font-size: 1.6rem;
+  }
+
+  .item-info {
+    padding: 10px 12px 10px 6px;
+  }
+
+  .item-title {
+    font-size: 0.9rem;
+  }
+
+  .item-desc {
+    display: none;
+  }
+}
+
+/* ライトモード（デフォルトが赤なのでダークモード用） */
+[data-theme="dark"] .ranking-page {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+}
+
+[data-theme="dark"] .ranking-page::before {
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 215, 0, 0.6) 0%, transparent 100%),
+    radial-gradient(2px 2px at 40% 70%, rgba(255, 215, 0, 0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(255, 215, 0, 0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 60% 20%, rgba(255, 215, 0, 0.3) 0%, transparent 100%);
+}
+
+[data-theme="dark"] .ranking-item {
+  background: rgba(30, 30, 50, 0.95);
+  border-color: #3a3a5e;
+}
+
+[data-theme="dark"] .item-title {
+  color: #fff;
+}
+
+[data-theme="dark"] .ranking-item:hover .item-title {
+  color: #ffd700;
+}
+
+[data-theme="dark"] .item-desc,
+[data-theme="dark"] .item-meta {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ranking-item:not(.top-1):not(.top-2):not(.top-3) .rank-badge {
+  background: #3a3a5e;
+  color: #ccc;
+}
+
+[data-theme="dark"] .confetti {
+  background: linear-gradient(135deg, #ffd700, #ff6b6b);
+}
