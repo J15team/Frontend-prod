@@ -154,6 +154,92 @@
   line-height: 1.8;
   color: var(--text-secondary);
 }
+.content-body h1 {
+  font-size: 1.75rem;
+  border-bottom: 2px solid #22c55e;
+  padding-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.content-body h2 {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.content-body h3 {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.content-body p {
+  margin-bottom: 1rem;
+}
+.content-body code {
+  background: var(--bg-tertiary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.9em;
+  color: var(--text-primary);
+}
+.content-body pre {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.content-body pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+.content-body ul,
+.content-body ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+.content-body li {
+  margin-bottom: 0.5rem;
+}
+.content-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+.content-body blockquote {
+  border-left: 4px solid #22c55e;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+.content-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.content-body th,
+.content-body td {
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  text-align: left;
+}
+.content-body th {
+  background: var(--bg-tertiary);
+  font-weight: 600;
+}
+.content-body a {
+  color: #22c55e;
+  text-decoration: none;
+}
+.content-body a:hover {
+  text-decoration: underline;
+}
 
 .section-image-wrapper {
   margin-bottom: 20px;
@@ -173,25 +259,6 @@
   margin-top: 30px;
   margin-bottom: 15px;
   color: var(--text-primary);
-}
-.content-area p {
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
-}
-.content-area code {
-  background-color: var(--bg-tertiary);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: "Courier New", monospace;
-  color: var(--text-primary);
-}
-.content-area pre {
-  background-color: var(--bg-tertiary);
-  padding: 16px;
-  border-radius: 4px;
-  overflow-x: auto;
-  margin-bottom: 16px;
 }
 
 /* 進捗バー */

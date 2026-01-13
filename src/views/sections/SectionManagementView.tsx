@@ -3,6 +3,7 @@
  * セクション一覧、作成、更新、削除
  */
 import React, { useEffect, useState } from 'react';
+import { marked } from 'marked';
 import { useSectionManagementViewModel } from '@/viewmodels/sections/useSectionManagementViewModel';
 import { type Section } from '@/models/Section';
 
@@ -49,6 +50,8 @@ export const SectionManagementView: React.FC = () => {
     description: '',
     image: null,
   });
+  const [previewContent, setPreviewContent] = useState<string>('');
+  const [showPreview, setShowPreview] = useState(false);
 
   // 初期ロード時に題材一覧を取得
   useEffect(() => {
@@ -149,6 +152,11 @@ export const SectionManagementView: React.FC = () => {
     }
   };
 
+  const handlePreview = (content: string) => {
+    setPreviewContent(content);
+    setShowPreview(true);
+  };
+
   return (
     <div className="management-container">
       <h1>セクション管理</h1>
@@ -211,6 +219,14 @@ export const SectionManagementView: React.FC = () => {
                   setCreateForm({ ...createForm, description: e.target.value })
                 }
               />
+              <button
+                type="button"
+                className="btn-preview"
+                onClick={() => handlePreview(createForm.description)}
+                disabled={!createForm.description}
+              >
+                👁️ プレビュー
+              </button>
             </label>
             <label>
               画像ファイル (任意)
@@ -262,6 +278,14 @@ export const SectionManagementView: React.FC = () => {
                   setUpdateForm({ ...updateForm, description: e.target.value })
                 }
               />
+              <button
+                type="button"
+                className="btn-preview"
+                onClick={() => handlePreview(updateForm.description)}
+                disabled={!updateForm.description}
+              >
+                👁️ プレビュー
+              </button>
             </label>
             <label>
               画像ファイル (任意)
@@ -357,6 +381,22 @@ export const SectionManagementView: React.FC = () => {
           </div>
         )}
       </section>
+
+      {/* Markdownプレビューモーダル */}
+      {showPreview && (
+        <div className={`preview-modal-overlay ${showPreview ? 'show' : ''}`} onClick={() => setShowPreview(false)}>
+          <div className="preview-modal slide-in-left" onClick={(e) => e.stopPropagation()}>
+            <div className="preview-modal-header">
+              <h3>📄 Markdownプレビュー</h3>
+              <button className="preview-close-btn" onClick={() => setShowPreview(false)}>×</button>
+            </div>
+            <div 
+              className="preview-modal-content markdown-body"
+              dangerouslySetInnerHTML={{ __html: marked(previewContent) as string }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
