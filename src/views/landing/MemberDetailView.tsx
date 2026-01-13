@@ -224,7 +224,15 @@ export const MemberDetailView: React.FC = () => {
             <h2>Profile</h2>
             <div className="member-bio">
               {member.bio.map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
+                <p key={i}>
+                  {paragraph.includes('苦痛に歪む麗人の顔が好きです') ? (
+                    <>
+                      {paragraph.split('苦痛に歪む麗人の顔が好きです')[0]}
+                      <span className="distorted-text">苦痛に歪む麗人の顔が好きです</span>
+                      {paragraph.split('苦痛に歪む麗人の顔が好きです')[1]}
+                    </>
+                  ) : paragraph}
+                </p>
               ))}
             </div>
           </section>

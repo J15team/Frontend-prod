@@ -1553,3 +1553,30 @@
 .skill-tag.pachinkas:hover {
   transform: scale(1.1);
 }
+
+
+/* 歪みテキストエフェクト */
+.distorted-text {
+  display: inline-block;
+  animation: subtle-distort 3s ease-in-out infinite;
+  color: #666;
+}
+
+@keyframes subtle-distort {
+  0%, 100% {
+    transform: skewX(0deg);
+    filter: blur(0px);
+  }
+  25% {
+    transform: skewX(-1deg);
+    filter: blur(0.3px);
+  }
+  50% {
+    transform: skewX(0.5deg);
+    filter: blur(0.5px);
+  }
+  75% {
+    transform: skewX(-0.5deg);
+    filter: blur(0.2px);
+  }
+}
