@@ -2,8 +2,9 @@
  * Section Management View
  * セクション一覧、作成、更新、削除
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { marked } from 'marked';
+import Editor from '@monaco-editor/react';
 import { useSectionManagementViewModel } from '@/viewmodels/sections/useSectionManagementViewModel';
 import { type Section } from '@/models/Section';
 
@@ -52,6 +53,47 @@ export const SectionManagementView: React.FC = () => {
   });
   const [previewContent, setPreviewContent] = useState<string>('');
   const [showPreview, setShowPreview] = useState(false);
+  const [previewTab, setPreviewTab] = useState<'markdown' | 'code'>('markdown');
+  
+  // コードエディター用state
+  const [codeTab, setCodeTab] = useState<'html' | 'css' | 'javascript'>('html');
+  const [codes, setCodes] = useState({ html: '', css: '', javascript: '' });
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const DEFAULT_CODE = {
+    html: `<div class="container">
+  <h1>Hello, World!</h1>
+  <button id="btn">クリック</button>
+</div>`,
+    css: `.container {
+  text-align: center;
+  padding: 20px;
+}
+h1 { color: #22c55e; }
+button {
+  padding: 10px 20px;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}`,
+    javascript: `const btn = document.getElementById('btn');
+btn.addEventListener('click', () => {
+  alert('ボタンがクリックされました！');
+});`,
+  };
+
+  const updateCodePreview = () => {
+    if (!iframeRef.current) return;
+    const html = codes.html || DEFAULT_CODE.html;
+    const css = codes.css || DEFAULT_CODE.css;
+    const js = codes.javascript || DEFAULT_CODE.javascript;
+    
+    iframeRef.current.srcdoc = `<!DOCTYPE html>
+<html><head><style>${css}</style></head>
+<body>${html}<script>try{${js}}catch(e){console.error(e)}</script></body></html>`;
+  };
 
   // 初期ロード時に題材一覧を取得
   useEffect(() => {
@@ -387,13 +429,75 @@ export const SectionManagementView: React.FC = () => {
         <div className={`preview-modal-overlay ${showPreview ? 'show' : ''}`} onClick={() => setShowPreview(false)}>
           <div className="preview-modal slide-in-left" onClick={(e) => e.stopPropagation()}>
             <div className="preview-modal-header">
-              <h3>📄 Markdownプレビュー</h3>
+              <div className="preview-modal-tabs">
+                <button 
+                  className={`preview-tab-btn ${previewTab === 'markdown' ? 'active' : ''}`}
+                  onClick={() => setPreviewTab('markdown')}
+                >
+                  📄 Markdown
+                </button>
+                <button 
+                  className={`preview-tab-btn ${previewTab === 'code' ? 'active' : ''}`}
+                  onClick={() => setPreviewTab('code')}
+                >
+                  💻 コードエディター
+                </button>
+              </div>
               <button className="preview-close-btn" onClick={() => setShowPreview(false)}>×</button>
             </div>
-            <div 
-              className="preview-modal-content markdown-body"
-              dangerouslySetInnerHTML={{ __html: marked(previewContent) as string }}
-            />
+            
+            {previewTab === 'markdown' ? (
+              <div 
+                className="preview-modal-content markdown-body"
+                dangerouslySetInnerHTML={{ __html: marked(previewContent) as string }}
+              />
+            ) : (
+              <div className="preview-modal-code">
+                <div className="code-editor-section">
+                  <div className="code-tabs">
+                    <button 
+                      className={`code-tab ${codeTab === 'html' ? 'active' : ''}`}
+                      onClick={() => setCodeTab('html')}
+                    >🌐 HTML</button>
+                    <button 
+                      className={`code-tab ${codeTab === 'css' ? 'active' : ''}`}
+                      onClick={() => setCodeTab('css')}
+                    >🎨 CSS</button>
+                    <button 
+                      className={`code-tab ${codeTab === 'javascript' ? 'active' : ''}`}
+                      onClick={() => setCodeTab('javascript')}
+                    >⚡ JS</button>
+                  </div>
+                  <Editor
+                    height="300px"
+                    language={codeTab}
+                    theme="vs-dark"
+                    value={codes[codeTab] || DEFAULT_CODE[codeTab]}
+                    onChange={(value) => setCodes(prev => ({ ...prev, [codeTab]: value || '' }))}
+                    options={{
+                      minimap: { enabled: false },
+                      fontSize: 13,
+                      lineNumbers: 'on',
+                      scrollBeyondLastLine: false,
+                      automaticLayout: true,
+                      tabSize: 2,
+                    }}
+                  />
+                </div>
+                <div className="code-preview-section">
+                  <div className="code-preview-header">
+                    <span>👁️ プレビュー</span>
+                    <button className="btn-run-code" onClick={updateCodePreview}>▶ 実行</button>
+                  </div>
+                  <iframe
+                    ref={iframeRef}
+                    className="code-preview-iframe"
+                    title="Code Preview"
+                    sandbox="allow-scripts allow-modals"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
