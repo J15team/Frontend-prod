@@ -2,7 +2,7 @@
  * Member Detail View
  * チームメンバー個人紹介ページ
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 // メンバーデータ（後で実際の情報に更新）
@@ -135,11 +135,41 @@ const membersData: Record<string, {
 export const MemberDetailView: React.FC = () => {
   const { memberId } = useParams<{ memberId: string }>();
   const navigate = useNavigate();
+  const [showSlot, setShowSlot] = useState(false);
+  const [slotNumbers, setSlotNumbers] = useState(['?', '?', '?']);
+  const [isSpinning, setIsSpinning] = useState(false);
   
   // ページ遷移時にトップにスクロール
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [memberId]);
+
+  // パチンコスロット演出
+  const handlePachinkasClick = () => {
+    setShowSlot(true);
+    setIsSpinning(true);
+    setSlotNumbers(['?', '?', '?']);
+    
+    // スロット回転演出
+    const symbols = ['7', '🍒', '🔔', 'BAR', '💎'];
+    let count = 0;
+    const interval = setInterval(() => {
+      setSlotNumbers([
+        symbols[Math.floor(Math.random() * symbols.length)],
+        symbols[Math.floor(Math.random() * symbols.length)],
+        symbols[Math.floor(Math.random() * symbols.length)],
+      ]);
+      count++;
+      if (count > 15) {
+        clearInterval(interval);
+        // 最終結果は777
+        setTimeout(() => {
+          setSlotNumbers(['7', '7', '7']);
+          setIsSpinning(false);
+        }, 200);
+      }
+    }, 100);
+  };
   
   const member = memberId ? membersData[memberId] : null;
 
@@ -216,7 +246,14 @@ export const MemberDetailView: React.FC = () => {
               <h2>Skills</h2>
               <div className={`member-skills ${member.rainbowSkills ? 'rainbow' : ''}`}>
                 {member.skills.map((skill, i) => (
-                  <span key={i} className="skill-tag">{skill}</span>
+                  <span 
+                    key={i} 
+                    className={`skill-tag ${skill === 'パチンカス' ? 'pachinkas' : ''}`}
+                    onClick={skill === 'パチンカス' ? handlePachinkasClick : undefined}
+                    style={skill === 'パチンカス' ? { cursor: 'pointer' } : undefined}
+                  >
+                    {skill}
+                  </span>
                 ))}
               </div>
             </section>
@@ -259,6 +296,32 @@ export const MemberDetailView: React.FC = () => {
       <footer className="member-footer">
         <p>© 2026 Pathly Team</p>
       </footer>
+
+      {/* パチンコスロットモーダル */}
+      {showSlot && (
+        <div className="slot-modal-overlay" onClick={() => !isSpinning && setShowSlot(false)}>
+          <div className="slot-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="slot-machine">
+              <div className="slot-header">🎰 PACHINKAS 🎰</div>
+              <div className="slot-reels">
+                <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[0]}</div>
+                <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[1]}</div>
+                <div className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>{slotNumbers[2]}</div>
+              </div>
+              {!isSpinning && slotNumbers[0] === '7' && (
+                <div className="slot-jackpot">🎊 JACKPOT! 🎊</div>
+              )}
+              <button 
+                className="slot-close-btn" 
+                onClick={() => setShowSlot(false)}
+                disabled={isSpinning}
+              >
+                閉じる
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
