@@ -36,8 +36,8 @@ export const SectionsView: React.FC = () => {
   } = useSectionsViewModel();
 
   // リサイズ用の状態
-  const [sidebarWidth, setSidebarWidth] = useState(320); // px
-  const [contentWidth, setContentWidth] = useState(45); // パーセント（残りの中での割合）
+  const [sidebarWidth, setSidebarWidth] = useState(280); // px
+  const [contentWidth, setContentWidth] = useState(40); // パーセント（残りの中での割合）
   const [showExportModal, setShowExportModal] = useState(false);
   const [rightTab, setRightTab] = useState<'editor' | 'preview'>('editor');
   
@@ -91,7 +91,7 @@ export const SectionsView: React.FC = () => {
     if (draggingContent.current && contentContainerRef.current) {
       const containerRect = contentContainerRef.current.getBoundingClientRect();
       const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-      if (newWidth >= 25 && newWidth <= 75) {
+      if (newWidth >= 10 && newWidth <= 85) {
         setContentWidth(newWidth);
       }
     }
