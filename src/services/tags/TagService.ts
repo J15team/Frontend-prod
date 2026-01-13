@@ -74,5 +74,5 @@ export const addTagToSubject = async (subjectId: number, tagName: string): Promi
  * 題材からタグを削除
  */
 export const removeTagFromSubject = async (subjectId: number, tagName: string): Promise<void> => {
-  await apiClient.delete(`/subjects/${subjectId}/tags/${encodeURIComponent(tagName)}`);
+  await apiClient.delete(`/subjects/${subjectId}/tags`, { data: { tagName } });
 };

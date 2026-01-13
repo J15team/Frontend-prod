@@ -142,13 +142,7 @@ interface ProgressSidebarProps {
   getDaysRemaining: (subjectId: number) => number | null;
   onClose: () => void;
   onSubjectClick: (subject: Subject) => void;
-  // フィルター関連
   allTags: { id: number; name: string }[];
-  selectedTags: string[];
-  onToggleTag: (tagName: string) => void;
-  onClearTags: () => void;
-  selectedWeight: number | null;
-  onSelectWeight: (weight: number | null) => void;
 }
 
 const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
@@ -159,25 +153,32 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
   onClose,
   onSubjectClick,
   allTags,
-  selectedTags,
-  onToggleTag,
-  onClearTags,
-  selectedWeight,
-  onSelectWeight,
 }) => {
   const [showAllNotStarted, setShowAllNotStarted] = useState(false);
+  // サイドバー専用のフィルター状態
+  const [sidebarSelectedTags, setSidebarSelectedTags] = useState<string[]>([]);
+  const [sidebarSelectedWeight, setSidebarSelectedWeight] = useState<number | null>(null);
+
+  // フィルタリング適用
+  const filteredSubjects = subjects.filter((s) => {
+    // 難易度フィルター
+    if (sidebarSelectedWeight !== null && (s.weight || 1) !== sidebarSelectedWeight) {
+      return false;
+    }
+    return true;
+  });
 
   // 進捗でカテゴリ分け
-  const inProgress = subjects.filter((s) => {
+  const inProgress = filteredSubjects.filter((s) => {
     const p = progress[s.subjectId] || 0;
     return p > 0 && p < 100;
   });
-  const completed = subjects.filter((s) => (progress[s.subjectId] || 0) === 100);
-  const notStarted = subjects.filter((s) => (progress[s.subjectId] || 0) === 0);
+  const completed = filteredSubjects.filter((s) => (progress[s.subjectId] || 0) === 100);
+  const notStarted = filteredSubjects.filter((s) => (progress[s.subjectId] || 0) === 0);
 
-  // 全体の進捗計算
-  const totalProgress = subjects.length > 0
-    ? Math.round(subjects.reduce((sum, s) => sum + (progress[s.subjectId] || 0), 0) / subjects.length)
+  // 全体の進捗計算（フィルター適用後）
+  const totalProgress = filteredSubjects.length > 0
+    ? Math.round(filteredSubjects.reduce((sum, s) => sum + (progress[s.subjectId] || 0), 0) / filteredSubjects.length)
     : 0;
 
   const getDeadlineClass = (daysRemaining: number | null): string => {
@@ -323,8 +324,8 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
                 {[1, 2, 3, 4, 5].map((weight) => (
                   <button
                     key={weight}
-                    className={`sidebar-star-btn ${selectedWeight === weight ? 'active' : ''}`}
-                    onClick={() => onSelectWeight(selectedWeight === weight ? null : weight)}
+                    className={`sidebar-star-btn ${sidebarSelectedWeight === weight ? 'active' : ''}`}
+                    onClick={() => setSidebarSelectedWeight(sidebarSelectedWeight === weight ? null : weight)}
                   >
                     {'★'.repeat(weight)}
                   </button>
@@ -340,8 +341,14 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
                   {allTags.map((tag) => (
                     <button
                       key={tag.id}
-                      className={`sidebar-tag-btn ${selectedTags.includes(tag.name) ? 'active' : ''}`}
-                      onClick={() => onToggleTag(tag.name)}
+                      className={`sidebar-tag-btn ${sidebarSelectedTags.includes(tag.name) ? 'active' : ''}`}
+                      onClick={() => {
+                        setSidebarSelectedTags(prev => 
+                          prev.includes(tag.name) 
+                            ? prev.filter(t => t !== tag.name)
+                            : [...prev, tag.name]
+                        );
+                      }}
                     >
                       {tag.name}
                     </button>
@@ -359,12 +366,12 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
             </div>
 
             {/* フィルタークリア */}
-            {(selectedTags.length > 0 || selectedWeight !== null) && (
+            {(sidebarSelectedTags.length > 0 || sidebarSelectedWeight !== null) && (
               <button
                 className="sidebar-clear-filter"
                 onClick={() => {
-                  onClearTags();
-                  onSelectWeight(null);
+                  setSidebarSelectedTags([]);
+                  setSidebarSelectedWeight(null);
                 }}
               >
                 フィルターをクリア
@@ -752,11 +759,6 @@ export const SubjectsView: React.FC = () => {
             onSubjectClick(subject);
           }}
           allTags={allTags}
-          selectedTags={selectedTags}
-          onToggleTag={toggleTagFilter}
-          onClearTags={clearTagFilters}
-          selectedWeight={selectedWeight}
-          onSelectWeight={setSelectedWeight}
         />
       )}
 
