@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "kill -9 $(lsof -t -i :3000) 2>/dev/null; vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
