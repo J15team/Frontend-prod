@@ -125,3 +125,56 @@ body {
   margin-top: 20px;
   justify-content: flex-end;
 }
+
+
+/* ====================================================================
+   ダークモード対応（Global）
+   ==================================================================== */
+[data-theme="dark"] .btn-primary {
+  background-color: var(--color-primary);
+  color: #121212;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+[data-theme="dark"] .btn-secondary {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: #3a3a3a;
+}
+
+[data-theme="dark"] .btn-back {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+[data-theme="dark"] .btn-back:hover {
+  background-color: var(--color-primary);
+  color: #121212;
+}
+
+[data-theme="dark"] .loading-container,
+[data-theme="dark"] .error-container {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .error-container {
+  color: #f87171;
+}
+
+[data-theme="dark"] .progress-container {
+  background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .progress-bar {
+  background-color: var(--color-primary);
+}
+
+[data-theme="dark"] .modal-content {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
