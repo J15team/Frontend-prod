@@ -1244,6 +1244,66 @@
   }
 }
 
+/* 砂漠エフェクト（鳥取用） */
+.member-from.desert .skill-tag {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #8b4513;
+  background: linear-gradient(135deg, #f4d03f, #e6b800, #d4a574, #c19a6b, #f4d03f);
+  background-size: 400% 400%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  animation: desert-shimmer 4s ease infinite;
+  box-shadow: 0 0 10px rgba(244, 208, 63, 0.4), 0 0 20px rgba(210, 180, 140, 0.3);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.member-from.desert .skill-tag::before {
+  content: '🏜️';
+  margin-right: 0.3rem;
+}
+
+@keyframes desert-shimmer {
+  0% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), 0 0 20px rgba(210, 180, 140, 0.3);
+  }
+  25% {
+    background-position: 50% 100%;
+    box-shadow: 0 0 15px rgba(230, 184, 0, 0.5), 0 0 25px rgba(193, 154, 107, 0.4);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 20px rgba(212, 165, 116, 0.6), 0 0 30px rgba(244, 208, 63, 0.4);
+  }
+  75% {
+    background-position: 50% 0%;
+    box-shadow: 0 0 15px rgba(193, 154, 107, 0.5), 0 0 25px rgba(230, 184, 0, 0.4);
+  }
+  100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), 0 0 20px rgba(210, 180, 140, 0.3);
+  }
+}
+
+/* Skills用虹色エフェクト */
+.member-skills.rainbow .skill-tag {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff0080, #ff8c00, #40e0d0, #7b68ee, #ff0080);
+  background-size: 400% 400%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  animation: rainbow-glow 3s ease infinite;
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.4), 0 0 30px rgba(64, 224, 208, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
 .skill-tag {
   font-size: 0.9rem;
   color: #1e3a2f;

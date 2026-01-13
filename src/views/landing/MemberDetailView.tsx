@@ -18,6 +18,8 @@ const membersData: Record<string, {
   from: string[];
   links: { label: string; url: string }[];
   rainbowFrom?: boolean;
+  desertFrom?: boolean;
+  rainbowSkills?: boolean;
 }> = {
   'member-1': {
     name: 'RIKI YOSHIDA',
@@ -69,11 +71,13 @@ const membersData: Record<string, {
       '初詣のおみくじは大吉。',
       '旅行先で旅費を稼ぐことができてホクホクです。'
     ],
-    skills: [],
+    skills: ['パチンカス'],
     hobbies: [],
     links: [],
     from:['鳥取'],
-    rainbowFrom: true
+    rainbowFrom: false,
+    desertFrom: true,
+    rainbowSkills: true
   },
   'member-4': {
     name: 'DAIKI MORIKAWA',
@@ -198,7 +202,7 @@ export const MemberDetailView: React.FC = () => {
           {member.from.length > 0 && (
             <section className="member-section">
               <h2>From</h2>
-              <div className={`member-from ${member.rainbowFrom ? 'rainbow' : ''}`}>
+              <div className={`member-from ${member.rainbowFrom ? 'rainbow' : ''} ${member.desertFrom ? 'desert' : ''}`}>
                 {member.from.map((from, i) => (
                   <span key={i} className="skill-tag">{from}</span>
                 ))}
@@ -210,7 +214,7 @@ export const MemberDetailView: React.FC = () => {
           {member.skills.length > 0 && (
             <section className="member-section">
               <h2>Skills</h2>
-              <div className="member-skills">
+              <div className={`member-skills ${member.rainbowSkills ? 'rainbow' : ''}`}>
                 {member.skills.map((skill, i) => (
                   <span key={i} className="skill-tag">{skill}</span>
                 ))}
