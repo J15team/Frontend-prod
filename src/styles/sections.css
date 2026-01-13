@@ -220,7 +220,13 @@
 /* サイドバーリサイザー */
 .sidebar-wrapper {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+}
+.sidebar-wrapper .sidebar {
+  flex: 1;
+  overflow-y: auto;
 }
 .sidebar-resizer {
   width: 6px;
@@ -277,7 +283,7 @@
 .editor-panel {
   display: flex;
   flex-direction: column;
-  min-height: 500px;
+  height: 100%;
   background: #1e1e1e;
 }
 .editor-panel-header {
