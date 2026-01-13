@@ -8,6 +8,7 @@ export interface Tag {
   displayName: string;
   type: 'NORMAL' | 'PREMIUM';
   createdAt: string;
+  subjectIds?: number[];
 }
 
 /**

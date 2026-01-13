@@ -5,7 +5,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getAllSubjects } from '@/services/subjects/SubjectService';
 import { getProgress } from '@/services/progress/ProgressService';
-import { getAllTags, getSubjectTags } from '@/services/tags/TagService';
+import { getAllTags } from '@/services/tags/TagService';
 import { type Subject } from '@/models/Subject';
 import { type Tag } from '@/models/Tag';
 import {
@@ -27,6 +27,24 @@ interface SubjectDeadlines {
 interface SubjectTagsMap {
   [subjectId: number]: Tag[];
 }
+
+/**
+ * タグ一覧からsubjectIdごとのタグマップを構築
+ */
+const buildSubjectTagsMap = (tags: Tag[]): SubjectTagsMap => {
+  const map: SubjectTagsMap = {};
+  for (const tag of tags) {
+    if (tag.subjectIds) {
+      for (const subjectId of tag.subjectIds) {
+        if (!map[subjectId]) {
+          map[subjectId] = [];
+        }
+        map[subjectId].push(tag);
+      }
+    }
+  }
+  return map;
+};
 
 interface SubjectsViewModelReturn {
   subjects: Subject[];
@@ -57,12 +75,14 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
   const [error, setError] = useState<string | null>(null);
 
   /**
-   * タグ一覧を取得
+   * タグ一覧を取得し、subjectTagsマップを構築
    */
   const fetchAllTags = async (): Promise<void> => {
     try {
       const tags = await getAllTags();
       setAllTags(tags);
+      // subjectIdsから逆引きマップを構築
+      setSubjectTags(buildSubjectTagsMap(tags));
     } catch (err) {
       console.error('Failed to fetch tags:', err);
     }
@@ -78,10 +98,15 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
       const data = await getAllSubjects(tags);
       setSubjects(data);
 
-      // 各題材の進捗を取得
-      const progressMap: SubjectProgress = {};
+      // 保存済みの期限を読み込み
+      setDeadlines(getAllDeadlines());
+
+      // 進捗を取得（キャッシュ済みのものはスキップ）
+      const progressMap: SubjectProgress = { ...progress };
+      const subjectsNeedingProgress = data.filter(s => progressMap[s.subjectId] === undefined);
+
       await Promise.all(
-        data.map(async (subject) => {
+        subjectsNeedingProgress.map(async (subject) => {
           try {
             const progressData = await getProgress(subject.subjectId);
             progressMap[subject.subjectId] = progressData.progressPercentage;
@@ -90,24 +115,8 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
           }
         })
       );
+
       setProgress(progressMap);
-
-      // 各題材のタグを取得
-      const tagsMap: SubjectTagsMap = {};
-      await Promise.all(
-        data.map(async (subject) => {
-          try {
-            const tags = await getSubjectTags(subject.subjectId);
-            tagsMap[subject.subjectId] = tags;
-          } catch {
-            tagsMap[subject.subjectId] = [];
-          }
-        })
-      );
-      setSubjectTags(tagsMap);
-
-      // 保存済みの期限を読み込み
-      setDeadlines(getAllDeadlines());
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -165,13 +174,12 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
     [deadlines]
   );
 
-  // コンポーネントマウント時に題材を取得
+  // コンポーネントマウント時にタグ一覧を取得
   useEffect(() => {
     fetchAllTags();
-    fetchSubjects();
   }, []);
 
-  // タグフィルター変更時に再取得
+  // 初回マウント時およびタグフィルター変更時に題材を取得
   useEffect(() => {
     if (selectedTags.length > 0) {
       fetchSubjects(selectedTags);
