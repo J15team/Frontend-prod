@@ -1,22 +1,28 @@
 /* ====================================================================
    プロフィールページ - カード
    ==================================================================== */
-.profile-subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.profile-subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 
-.profile-subject-card {
-  background: #f8faf8;
-  border-radius: 12px;
-  padding: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 2px solid transparent;
+/* 完了カード用スタイル */
+.profile-section-fancy .subject-card.completed {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: rgba(34, 197, 94, 0.3);
 }
 
-.profile-subject-card:hover { border-color: #52b788; transform: translateY(-2px); }
-.profile-subject-card.completed { background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%); }
+.profile-section-fancy .subject-card.completed::before {
+  opacity: 1;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
 
-.subject-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
-.subject-title-card { font-weight: 600; color: #1b4332; font-size: 0.95rem; line-height: 1.4; }
+.profile-section-fancy .subject-card.completed .progress-bar {
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.complete-badge {
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
 
 .circular-progress-small { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
 .circular-progress-small svg { width: 100%; height: 100%; transform: rotate(-90deg); }

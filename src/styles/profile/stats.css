@@ -25,16 +25,57 @@
 .stat-card-fancy.progress .stat-number-large { color: var(--color-primary); }
 
 .profile-section-fancy {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 12px rgba(30, 58, 47, 0.08);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fdf9 100%);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 
+    0 4px 20px rgba(30, 58, 47, 0.08),
+    0 1px 3px rgba(30, 58, 47, 0.04);
+  border: 1px solid rgba(45, 106, 79, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
-.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.section-header h2 { font-size: 1.2rem; color: var(--color-forest); margin: 0; }
-.section-count { background: #d8f3dc; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; color: #2d6a4f; }
+.profile-section-fancy::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #16a34a, #15803d);
+  opacity: 0.8;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(45, 106, 79, 0.1);
+}
+
+.section-header h2 {
+  font-size: 1.25rem;
+  color: var(--color-forest);
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-count {
+  background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e5631;
+  box-shadow: 0 2px 4px rgba(45, 106, 79, 0.1);
+}
 
 /* 旧スタイル（互換性） */
 .profile-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; }

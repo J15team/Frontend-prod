@@ -303,40 +303,36 @@ export const ProfileView: React.FC = () => {
               {inProgressSubjects.map((subject) => (
                 <div
                   key={subject.subjectId}
-                  className="profile-subject-card"
+                  className="subject-card"
                   onClick={() => navigate(`/subjects/${subject.subjectId}/sections`)}
                 >
-                  <div className="subject-card-top">
-                    <span className="subject-title-card">{subject.title}</span>
-                    <div className="circular-progress-small">
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          className="circle-bg-small"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <path
-                          className="circle-progress-small"
-                          strokeDasharray={`${subject.progressPercentage}, 100`}
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                      </svg>
-                      <span className="progress-text-small">{subject.progressPercentage}%</span>
-                    </div>
+                  <div className="subject-card-body">
+                    <h2>{subject.title}</h2>
+                    <p>{subject.description}</p>
                   </div>
                   {subject.deadline && (
-                    <div className={`deadline-tag ${getDeadlineClass(subject.daysRemaining)}`}>
+                    <div className={`deadline-badge ${getDeadlineClass(subject.daysRemaining)}`}>
                       {subject.daysRemaining !== null && subject.daysRemaining < 0
                         ? `⚠️ ${Math.abs(subject.daysRemaining)}日超過`
                         : subject.daysRemaining === 0
                         ? '🔥 今日まで'
-                        : `📅 ${formatDeadline(subject.deadline)}（残り${subject.daysRemaining}日）`}
+                        : `📅 ${formatDeadline(subject.deadline)}まで（残り${subject.daysRemaining}日）`}
                     </div>
                   )}
-                  <div className="subject-card-bar">
-                    <div
-                      className="subject-card-bar-fill"
-                      style={{ width: `${subject.progressPercentage}%` }}
-                    />
+                  <div className="subject-progress">
+                    <span className="progress-label">進捗率</span>
+                    <div className="progress-container">
+                      <div
+                        className="progress-bar"
+                        style={{ width: `${subject.progressPercentage}%` }}
+                      />
+                    </div>
+                    <span className="progress-percentage">{subject.progressPercentage}%</span>
+                  </div>
+                  <div className="subject-footer">
+                    <span className="section-count">
+                      {subject.maxSections} セクション
+                    </span>
                   </div>
                 </div>
               ))}
@@ -354,12 +350,25 @@ export const ProfileView: React.FC = () => {
               {completedSubjects.map((subject) => (
                 <div
                   key={subject.subjectId}
-                  className="profile-subject-card completed"
+                  className="subject-card completed"
                   onClick={() => navigate(`/subjects/${subject.subjectId}/sections`)}
                 >
-                  <div className="subject-card-top">
-                    <span className="subject-title-card">{subject.title}</span>
-                    <span className="complete-check">✓</span>
+                  <div className="subject-card-body">
+                    <h2>{subject.title}</h2>
+                    <p>{subject.description}</p>
+                  </div>
+                  <div className="subject-progress">
+                    <span className="progress-label">進捗率</span>
+                    <div className="progress-container">
+                      <div className="progress-bar" style={{ width: '100%' }} />
+                    </div>
+                    <span className="progress-percentage">100%</span>
+                  </div>
+                  <div className="subject-footer">
+                    <span className="section-count">
+                      {subject.maxSections} セクション
+                    </span>
+                    <span className="complete-badge">🎉 完了</span>
                   </div>
                 </div>
               ))}
