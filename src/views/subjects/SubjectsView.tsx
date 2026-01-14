@@ -410,7 +410,7 @@ export const SubjectsView: React.FC = () => {
   
   // フィルター・ソート用の状態
   const [selectedWeight, setSelectedWeight] = useState<number | null>(null);
-  const [sortBy, setSortBy] = useState<'weight' | 'sections' | 'progress'>('weight');
+  const [sortBy, setSortBy] = useState<'sections' | 'progress'>('sections');
   const [effectsEnabled, setEffectsEnabled] = useState(true);
   
   // チュートリアル
@@ -509,13 +509,11 @@ export const SubjectsView: React.FC = () => {
   // ソート
   const sortedSubjects = [...filteredSubjects].sort((a, b) => {
     switch (sortBy) {
-      case 'sections':
-        return (a.maxSections || 0) - (b.maxSections || 0); // 少ない順
       case 'progress':
         return (progress[b.subjectId] || 0) - (progress[a.subjectId] || 0);
-      case 'weight':
+      case 'sections':
       default:
-        return (a.weight || 1) - (b.weight || 1);
+        return (a.maxSections || 0) - (b.maxSections || 0); // 少ない順
     }
   });
 
@@ -616,10 +614,9 @@ export const SubjectsView: React.FC = () => {
             <span className="filter-label">並び替え:</span>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'weight' | 'sections' | 'progress')}
+              onChange={(e) => setSortBy(e.target.value as 'sections' | 'progress')}
               className="sort-select"
             >
-              <option value="weight">難易度順</option>
               <option value="sections">セクション数順</option>
               <option value="progress">進捗率順</option>
             </select>
