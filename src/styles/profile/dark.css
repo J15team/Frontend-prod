@@ -205,3 +205,12 @@
 [data-theme="dark"] .delete-confirm-modal p {
   color: var(--text-primary);
 }
+
+/* ロゴ画像のダークモード対応 */
+[data-theme="dark"] .logo-title {
+  filter: brightness(0) invert(1);
+}
+
+[data-theme="dark"] .footer-logo-title {
+  filter: brightness(0) invert(1);
+}

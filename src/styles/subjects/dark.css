@@ -184,3 +184,29 @@
 [data-theme="dark"] .toggle-label {
   color: var(--text-secondary);
 }
+
+/* フッター */
+[data-theme="dark"] .subjects-footer {
+  background: #0a0a0a;
+}
+
+[data-theme="dark"] .footer-tagline {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .footer-link {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .footer-link:hover {
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] .footer-copyright {
+  color: var(--text-muted);
+}
+
+/* ロゴ画像のダークモード対応 */
+[data-theme="dark"] .footer-logo-title {
+  filter: brightness(0) invert(1);
+}
