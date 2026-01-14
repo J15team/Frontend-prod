@@ -42,8 +42,8 @@ export const SigninView: React.FC = () => {
 
       <div className="auth-card-modern">
         <div className="auth-logo">
-          <span className="auth-logo-icon">🛤️</span>
-          <span className="auth-logo-text">Pathly</span>
+          <img src="/icon.PNG" alt="Pathly" className="auth-logo-icon" />
+          <img src="/title_black.PNG" alt="Pathly" className="auth-logo-title" />
         </div>
         
         <h1>おかえりなさい</h1>

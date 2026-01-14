@@ -35,8 +35,8 @@ export const AdminSigninView: React.FC = () => {
 
       <div className="auth-card-modern admin-card">
         <div className="auth-logo">
-          <span className="auth-logo-icon">🔐</span>
-          <span className="auth-logo-text">Pathly Admin</span>
+          <img src="/icon.PNG" alt="Pathly" className="auth-logo-icon" />
+          <img src="/title_black.PNG" alt="Pathly Admin" className="auth-logo-title" />
         </div>
         
         <div className="admin-badge-auth">管理者専用</div>

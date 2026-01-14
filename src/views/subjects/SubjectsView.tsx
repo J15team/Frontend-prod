@@ -729,7 +729,7 @@ export const SubjectsView: React.FC = () => {
       <footer className="subjects-footer">
         <div className="footer-content">
           <div className="footer-brand">
-            <span className="footer-logo">🌿 Pathly</span>
+            <span className="footer-logo"><img src="/icon.PNG" alt="Pathly" className="footer-logo-icon" /><img src="/title_white.PNG" alt="Pathly" className="footer-logo-title" /></span>
             <p className="footer-tagline">学習の道筋を、あなたと共に</p>
           </div>
           <div className="footer-links">

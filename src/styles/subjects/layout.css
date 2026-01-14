@@ -150,7 +150,24 @@
   gap: 8px;
 }
 
-.footer-logo { font-size: 1.5rem; font-weight: 700; }
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.footer-logo-title {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+}
 .footer-tagline { color: #9ca3af; font-size: 0.9rem; margin: 0; }
 
 .footer-links {

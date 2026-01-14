@@ -54,6 +54,17 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+.landing-header-v2 .logo-title {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.landing-header-v2.scrolled .logo-title {
+  filter: brightness(0);
+}
+
 .landing-header-v2 .logo:hover .logo-icon {
   transform: scale(1.05) rotate(3deg);
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);

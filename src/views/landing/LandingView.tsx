@@ -62,7 +62,7 @@ export const LandingView: React.FC = () => {
         <div className="header-inner">
           <div className="logo">
             <img src="/icon.PNG" alt="Pathly" className="logo-icon" />
-            <span className="logo-text">Pathly</span>
+            <img src="/title_white.PNG" alt="Pathly" className="logo-title" />
           </div>
           <nav className="header-nav">
             <button onClick={() => scrollToSection(1)}>特徴</button>
@@ -347,7 +347,7 @@ export const LandingView: React.FC = () => {
             <div className="footer-brand">
               <div className="logo">
                 <img src="/icon.PNG" alt="Pathly" className="logo-icon" />
-                <span className="logo-text">Pathly</span>
+                <img src="/title_white.PNG" alt="Pathly" className="logo-title" />
               </div>
               <p>Path + -ly: 学習の道筋</p>
             </div>

@@ -35,6 +35,12 @@
   object-fit: cover;
 }
 
+.footer-brand .logo-title {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+}
+
 .footer-brand p {
   color: #9ca3af;
   font-size: 0.9rem;
