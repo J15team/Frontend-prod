@@ -85,7 +85,7 @@ const membersData: Record<string, {
     nameEn: 'DAIKI MORIKAWA',
     role: 'Frontend',
     title: 'Frontend',
-    image: '/images/team/member-4.jpg',
+    image: '/images/team/member-4-detail.jpg',
     bio: [
       '麻雀が好きな自堕落専門学生です',
       '眠気を抑えながら日々生活しています'

@@ -61,6 +61,7 @@ export const LandingView: React.FC = () => {
       <header className={`landing-header-v2 ${scrollY > window.innerHeight * 0.6 ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <div className="logo">
+            <img src="/icon.PNG" alt="Pathly" className="logo-icon" />
             <span className="logo-text">Pathly</span>
           </div>
           <nav className="header-nav">
@@ -279,7 +280,7 @@ export const LandingView: React.FC = () => {
               { id: 'member-1', name: 'RIKI YOSHIDA', role: 'Tech Lead (Frontend & Backend)', image: '/images/team/member-1.jpg' },
               { id: 'member-2', name: 'HARUYA NAKATA', role: 'Team Leader (Frontend & Designer)', image: '/images/team/member-2.jpg' },
               { id: 'member-3', name: 'TAKUMA ARAKI', role: 'Backend', image: '/images/team/member-3.jpg' },
-              { id: 'member-4', name: 'DAIKI MORIKAWA', role: 'Frontend', image: '' },
+              { id: 'member-4', name: 'DAIKI MORIKAWA', role: 'Frontend', image: '/images/team/member-4-detail.jpg' },
               { id: 'member-5', name: 'SEIYA HIROHATA', role: "Leader's pet(frontend)", image: '/images/team/member-5.jpg' },
               { id: 'member-6', name: 'KOUKI TANAKA', role: 'material', image: '/images/team/member-6.jpg' },
             ].map((member, i) => (
@@ -345,6 +346,7 @@ export const LandingView: React.FC = () => {
           <div className="footer-main">
             <div className="footer-brand">
               <div className="logo">
+                <img src="/icon.PNG" alt="Pathly" className="logo-icon" />
                 <span className="logo-text">Pathly</span>
               </div>
               <p>Path + -ly: 学習の道筋</p>
