@@ -5,7 +5,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@/contexts/ThemeContext';
-import { ScrollToTop } from '@/components/common/ScrollToTop';
+import { ScrollToTop } from '@/components/common/ScrollToTop/ScrollToTop';
 import { LandingView } from '@/views/landing/LandingView';
 import { MemberDetailView } from '@/views/landing/MemberDetailView';
 import { RootView } from '@/views/RootView';
@@ -28,7 +28,7 @@ import { TagManagementView } from '@/views/admin/TagManagementView';
 import { RankingView } from '@/views/ranking/RankingView';
 import { ForbiddenView } from '@/views/error/ForbiddenView';
 import { AdminKeyRequiredView } from '@/views/error/AdminKeyRequiredView';
-import { ProtectedRoute } from '@/components/common/ProtectedRoute';
+import { ProtectedRoute } from '@/components/common/ProtectedRoute/ProtectedRoute';
 
 const App: React.FC = () => {
   return (

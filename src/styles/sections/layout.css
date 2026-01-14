@@ -1,0 +1,85 @@
+/* ====================================================================
+   セクションページ - レイアウト
+   ==================================================================== */
+.sections-container {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.sections-header {
+  background: var(--bg-secondary);
+  padding: 20px 30px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.sections-header h1 {
+  flex: 1;
+  color: var(--text-primary);
+  font-size: 1.5em;
+}
+
+.sections-header-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px;
+}
+
+.subject-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.subject-description {
+  color: var(--text-secondary);
+}
+
+.subject-meta {
+  display: flex;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.progress-summary {
+  background: var(--bg-secondary);
+  padding: 16px 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sections-content {
+  display: flex;
+  height: calc(100vh - 180px);
+  overflow: hidden;
+}
+
+/* 進捗バー */
+.progress-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.progress-text {
+  font-size: 0.9em;
+  color: #666;
+  white-space: nowrap;
+  display: flex;
+  gap: 12px;
+}
+.progress-percentage {
+  font-weight: bold;
+  color: #28a745;
+}
+.empty-section {
+  padding: 40px;
+  text-align: center;
+  color: #777;
+}

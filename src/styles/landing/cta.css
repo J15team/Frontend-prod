@@ -1,0 +1,102 @@
+/* ========================================
+   Landing Page - CTA Section
+   ======================================== */
+.cta-section {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.cta-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.cta-bg .placeholder-image {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+}
+
+.cta-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 58, 47, 0.85);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.cta-label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #86efac;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.cta-section h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cta-primary:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+.btn-cta-secondary {
+  padding: 1rem 2rem;
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cta-secondary:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.1);
+}

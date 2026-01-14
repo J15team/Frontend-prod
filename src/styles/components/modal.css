@@ -1,0 +1,35 @@
+/* ====================================================================
+   期限設定モーダル
+   ==================================================================== */
+.modal-content h3 { margin-bottom: 8px; color: #333; }
+.modal-subject-title { color: #666; font-size: 0.95rem; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.modal-form { margin-bottom: 24px; }
+.modal-form label { display: flex; flex-direction: column; gap: 8px; font-weight: 500; color: #444; }
+.modal-form input[type="date"] { padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+
+.google-calendar-link { display: block; margin-top: 20px; padding: 12px; background: #f0f7ff; border: 1px solid #007bff; border-radius: 8px; color: #007bff; text-decoration: none; text-align: center; font-weight: 500; transition: all 0.2s; }
+.google-calendar-link:hover { background: #007bff; color: white; }
+
+/* 期限バッジ */
+.subject-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.deadline-btn { background: transparent; border: 1px solid #ddd; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 1rem; transition: all 0.2s; }
+.deadline-btn:hover { background: #f5f5f5; border-color: #007bff; }
+.deadline-btn.has-deadline { background: #e3f2fd; border-color: #007bff; }
+
+.deadline-badge { padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; margin: 12px 0; }
+.deadline-normal { background: #e8f5e9; color: #2e7d32; }
+.deadline-soon { background: #fff3e0; color: #ef6c00; }
+.deadline-urgent { background: #ffebee; color: #c62828; }
+.deadline-overdue { background: #f44336; color: white; }
+.deadline-badge-small { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; margin: 6px 0; }
+
+/* ダークモード */
+[data-theme="dark"] .modal-content h3 { color: var(--text-primary); }
+[data-theme="dark"] .modal-subject-title { color: var(--text-secondary); border-bottom-color: var(--border-color); }
+[data-theme="dark"] .modal-form label { color: var(--text-primary); }
+[data-theme="dark"] .modal-form input[type="date"] { background: var(--bg-tertiary); border-color: var(--border-color); color: var(--text-primary); }
+[data-theme="dark"] .google-calendar-link { background: rgba(0, 123, 255, 0.1); border-color: #60a5fa; color: #60a5fa; }
+[data-theme="dark"] .google-calendar-link:hover { background: #60a5fa; color: #121212; }
+[data-theme="dark"] .deadline-btn { border-color: var(--border-color); color: var(--text-primary); }
+[data-theme="dark"] .deadline-btn:hover { background: var(--bg-tertiary); border-color: var(--color-primary); }
+[data-theme="dark"] .deadline-btn.has-deadline { background: rgba(59, 130, 246, 0.2); border-color: #60a5fa; }

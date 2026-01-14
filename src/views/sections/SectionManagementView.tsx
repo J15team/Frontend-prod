@@ -2,24 +2,25 @@
  * Section Management View
  * セクション一覧、作成、更新、削除
  */
-import React, { useEffect, useState, useRef } from 'react';
-import { marked } from 'marked';
-import Editor from '@monaco-editor/react';
+import React, { useEffect, useState } from 'react';
 import { useSectionManagementViewModel } from '@/viewmodels/sections/useSectionManagementViewModel';
+import { useMemoStorage } from '@/hooks/useMemoStorage';
 import { type Section } from '@/models/Section';
 
-interface SectionFormState {
-  sectionId: string;
-  title: string;
-  description: string;
-  image: File | null;
-}
+// コンポーネント
+import { SectionCreateForm } from '@/components/sections/SectionCreateForm/SectionCreateForm';
+import { SectionUpdateForm } from '@/components/sections/SectionUpdateForm/SectionUpdateForm';
+import { SectionListTable } from '@/components/sections/SectionListTable/SectionListTable';
+import { MarkdownPreviewModal } from '@/components/common/MarkdownPreviewModal/MarkdownPreviewModal';
+import { MemoModal } from '@/components/common/MemoModal/MemoModal';
 
 interface SectionUpdateFormState {
   title: string;
   description: string;
   image: File | null;
 }
+
+const MEMO_STORAGE_KEY = 'section-management-memo';
 
 export const SectionManagementView: React.FC = () => {
   const {
@@ -37,83 +38,30 @@ export const SectionManagementView: React.FC = () => {
     removeSectionImage,
   } = useSectionManagementViewModel();
 
+  // メモ帳フック
+  const memo = useMemoStorage(MEMO_STORAGE_KEY);
+
+  // ローカル状態
   const [subjectId, setSubjectId] = useState<string>('');
   const [selectedSectionId, setSelectedSectionId] = useState<string>('');
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
-  const [createForm, setCreateForm] = useState<SectionFormState>({
-    sectionId: '',
-    title: '',
-    description: '',
-    image: null,
-  });
   const [updateForm, setUpdateForm] = useState<SectionUpdateFormState>({
     title: '',
     description: '',
     image: null,
   });
+
+  // モーダル状態
   const [previewContent, setPreviewContent] = useState<string>('');
   const [showPreview, setShowPreview] = useState(false);
-  const [previewTab, setPreviewTab] = useState<'markdown' | 'code'>('markdown');
-  
-  // コードエディター用state
-  const [codeTab, setCodeTab] = useState<'html' | 'css' | 'javascript'>('html');
-  const [codes, setCodes] = useState({ html: '', css: '', javascript: '' });
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  // メモ帳用state
-  const [memoContent, setMemoContent] = useState<string>('');
-  const [memoSaved, setMemoSaved] = useState(false);
   const [showMemo, setShowMemo] = useState(false);
-  const MEMO_STORAGE_KEY = 'section-management-memo';
-
-  const DEFAULT_CODE = {
-    html: `<div class="container">
-  <h1>Hello, World!</h1>
-  <button id="btn">クリック</button>
-</div>`,
-    css: `.container {
-  text-align: center;
-  padding: 20px;
-}
-h1 { color: #22c55e; }
-button {
-  padding: 10px 20px;
-  background: #22c55e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}`,
-    javascript: `const btn = document.getElementById('btn');
-btn.addEventListener('click', () => {
-  alert('ボタンがクリックされました！');
-});`,
-  };
-
-  const updateCodePreview = () => {
-    if (!iframeRef.current) return;
-    const html = codes.html || DEFAULT_CODE.html;
-    const css = codes.css || DEFAULT_CODE.css;
-    const js = codes.javascript || DEFAULT_CODE.javascript;
-    
-    iframeRef.current.srcdoc = `<!DOCTYPE html>
-<html><head><style>${css}</style></head>
-<body>${html}<script>try{${js}}catch(e){console.error(e)}</script></body></html>`;
-  };
 
   // 初期ロード時に題材一覧を取得
   useEffect(() => {
     fetchSubjects();
   }, []);
 
-  // メモ帳の初期読み込み
-  useEffect(() => {
-    const savedMemo = localStorage.getItem(MEMO_STORAGE_KEY);
-    if (savedMemo) {
-      setMemoContent(savedMemo);
-    }
-  }, []);
-
+  // 選択中のセクションを最新に保つ
   useEffect(() => {
     if (!selectedSectionId) return;
     const latestSection = sections.find(
@@ -152,16 +100,19 @@ btn.addEventListener('click', () => {
     }
   };
 
-  const handleCreateSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleCreateSubmit = async (data: {
+    sectionId: string;
+    title: string;
+    description: string;
+    image: File | null;
+  }) => {
     if (!subjectId) return;
     await createSectionItem(Number(subjectId), {
-      sectionId: Number(createForm.sectionId),
-      title: createForm.title,
-      description: createForm.description,
-      image: createForm.image,
+      sectionId: Number(data.sectionId),
+      title: data.title,
+      description: data.description,
+      image: data.image,
     });
-    setCreateForm({ sectionId: '', title: '', description: '', image: null });
   };
 
   const handleUpdateSubmit = async (event: React.FormEvent) => {
@@ -185,7 +136,6 @@ btn.addEventListener('click', () => {
   const handleDeleteImage = async (imageId: number) => {
     if (!subjectId || !selectedSectionId) return;
     await removeSectionImage(Number(subjectId), Number(selectedSectionId), imageId);
-    // 削除後、セクション詳細を再取得して表示を更新
     await handleSectionSelect(selectedSectionId);
   };
 
@@ -211,21 +161,6 @@ btn.addEventListener('click', () => {
   const handlePreview = (content: string) => {
     setPreviewContent(content);
     setShowPreview(true);
-  };
-
-  // メモ帳の保存
-  const handleSaveMemo = () => {
-    localStorage.setItem(MEMO_STORAGE_KEY, memoContent);
-    setMemoSaved(true);
-    setTimeout(() => setMemoSaved(false), 2000);
-  };
-
-  // メモ帳のクリア
-  const handleClearMemo = () => {
-    if (confirm('メモを削除しますか？')) {
-      setMemoContent('');
-      localStorage.removeItem(MEMO_STORAGE_KEY);
-    }
   };
 
   return (
@@ -257,316 +192,49 @@ btn.addEventListener('click', () => {
       </div>
 
       <div className="management-grid">
-        <div className="management-card">
-          <h2>セクション作成 (POST)</h2>
-          <form className="management-form" onSubmit={handleCreateSubmit}>
-            <label>
-              セクションID
-              <input
-                type="number"
-                min="0"
-                max="100"
-                value={createForm.sectionId}
-                onChange={(e) =>
-                  setCreateForm({ ...createForm, sectionId: e.target.value })
-                }
-                required
-              />
-            </label>
-            <label>
-              タイトル
-              <input
-                type="text"
-                value={createForm.title}
-                onChange={(e) => setCreateForm({ ...createForm, title: e.target.value })}
-                required
-              />
-            </label>
-            <label>
-              説明 (Markdown可)
-              <textarea
-                value={createForm.description}
-                onChange={(e) =>
-                  setCreateForm({ ...createForm, description: e.target.value })
-                }
-              />
-              <button
-                type="button"
-                className="btn-preview"
-                onClick={() => handlePreview(createForm.description)}
-                disabled={!createForm.description}
-              >
-                👁️ プレビュー
-              </button>
-              <button
-                type="button"
-                className="btn-memo"
-                onClick={() => setShowMemo(true)}
-              >
-                📝 メモ帳
-              </button>
-            </label>
-            <label>
-              画像ファイル (任意)
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setCreateForm({ ...createForm, image: e.target.files?.[0] ?? null })
-                }
-              />
-            </label>
-            <button type="submit" className="btn-primary" disabled={loading || !subjectId}>
-              {loading ? '送信中...' : '作成'}
-            </button>
-          </form>
-        </div>
+        <SectionCreateForm
+          loading={loading}
+          disabled={!subjectId}
+          onSubmit={handleCreateSubmit}
+          onPreview={handlePreview}
+          onOpenMemo={() => setShowMemo(true)}
+        />
 
-        <div className="management-card">
-          <h2>セクション更新/削除</h2>
-          <form className="management-form" onSubmit={handleUpdateSubmit}>
-            <label>
-              編集するセクション
-              <select
-                value={selectedSectionId}
-                onChange={(e) => handleSectionSelect(e.target.value)}
-              >
-                <option value="">選択してください</option>
-                {sections.map((section) => (
-                  <option key={section.sectionId} value={section.sectionId}>
-                    #{section.sectionId} {section.title}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              タイトル
-              <input
-                type="text"
-                value={updateForm.title}
-                onChange={(e) => setUpdateForm({ ...updateForm, title: e.target.value })}
-                required
-              />
-            </label>
-            <label>
-              説明
-              <textarea
-                value={updateForm.description}
-                onChange={(e) =>
-                  setUpdateForm({ ...updateForm, description: e.target.value })
-                }
-              />
-              <button
-                type="button"
-                className="btn-preview"
-                onClick={() => handlePreview(updateForm.description)}
-                disabled={!updateForm.description}
-              >
-                👁️ プレビュー
-              </button>
-              <button
-                type="button"
-                className="btn-memo"
-                onClick={() => setShowMemo(true)}
-              >
-                📝 メモ帳
-              </button>
-            </label>
-            <label>
-              画像ファイル (任意)
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setUpdateForm({ ...updateForm, image: e.target.files?.[0] ?? null })
-                }
-              />
-            </label>
-            {selectedSection && (
-              <div className="image-status">
-                <p>現在の画像: {selectedSection.images?.length ?? 0}件</p>
-                {selectedSection.images && selectedSection.images.length > 0 ? (
-                  <ul className="image-list">
-                    {selectedSection.images.map((image) => (
-                      <li key={image.imageId}>
-                        <div className="image-list-row">
-                          <span className="image-label">画像ID: {image.imageId}</span>
-                          <a href={image.imageUrl} target="_blank" rel="noreferrer">
-                            新しいタブで開く
-                          </a>
-                          <button
-                            type="button"
-                            className="btn-secondary"
-                            onClick={() => handleCopyLink(image.imageUrl)}
-                          >
-                            リンクをコピー
-                          </button>
-                          <button
-                            type="button"
-                            className="btn-danger"
-                            disabled={loading}
-                            onClick={() => handleDeleteImage(image.imageId)}
-                          >
-                            画像を削除
-                          </button>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>画像は登録されていません</p>
-                )}
-              </div>
-            )}
-            <div className="management-actions">
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={loading || !selectedSectionId}
-              >
-                {loading ? '更新中...' : '更新'}
-              </button>
-              <button
-                type="button"
-                className="btn-secondary"
-                disabled={loading || !selectedSectionId}
-                onClick={handleDelete}
-              >
-                削除
-              </button>
-            </div>
-          </form>
-        </div>
+        <SectionUpdateForm
+          sections={sections}
+          selectedSectionId={selectedSectionId}
+          selectedSection={selectedSection}
+          formData={updateForm}
+          loading={loading}
+          onSectionSelect={handleSectionSelect}
+          onFormChange={setUpdateForm}
+          onSubmit={handleUpdateSubmit}
+          onDelete={handleDelete}
+          onDeleteImage={handleDeleteImage}
+          onCopyLink={handleCopyLink}
+          onPreview={handlePreview}
+          onOpenMemo={() => setShowMemo(true)}
+        />
       </div>
 
-      <section className="data-section">
-        <h2>セクション一覧 (GET)</h2>
-        {sections.length === 0 ? (
-          <p>セクションが読み込まれていません。</p>
-        ) : (
-          <div className="data-table">
-            <div className="data-table-header">
-              <span>ID</span>
-              <span>タイトル</span>
-              <span>説明</span>
-              <span>画像</span>
-            </div>
-            {sections.map((section) => (
-              <div key={section.sectionId} className="data-table-row">
-                <span>#{section.sectionId}</span>
-                <span>{section.title}</span>
-                <span className="table-description">{section.description}</span>
-                <span>
-                  {section.images && section.images.length > 0
-                    ? `${section.images.length}件`
-                    : '-'}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+      <SectionListTable sections={sections} />
 
-      {/* Markdownプレビューモーダル */}
-      {showPreview && (
-        <div className={`preview-modal-overlay ${showPreview ? 'show' : ''}`} onClick={() => setShowPreview(false)}>
-          <div className="preview-modal slide-in-left" onClick={(e) => e.stopPropagation()}>
-            <div className="preview-modal-header">
-              <div className="preview-modal-tabs">
-                <button 
-                  className={`preview-tab-btn ${previewTab === 'markdown' ? 'active' : ''}`}
-                  onClick={() => setPreviewTab('markdown')}
-                >
-                  📄 Markdown
-                </button>
-                <button 
-                  className={`preview-tab-btn ${previewTab === 'code' ? 'active' : ''}`}
-                  onClick={() => setPreviewTab('code')}
-                >
-                  💻 コードエディター
-                </button>
-              </div>
-              <button className="preview-close-btn" onClick={() => setShowPreview(false)}>×</button>
-            </div>
-            
-            {previewTab === 'markdown' ? (
-              <div 
-                className="preview-modal-content markdown-body"
-                dangerouslySetInnerHTML={{ __html: marked(previewContent) as string }}
-              />
-            ) : (
-              <div className="preview-modal-code">
-                <div className="code-editor-section">
-                  <div className="code-tabs">
-                    <button 
-                      className={`code-tab ${codeTab === 'html' ? 'active' : ''}`}
-                      onClick={() => setCodeTab('html')}
-                    >🌐 HTML</button>
-                    <button 
-                      className={`code-tab ${codeTab === 'css' ? 'active' : ''}`}
-                      onClick={() => setCodeTab('css')}
-                    >🎨 CSS</button>
-                    <button 
-                      className={`code-tab ${codeTab === 'javascript' ? 'active' : ''}`}
-                      onClick={() => setCodeTab('javascript')}
-                    >⚡ JS</button>
-                  </div>
-                  <Editor
-                    height="300px"
-                    language={codeTab}
-                    theme="vs-dark"
-                    value={codes[codeTab] || DEFAULT_CODE[codeTab]}
-                    onChange={(value) => setCodes(prev => ({ ...prev, [codeTab]: value || '' }))}
-                    options={{
-                      minimap: { enabled: false },
-                      fontSize: 13,
-                      lineNumbers: 'on',
-                      scrollBeyondLastLine: false,
-                      automaticLayout: true,
-                      tabSize: 2,
-                    }}
-                  />
-                </div>
-                <div className="code-preview-section">
-                  <div className="code-preview-header">
-                    <span>👁️ プレビュー</span>
-                    <button className="btn-run-code" onClick={updateCodePreview}>▶ 実行</button>
-                  </div>
-                  <iframe
-                    ref={iframeRef}
-                    className="code-preview-iframe"
-                    title="Code Preview"
-                    sandbox="allow-scripts allow-modals"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {/* モーダル */}
+      <MarkdownPreviewModal
+        isOpen={showPreview}
+        content={previewContent}
+        onClose={() => setShowPreview(false)}
+      />
 
-      {/* メモ帳モーダル */}
-      {showMemo && (
-        <div className="memo-modal-overlay" onClick={() => setShowMemo(false)}>
-          <div className="memo-panel" onClick={(e) => e.stopPropagation()}>
-            <div className="memo-panel-header">
-              <span>📝 メモ帳</span>
-              <div className="memo-actions">
-                {memoSaved && <span className="memo-saved-indicator">✓ 保存しました</span>}
-                <button className="btn-memo-save" onClick={handleSaveMemo}>保存</button>
-                <button className="btn-memo-clear" onClick={handleClearMemo}>クリア</button>
-                <button className="memo-close-btn" onClick={() => setShowMemo(false)}>×</button>
-              </div>
-            </div>
-            <textarea
-              className="memo-textarea"
-              placeholder="記事の下書きやメモをここに書いてください...&#10;&#10;セクションに紐づかない全体的なメモを一時保存できます。"
-              value={memoContent}
-              onChange={(e) => setMemoContent(e.target.value)}
-            />
-          </div>
-        </div>
-      )}
+      <MemoModal
+        isOpen={showMemo}
+        content={memo.content}
+        saved={memo.saved}
+        onContentChange={memo.setContent}
+        onSave={memo.save}
+        onClear={memo.clear}
+        onClose={() => setShowMemo(false)}
+      />
     </div>
   );
 };

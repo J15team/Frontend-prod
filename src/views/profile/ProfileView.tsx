@@ -8,7 +8,7 @@ import { useProfileViewModel } from '@/viewmodels/profile/useProfileViewModel';
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
 import { useTheme } from '@/contexts/ThemeContext';
 import { isGitHubConnected, getGitHubUser, clearGitHubConnection } from '@/utils/storage/githubStorage';
-import { LoadingSpinner } from '@/components/common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner/LoadingSpinner';
 
 const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || 'Ov23li1eg2wFShx5hmTd';
 

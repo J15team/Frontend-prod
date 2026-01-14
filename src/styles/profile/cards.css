@@ -1,0 +1,71 @@
+/* ====================================================================
+   プロフィールページ - カード
+   ==================================================================== */
+.profile-subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+.profile-subject-card {
+  background: #f8faf8;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.profile-subject-card:hover { border-color: #52b788; transform: translateY(-2px); }
+.profile-subject-card.completed { background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%); }
+
+.subject-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.subject-title-card { font-weight: 600; color: #1b4332; font-size: 0.95rem; line-height: 1.4; }
+
+.circular-progress-small { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
+.circular-progress-small svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.circle-bg-small { fill: none; stroke: #d8f3dc; stroke-width: 3; }
+.circle-progress-small { fill: none; stroke: #40916c; stroke-width: 3; stroke-linecap: round; transition: stroke-dasharray 0.3s ease; }
+.progress-text-small { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.7rem; font-weight: 700; color: #1b4332; }
+
+.complete-check { width: 32px; height: 32px; background: #2d6a4f; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+
+.deadline-tag { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; margin-bottom: 12px; }
+
+.subject-card-bar { height: 6px; background: #d8f3dc; border-radius: 3px; overflow: hidden; }
+.subject-card-bar-fill { height: 100%; background: linear-gradient(90deg, #40916c, #52b788); border-radius: 3px; transition: width 0.3s ease; }
+
+.profile-empty { text-align: center; padding: 60px 20px; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(45, 106, 79, 0.08); }
+.profile-empty .empty-icon { font-size: 4rem; display: block; margin-bottom: 16px; }
+.profile-empty p { color: #555; font-size: 1.1rem; margin-bottom: 24px; }
+.profile-empty .btn-primary { background: #40916c; border-color: #40916c; }
+.profile-empty .btn-primary:hover { background: #2d6a4f; }
+
+.profile-bottom-actions { display: flex; justify-content: center; gap: 16px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e8ede9; }
+
+.btn-back-bottom { padding: 12px 32px; background: white; border: 2px solid #40916c; border-radius: 8px; color: #40916c; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.btn-back-bottom:hover { background: #40916c; color: white; }
+
+.btn-signout-bottom { padding: 12px 32px; background: transparent; border: 2px solid #d4d4d4; border-radius: 8px; color: #666; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+.btn-signout-bottom:hover { border-color: #999; color: #333; }
+
+/* 旧スタイル（互換性） */
+.profile-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.profile-card { background: white; border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 24px; }
+.profile-avatar { width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile-name { font-size: 1.8rem; color: #333; margin-bottom: 8px; }
+.profile-email { color: #666; font-size: 1rem; }
+
+.profile-section { margin-bottom: 32px; }
+.profile-section h2 { font-size: 1.2rem; color: #333; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+
+.profile-subject-list { display: flex; flex-direction: column; gap: 12px; }
+.profile-subject-item { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.profile-subject-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+.profile-subject-item .subject-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.profile-subject-item .subject-title { font-weight: 500; color: #333; }
+.profile-subject-item .subject-progress-text { font-weight: 600; color: #007bff; }
+.profile-subject-item.completed { background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%); border: 1px solid #c6f6d5; }
+.profile-subject-item.completed .subject-info { margin-bottom: 0; }
+.complete-badge { color: #28a745; font-weight: 600; font-size: 0.9rem; }
+
+.header-actions { display: flex; gap: 12px; }
+.btn-profile { padding: 10px 20px; border: 1px solid #007bff; border-radius: 4px; background: transparent; color: #007bff; font-size: 1em; cursor: pointer; transition: all 0.2s; }
+.btn-profile:hover { background: #007bff; color: white; }

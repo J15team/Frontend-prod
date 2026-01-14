@@ -1,0 +1,135 @@
+/* ========================================
+   Landing Page - Features Section
+   ======================================== */
+.features-section {
+  padding: 8rem 8%;
+  background: #fafafa;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #22c55e;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e3a2f;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  color: #6b7280;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s;
+  border: 1px solid #e5e7eb;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-color: #22c55e;
+}
+
+.feature-card.large {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.feature-card.large .feature-image {
+  height: 100%;
+  min-height: 300px;
+}
+
+.feature-card.large .feature-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.feature-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e3a2f;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card p {
+  color: #6b7280;
+  line-height: 1.7;
+}
+
+/* Feature Icon Box */
+.feature-icon-box {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.25);
+  transition: all 0.3s;
+}
+
+.feature-card:hover .feature-icon-box {
+  transform: scale(1.1) rotate(-5deg);
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.35);
+}
+
+.feature-icon-box svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+/* Large card icon */
+.feature-icon-svg {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #1e3a2f 0%, #2d5a47 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(30, 58, 47, 0.3);
+}
+
+.feature-icon-svg svg {
+  width: 40px;
+  height: 40px;
+  color: #22c55e;
+}

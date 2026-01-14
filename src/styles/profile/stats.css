@@ -1,0 +1,43 @@
+/* ====================================================================
+   プロフィールページ - 統計
+   ==================================================================== */
+.profile-content { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
+
+.profile-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+
+.stat-card-fancy {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(30, 58, 47, 0.08);
+  transition: transform 0.2s;
+}
+
+.stat-card-fancy:hover { transform: translateY(-2px); }
+.stat-card-fancy .stat-icon { font-size: 2rem; }
+.stat-card-fancy .stat-info { display: flex; flex-direction: column; }
+.stat-number-large { font-size: 1.8rem; font-weight: 700; color: var(--color-forest); }
+.stat-label-small { font-size: 0.85rem; color: #74796d; }
+.stat-card-fancy.completed .stat-number-large { color: var(--color-forest); }
+.stat-card-fancy.progress .stat-number-large { color: var(--color-primary); }
+
+.profile-section-fancy {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(30, 58, 47, 0.08);
+}
+
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.section-header h2 { font-size: 1.2rem; color: var(--color-forest); margin: 0; }
+.section-count { background: #d8f3dc; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; color: #2d6a4f; }
+
+/* 旧スタイル（互換性） */
+.profile-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; }
+.stat-card { background: white; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.stat-number { display: block; font-size: 2.5rem; font-weight: 700; color: #007bff; }
+.stat-label { color: #666; font-size: 0.9rem; }

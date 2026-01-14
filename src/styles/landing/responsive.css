@@ -1,0 +1,151 @@
+/* ========================================
+   Landing Page - Responsive
+   ======================================== */
+@media (max-width: 1024px) {
+  .side-nav {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature-card.large {
+    grid-column: span 2;
+  }
+
+  .flow-timeline {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .flow-item::after {
+    display: none;
+  }
+
+  .team-grid-large {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-header-v2 {
+    padding: 1rem 1.5rem;
+  }
+
+  .landing-header-v2 .header-nav {
+    display: none;
+  }
+
+  .landing-header-v2 .btn-text {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 0 5%;
+    text-align: center;
+  }
+
+  .hero-overlay {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .scroll-indicator {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .features-section,
+  .flow-section,
+  .cta-section {
+    padding: 4rem 5%;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card.large {
+    grid-column: span 1;
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card.large .feature-image {
+    min-height: 200px;
+  }
+
+  .flow-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+  }
+
+  .footer-main {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  /* Member Detail */
+  .member-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .member-main {
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .member-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .member-image {
+    width: 200px;
+    height: 250px;
+  }
+
+  .member-name {
+    font-size: 2rem;
+  }
+
+  .member-content {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .team-grid-large {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}

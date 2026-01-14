@@ -1,0 +1,369 @@
+/* ========================================
+   Landing Page - Special Effects
+   ======================================== */
+
+/* Rainbow Effect (From) */
+.member-from.rainbow .skill-tag {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff0080, #ff8c00, #40e0d0, #7b68ee, #ff0080);
+  background-size: 400% 400%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  animation: rainbow-glow 3s ease infinite;
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.4), 0 0 30px rgba(64, 224, 208, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes rainbow-glow {
+  0% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 15px rgba(255, 0, 128, 0.5), 0 0 30px rgba(64, 224, 208, 0.3);
+  }
+  25% {
+    background-position: 50% 100%;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.5), 0 0 30px rgba(123, 104, 238, 0.3);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 15px rgba(64, 224, 208, 0.5), 0 0 30px rgba(255, 0, 128, 0.3);
+  }
+  75% {
+    background-position: 50% 0%;
+    box-shadow: 0 0 15px rgba(123, 104, 238, 0.5), 0 0 30px rgba(255, 140, 0, 0.3);
+  }
+  100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 15px rgba(255, 0, 128, 0.5), 0 0 30px rgba(64, 224, 208, 0.3);
+  }
+}
+
+/* Desert Effect (Tottori) */
+.member-from.desert .skill-tag {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #8b4513;
+  background: linear-gradient(135deg, #f4d03f, #e6b800, #d4a574, #c19a6b, #f4d03f);
+  background-size: 400% 400%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  animation: desert-shimmer 4s ease infinite;
+  box-shadow: 0 0 10px rgba(244, 208, 63, 0.4), 0 0 20px rgba(210, 180, 140, 0.3);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes desert-shimmer {
+  0% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), 0 0 20px rgba(210, 180, 140, 0.3);
+  }
+  25% {
+    background-position: 50% 100%;
+    box-shadow: 0 0 15px rgba(230, 184, 0, 0.5), 0 0 25px rgba(193, 154, 107, 0.4);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 20px rgba(212, 165, 116, 0.6), 0 0 30px rgba(244, 208, 63, 0.4);
+  }
+  75% {
+    background-position: 50% 0%;
+    box-shadow: 0 0 15px rgba(193, 154, 107, 0.5), 0 0 25px rgba(230, 184, 0, 0.4);
+  }
+  100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5), 0 0 20px rgba(210, 180, 140, 0.3);
+  }
+}
+
+/* Skills Rainbow Effect */
+.member-skills.rainbow .skill-tag {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff0080, #ff8c00, #40e0d0, #7b68ee, #ff0080);
+  background-size: 400% 400%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  animation: rainbow-glow 3s ease infinite;
+  box-shadow: 0 0 15px rgba(255, 0, 128, 0.4), 0 0 30px rgba(64, 224, 208, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Pachinko Slot Modal */
+.slot-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.slot-modal {
+  background: radial-gradient(ellipse at center, #1a0a2e, #0a0a1a);
+  border-radius: 30px;
+  padding: 2.5rem;
+  border: 6px solid #ff0066;
+  box-shadow: 
+    0 0 60px rgba(255, 0, 102, 0.6),
+    0 0 100px rgba(255, 0, 102, 0.3),
+    inset 0 0 30px rgba(255, 0, 102, 0.2);
+}
+
+.slot-machine {
+  text-align: center;
+}
+
+.slot-header {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff0066;
+  margin-bottom: 1.5rem;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 102, 1),
+    0 0 20px rgba(255, 0, 102, 0.8),
+    0 0 30px rgba(255, 0, 102, 0.6);
+  letter-spacing: 0.3rem;
+}
+
+.pachinko-frame {
+  background: linear-gradient(180deg, #2a1a3a, #1a0a2a);
+  border: 4px solid #ffd700;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 
+    inset 0 0 30px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.slot-reels {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.slot-reel {
+  width: 90px;
+  height: 120px;
+  background: linear-gradient(180deg, #000, #1a1a1a, #000);
+  border: 3px solid #ffd700;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #ff0000;
+  font-family: 'Arial Black', sans-serif;
+  box-shadow: 
+    inset 0 5px 15px rgba(0, 0, 0, 0.8),
+    inset 0 -5px 15px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.slot-reel.spinning {
+  animation: pachinko-spin 0.08s linear infinite;
+  color: #ffff00;
+  text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+}
+
+.slot-reel.stopped {
+  color: #ff0000;
+  text-shadow: 
+    0 0 20px rgba(255, 0, 0, 1),
+    0 0 40px rgba(255, 0, 0, 0.8);
+  animation: reel-flash 0.3s ease-out;
+}
+
+@keyframes pachinko-spin {
+  0% { transform: translateY(-100%); opacity: 0.7; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0.7; }
+}
+
+@keyframes reel-flash {
+  0% { transform: scale(1.2); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.slot-jackpot {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffd700;
+  animation: jackpot-flash 0.3s ease infinite;
+  margin: 1rem 0;
+  text-shadow: 
+    0 0 20px rgba(255, 215, 0, 1),
+    0 0 40px rgba(255, 215, 0, 0.8),
+    0 0 60px rgba(255, 0, 102, 0.6);
+}
+
+@keyframes jackpot-flash {
+  0%, 100% { 
+    color: #ffd700;
+    transform: scale(1);
+  }
+  50% { 
+    color: #ff0066;
+    transform: scale(1.15);
+  }
+}
+
+.slot-close-btn {
+  background: linear-gradient(135deg, #ff0066, #ff3399);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
+}
+
+.slot-close-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 0, 102, 0.8);
+}
+
+.slot-close-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.skill-tag.pachinkas {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.skill-tag.pachinkas:hover {
+  transform: scale(1.1);
+}
+
+/* Distorted Text Effect */
+.distorted-text {
+  display: inline-block;
+  animation: distort-fall 4s ease-in-out infinite;
+  color: #666;
+}
+
+@keyframes distort-fall {
+  0% {
+    transform: skewX(0deg) translateY(0);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  30% {
+    transform: skewX(-2deg) translateY(2px);
+    filter: blur(0.5px);
+    opacity: 0.9;
+  }
+  60% {
+    transform: skewX(3deg) skewY(1deg) translateY(5px);
+    filter: blur(1px);
+    opacity: 0.7;
+  }
+  80% {
+    transform: skewX(-4deg) skewY(2deg) translateY(10px);
+    filter: blur(1.5px);
+    opacity: 0.4;
+  }
+  90% {
+    transform: skewX(0deg) translateY(0);
+    filter: blur(0px);
+    opacity: 0;
+  }
+  100% {
+    transform: skewX(0deg) translateY(0);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/* Onion Explosion Effect */
+.onion-explosion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.onion {
+  position: absolute;
+  top: 50%;
+  animation: onion-explode 2s ease-out forwards;
+}
+
+@keyframes onion-explode {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+      calc(-50% + (var(--random-x, 0) * 200px - 100px)),
+      calc(-50% + (var(--random-y, 0) * 400px - 200px))
+    ) scale(0.5) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.onion:nth-child(odd) {
+  animation-name: onion-explode-left;
+}
+
+.onion:nth-child(even) {
+  animation-name: onion-explode-right;
+}
+
+@keyframes onion-explode-left {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-150vw) translateY(-50vh) scale(0.3) rotate(1080deg);
+    opacity: 0;
+  }
+}
+
+@keyframes onion-explode-right {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(1.5) rotate(-180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(150vw) translateY(50vh) scale(0.3) rotate(-1080deg);
+    opacity: 0;
+  }
+}

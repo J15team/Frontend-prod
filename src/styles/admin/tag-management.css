@@ -1,0 +1,131 @@
+/**
+ * tag-management.css
+ * タグ管理のスタイル
+ */
+
+.current-tags {
+  margin: 12px 0;
+}
+
+.current-tags .label {
+  font-weight: 500;
+  color: #444;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.no-tags {
+  color: #888;
+  font-style: italic;
+}
+
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tag-remove-btn {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag-remove-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.search-bar {
+  margin-bottom: 16px;
+}
+
+.search-bar input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.tag-type {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tag-type.normal {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.tag-type.premium {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.btn-danger-small {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-danger-small:hover {
+  background: #c62828;
+}
+
+.btn-danger-small:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ダークモード */
+[data-theme="dark"] .search-bar input {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .search-bar input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .current-tags .label {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .no-tags {
+  color: var(--text-muted);
+}

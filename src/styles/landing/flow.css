@@ -1,0 +1,84 @@
+/* ========================================
+   Landing Page - Flow Section
+   ======================================== */
+.flow-section {
+  padding: 8rem 8%;
+  background: #1e3a2f;
+}
+
+.section-header.light .section-label {
+  color: #86efac;
+}
+
+.section-header.light .section-title {
+  color: white;
+}
+
+.flow-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.flow-item {
+  position: relative;
+}
+
+.flow-item::after {
+  content: '';
+  position: absolute;
+  top: 80px;
+  right: -1rem;
+  width: calc(100% - 60px);
+  height: 2px;
+  background: linear-gradient(90deg, #22c55e, transparent);
+}
+
+.flow-item:last-child::after {
+  display: none;
+}
+
+.flow-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #22c55e;
+  opacity: 0.3;
+  margin-bottom: 1rem;
+}
+
+.flow-content {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.flow-image {
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.flow-image .placeholder-image {
+  background: linear-gradient(135deg, #2d5a47 0%, #1e3a2f 100%);
+}
+
+.flow-image .placeholder-icon {
+  font-size: 2.5rem;
+  opacity: 0.8;
+}
+
+.flow-content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.flow-content p {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  line-height: 1.6;
+}

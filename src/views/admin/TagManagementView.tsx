@@ -4,7 +4,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useTagManagementViewModel } from '@/viewmodels/admin/useTagManagementViewModel';
-import { CopyableCode } from '@/components/common/CopyableCode';
+import { CopyableCode } from '@/components/common/CopyableCode/CopyableCode';
 
 export const TagManagementView: React.FC = () => {
   const {

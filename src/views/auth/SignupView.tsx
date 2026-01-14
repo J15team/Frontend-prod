@@ -5,8 +5,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
-import { GoogleSignInButton } from '@/components/features/GoogleSignInButton';
-import { GitHubSignInButton } from '@/components/features/GitHubSignInButton';
+import { GoogleSignInButton } from '@/components/features/GoogleSignInButton/GoogleSignInButton';
+import { GitHubSignInButton } from '@/components/features/GitHubSignInButton/GitHubSignInButton';
 import { type SignupRequest } from '@/models/User';
 
 export const SignupView: React.FC = () => {

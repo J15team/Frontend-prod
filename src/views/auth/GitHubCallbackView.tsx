@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { saveTokens, saveUser } from '@/utils/storage/tokenStorage';
-import { LoadingSpinner } from '@/components/common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner/LoadingSpinner';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://zu9mkxoir4.execute-api.ap-northeast-1.amazonaws.com';
 

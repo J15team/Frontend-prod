@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CopyableCode } from '@/components/common/CopyableCode';
+import { CopyableCode } from '@/components/common/CopyableCode/CopyableCode';
 
 interface EndpointLink {
   label: string;

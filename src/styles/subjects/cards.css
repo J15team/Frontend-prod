@@ -1,0 +1,103 @@
+/* ====================================================================
+   題材一覧ページ - カード
+   ==================================================================== */
+
+/* カテゴリセクション */
+.subject-category {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.subject-category:nth-child(even) { background: var(--bg-tertiary); }
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--color-primary-light);
+}
+
+.category-emoji { font-size: 1.5rem; }
+.category-title { font-size: 1.25rem; font-weight: 700; color: var(--color-forest); margin: 0; }
+.category-count { background: var(--color-primary-light); color: var(--color-forest); padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+.category-stars { margin-left: auto; }
+
+/* カード */
+.subject-card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.12);
+  border-color: var(--color-primary-light);
+}
+
+.subject-card:hover::before { opacity: 1; }
+
+.subject-card-header { padding: 20px 20px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+.subject-card-body { padding: 16px 20px; }
+.subject-card h2 { margin: 0 0 8px; color: var(--text-primary); font-size: 1.25rem; font-weight: 700; line-height: 1.4; }
+.subject-card p { color: var(--text-secondary); margin: 0; font-size: 0.9rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.subject-card .subject-progress { padding: 0 20px; margin: 0; }
+
+.subject-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-color);
+  margin-top: 12px;
+}
+
+.section-count { display: inline-flex; align-items: center; gap: 4px; color: #22c55e; font-weight: 600; font-size: 0.85rem; }
+.section-count::before { content: '📚'; font-size: 1rem; }
+.created-at { color: #9ca3af; font-size: 0.8rem; }
+
+/* 進捗バー */
+.subject-progress { display: flex; align-items: center; gap: 10px; padding: 0 20px; margin: 12px 0; }
+.subject-progress .progress-label { font-size: 0.75rem; color: #9ca3af; min-width: 40px; }
+.subject-progress .progress-container { flex: 1; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
+.subject-progress .progress-bar { height: 100%; background: linear-gradient(90deg, #22c55e, #16a34a); border-radius: 4px; transition: width 0.3s ease; }
+.subject-progress .progress-percentage { font-size: 0.85rem; font-weight: 700; color: #22c55e; min-width: 40px; text-align: right; }
+
+/* タグ表示 */
+.subject-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.subject-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  color: #5b4b8a;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}

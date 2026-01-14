@@ -5,8 +5,8 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRankingViewModel } from '@/viewmodels/ranking/useRankingViewModel';
-import { LoadingSpinner } from '@/components/common/LoadingSpinner';
-import '@/styles/ranking.css';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner/LoadingSpinner';
+import '@/styles/ranking/ranking.css';
 
 type TabType = 'subjects' | 'tags';
 

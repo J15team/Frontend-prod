@@ -1,0 +1,75 @@
+/* ====================================================================
+   ボタン類
+   ==================================================================== */
+
+/* プレビューボタン */
+.btn-preview {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-preview:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+.btn-preview:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* メモ帳ボタン */
+.btn-memo {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-memo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* 危険ボタン */
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-danger:hover:not(:disabled) { background-color: #c82333; }
+.btn-danger:disabled { background-color: #6c757d; cursor: not-allowed; opacity: 0.5; }
+
+.btn-danger-small {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.btn-danger-small:hover { background: #c62828; }
+.btn-danger-small:disabled { background: #ccc; cursor: not-allowed; }
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .btn-memo {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}

@@ -1,0 +1,8 @@
+/* ====================================================================
+   プロフィールページ - レスポンシブ
+   ==================================================================== */
+@media (max-width: 768px) {
+  .profile-stats-grid { grid-template-columns: 1fr; }
+  .profile-subject-grid { grid-template-columns: 1fr; }
+  .profile-bottom-actions { flex-direction: column; }
+}

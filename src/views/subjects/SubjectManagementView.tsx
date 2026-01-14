@@ -4,7 +4,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { useSubjectManagementViewModel } from '@/viewmodels/subjects/useSubjectManagementViewModel';
-import { CopyableCode } from '@/components/common/CopyableCode';
+import { CopyableCode } from '@/components/common/CopyableCode/CopyableCode';
 
 interface SubjectFormState {
   subjectId: string;

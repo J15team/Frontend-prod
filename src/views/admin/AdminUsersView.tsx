@@ -4,7 +4,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { useAdminUsersViewModel } from '@/viewmodels/admin/useAdminUsersViewModel';
-import { CopyableCode } from '@/components/common/CopyableCode';
+import { CopyableCode } from '@/components/common/CopyableCode/CopyableCode';
 
 interface AdminCreateForm {
   email: string;

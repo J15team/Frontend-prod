@@ -8,8 +8,8 @@ import { useSubjectsViewModel } from '@/viewmodels/subjects/useSubjectsViewModel
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
 import { recordSubjectView, recordTagView } from '@/services/ranking/RankingService';
 import { type Subject } from '@/models/Subject';
-import { LoadingSpinner } from '@/components/common/LoadingSpinner';
-import { Tutorial, shouldShowTutorial } from '@/components/features/Tutorial';
+import { LoadingSpinner } from '@/components/common/LoadingSpinner/LoadingSpinner';
+import { Tutorial, shouldShowTutorial } from '@/components/features/Tutorial/Tutorial';
 
 // スクロールアニメーション用フック
 const useScrollAnimation = () => {

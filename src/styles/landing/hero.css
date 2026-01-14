@@ -1,0 +1,208 @@
+/* ========================================
+   Landing Page - Hero Section
+   ======================================== */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 8%;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.38);
+  transition: background 0.3s ease;
+}
+
+/* 右寄せヒーローコンテンツ */
+.hero-content-right {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-align: right;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: 120px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.hero-section.visible .hero-content-right {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-title-new {
+  margin: 0;
+  font-weight: 200;
+  font-size: 3rem;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.hero-sub {
+  display: block;
+  margin-top: 14px;
+  font-size: 1rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
+}
+
+.hero-section.visible .hero-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #22c55e;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #1e3a2f;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title .line-1 {
+  display: block;
+}
+
+.hero-title .line-2 {
+  display: block;
+  color: #22c55e;
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: #4b5563;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: #1e3a2f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-hero:hover {
+  background: #22c55e;
+  transform: translateY(-2px);
+}
+
+.btn-hero .arrow {
+  transition: transform 0.3s;
+}
+
+.btn-hero:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, #22c55e, transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; height: 60px; }
+  50% { opacity: 1; height: 80px; }
+}
+
+/* Placeholder Images */
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  opacity: 0.5;
+}
+
+.placeholder-text {
+  font-size: 1rem;
+  color: #6b7280;
+  opacity: 0.5;
+}

@@ -1,0 +1,185 @@
+/* ========================================
+   Landing Page - Header
+   ======================================== */
+.landing-header-v2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  transition: all 0.4s ease;
+  color: #fff;
+}
+
+.landing-header-v2 .logo-text {
+  color: inherit;
+}
+
+.landing-header-v2 .header-nav button {
+  color: inherit;
+}
+
+.landing-header-v2.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  padding: 1rem 3rem;
+  color: #111;
+}
+
+.landing-header-v2 .header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.landing-header-v2 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e3a2f;
+}
+
+.landing-header-v2 .logo-icon {
+  font-size: 1.8rem;
+}
+
+.landing-header-v2 .header-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.landing-header-v2 .header-nav button {
+  background: none;
+  border: none;
+  color: #1e3a2f;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.landing-header-v2 .header-nav button:hover {
+  color: #22c55e;
+}
+
+.landing-header-v2 .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.landing-header-v2 .btn-text {
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.8;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.landing-header-v2 .btn-outline {
+  padding: 0.6rem 1.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.landing-header-v2.scrolled .btn-outline {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  color: #1e3a2f;
+}
+
+.landing-header-v2 .btn-outline:hover {
+  transform: translateY(-1px);
+  opacity: 0.85;
+}
+
+.landing-header-v2.scrolled .btn-outline:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.landing-header-v2 .btn-primary {
+  padding: 0.6rem 1.25rem;
+  background: #000;
+  border: none;
+  border-radius: 999px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.landing-header-v2.scrolled .btn-primary {
+  background: #1e3a2f;
+  border-radius: 6px;
+}
+
+.landing-header-v2 .btn-primary:hover {
+  transform: translateY(-1px);
+  opacity: 0.85;
+}
+
+.landing-header-v2.scrolled .btn-primary:hover {
+  background: #22c55e;
+}
+
+/* Side Navigation */
+.side-nav {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.side-nav button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.side-nav .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+  transition: all 0.3s;
+}
+
+.side-nav .label {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s;
+}
+
+.side-nav button:hover .label,
+.side-nav button.active .label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.side-nav button.active .dot {
+  background: #22c55e;
+  transform: scale(1.3);
+}

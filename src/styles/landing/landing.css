@@ -1,0 +1,10 @@
+/* ========================================
+   Landing Page V2 - Base Styles
+   ======================================== */
+
+.landing-page-v2 {
+  min-height: 100vh;
+  background: #fff;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
