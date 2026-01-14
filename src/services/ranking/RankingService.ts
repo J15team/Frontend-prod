@@ -5,9 +5,7 @@
 import apiClient from '../apiClient';
 import { type SubjectRanking, type TagRanking, type ViewRecordResponse } from '@/models/Ranking';
 
-/**
- * 題材の閲覧を記録
- */
+
 export const recordSubjectView = async (subjectId: number): Promise<ViewRecordResponse> => {
   const response = await apiClient.post<ViewRecordResponse>(`/views/subjects/${subjectId}`);
   return response.data;

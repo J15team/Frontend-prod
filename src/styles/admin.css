@@ -620,6 +620,172 @@
   color: var(--text-primary);
 }
 
+/* ====================================================================
+   メモ帳パネル
+   ==================================================================== */
+.btn-memo {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-memo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.memo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.memo-panel {
+  width: 600px;
+  max-width: 90vw;
+  height: 70vh;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  animation: memoFadeIn 0.2s ease-out;
+}
+
+@keyframes memoFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.memo-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0;
+}
+
+.memo-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.memo-saved-indicator {
+  font-size: 0.75rem;
+  color: #fef3c7;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.btn-memo-save,
+.btn-memo-clear {
+  padding: 0.4rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-memo-save {
+  background: rgba(255, 255, 255, 0.9);
+  color: #d97706;
+}
+
+.btn-memo-save:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-memo-clear {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.btn-memo-clear:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.memo-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  margin-left: 0.5rem;
+}
+
+.memo-close-btn:hover {
+  opacity: 0.8;
+}
+
+.memo-textarea {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  resize: none;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-family: inherit;
+  outline: none;
+  border-radius: 0 0 12px 12px;
+}
+
+.memo-textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* メモ帳 ダークモード */
+[data-theme="dark"] .memo-panel {
+  background: var(--bg-secondary);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .memo-textarea {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .memo-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .memo-panel {
+    width: 95vw;
+    height: 80vh;
+  }
+  
+  .btn-memo {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}
+
 /* エラーカード ダークモード */
 [data-theme="dark"] .error-card {
   background: var(--bg-secondary);

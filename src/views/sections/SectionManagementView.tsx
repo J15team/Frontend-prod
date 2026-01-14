@@ -60,6 +60,12 @@ export const SectionManagementView: React.FC = () => {
   const [codes, setCodes] = useState({ html: '', css: '', javascript: '' });
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  // メモ帳用state
+  const [memoContent, setMemoContent] = useState<string>('');
+  const [memoSaved, setMemoSaved] = useState(false);
+  const [showMemo, setShowMemo] = useState(false);
+  const MEMO_STORAGE_KEY = 'section-management-memo';
+
   const DEFAULT_CODE = {
     html: `<div class="container">
   <h1>Hello, World!</h1>
@@ -98,6 +104,14 @@ btn.addEventListener('click', () => {
   // 初期ロード時に題材一覧を取得
   useEffect(() => {
     fetchSubjects();
+  }, []);
+
+  // メモ帳の初期読み込み
+  useEffect(() => {
+    const savedMemo = localStorage.getItem(MEMO_STORAGE_KEY);
+    if (savedMemo) {
+      setMemoContent(savedMemo);
+    }
   }, []);
 
   useEffect(() => {
@@ -199,6 +213,21 @@ btn.addEventListener('click', () => {
     setShowPreview(true);
   };
 
+  // メモ帳の保存
+  const handleSaveMemo = () => {
+    localStorage.setItem(MEMO_STORAGE_KEY, memoContent);
+    setMemoSaved(true);
+    setTimeout(() => setMemoSaved(false), 2000);
+  };
+
+  // メモ帳のクリア
+  const handleClearMemo = () => {
+    if (confirm('メモを削除しますか？')) {
+      setMemoContent('');
+      localStorage.removeItem(MEMO_STORAGE_KEY);
+    }
+  };
+
   return (
     <div className="management-container">
       <h1>セクション管理</h1>
@@ -269,6 +298,13 @@ btn.addEventListener('click', () => {
               >
                 👁️ プレビュー
               </button>
+              <button
+                type="button"
+                className="btn-memo"
+                onClick={() => setShowMemo(true)}
+              >
+                📝 メモ帳
+              </button>
             </label>
             <label>
               画像ファイル (任意)
@@ -327,6 +363,13 @@ btn.addEventListener('click', () => {
                 disabled={!updateForm.description}
               >
                 👁️ プレビュー
+              </button>
+              <button
+                type="button"
+                className="btn-memo"
+                onClick={() => setShowMemo(true)}
+              >
+                📝 メモ帳
               </button>
             </label>
             <label>
@@ -498,6 +541,29 @@ btn.addEventListener('click', () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* メモ帳モーダル */}
+      {showMemo && (
+        <div className="memo-modal-overlay" onClick={() => setShowMemo(false)}>
+          <div className="memo-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="memo-panel-header">
+              <span>📝 メモ帳</span>
+              <div className="memo-actions">
+                {memoSaved && <span className="memo-saved-indicator">✓ 保存しました</span>}
+                <button className="btn-memo-save" onClick={handleSaveMemo}>保存</button>
+                <button className="btn-memo-clear" onClick={handleClearMemo}>クリア</button>
+                <button className="memo-close-btn" onClick={() => setShowMemo(false)}>×</button>
+              </div>
+            </div>
+            <textarea
+              className="memo-textarea"
+              placeholder="記事の下書きやメモをここに書いてください...&#10;&#10;セクションに紐づかない全体的なメモを一時保存できます。"
+              value={memoContent}
+              onChange={(e) => setMemoContent(e.target.value)}
+            />
           </div>
         </div>
       )}
