@@ -280,7 +280,7 @@ export const LandingView: React.FC = () => {
               { id: 'member-1', name: 'RIKI YOSHIDA', role: 'Tech Lead (Frontend & Backend)', image: '/images/team/member-1.jpg' },
               { id: 'member-2', name: 'HARUYA NAKATA', role: 'Team Leader (Frontend & Designer)', image: '/images/team/member-2.jpg' },
               { id: 'member-3', name: 'TAKUMA ARAKI', role: 'Backend', image: '/images/team/member-3.jpg' },
-              { id: 'member-4', name: 'DAIKI MORIKAWA', role: 'Frontend', image: '/images/team/member-4-detail.jpg' },
+              { id: 'member-4', name: 'DAIKI MORIKAWA', role: 'Frontend', image: '/images/team/member-4.jpg' },
               { id: 'member-5', name: 'SEIYA HIROHATA', role: "Leader's pet(frontend)", image: '/images/team/member-5.jpg' },
               { id: 'member-6', name: 'KOUKI TANAKA', role: 'material', image: '/images/team/member-6.jpg' },
             ].map((member, i) => (
