@@ -29,14 +29,14 @@
 }
 
 .footer-brand .logo-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   object-fit: cover;
 }
 
 .footer-brand .logo-title {
-  height: 22px;
+  height: 28px;
   width: auto;
   object-fit: contain;
 }

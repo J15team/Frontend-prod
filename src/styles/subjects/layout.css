@@ -157,14 +157,14 @@
 }
 
 .footer-logo-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   object-fit: cover;
 }
 
 .footer-logo-title {
-  height: 20px;
+  height: 26px;
   width: auto;
   object-fit: contain;
 }

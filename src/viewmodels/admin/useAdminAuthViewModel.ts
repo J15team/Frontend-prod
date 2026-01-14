@@ -4,7 +4,7 @@
  */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signin } from '@/services/auth/AuthService';
+import { signin, googleSignin } from '@/services/auth/AuthService';
 import { type User } from '@/models/User';
 import { getStoredUser, hasValidSession } from '@/utils/storage/tokenStorage';
 
@@ -19,6 +19,7 @@ interface AdminAuthViewModelReturn {
   error: string | null;
   isAuthenticated: boolean;
   handleAdminSignin: (data: AdminSigninRequest) => Promise<void>;
+  handleAdminGoogleSignin: (credential: string) => Promise<void>;
 }
 
 export const useAdminAuthViewModel = (): AdminAuthViewModelReturn => {
@@ -64,11 +65,40 @@ export const useAdminAuthViewModel = (): AdminAuthViewModelReturn => {
     }
   };
 
+  const handleAdminGoogleSignin = async (credential: string): Promise<void> => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await googleSignin(credential);
+
+      console.log('Admin Google signin response:', response);
+      console.log('User role:', response.user.role);
+
+      // ロールがROLE_ADMINかチェック
+      if (response.user.role !== 'ROLE_ADMIN') {
+        throw new Error('管理者権限がありません。このGoogleアカウントは管理者として登録されていません。');
+      }
+
+      setUser(response.user);
+      navigate('/admin');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Googleサインインに失敗しました');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     user,
     loading,
     error,
     isAuthenticated,
     handleAdminSignin,
+    handleAdminGoogleSignin,
   };
 };

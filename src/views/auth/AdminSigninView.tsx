@@ -5,9 +5,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAdminAuthViewModel } from '@/viewmodels/admin/useAdminAuthViewModel';
+import { GoogleSignInButton } from '@/components/features/GoogleSignInButton/GoogleSignInButton';
 
 export const AdminSigninView: React.FC = () => {
-  const { loading, error, handleAdminSignin } = useAdminAuthViewModel();
+  const { loading, error, handleAdminSignin, handleAdminGoogleSignin } = useAdminAuthViewModel();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,6 +24,10 @@ export const AdminSigninView: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const onGoogleSuccess = async (credential: string) => {
+    await handleAdminGoogleSignin(credential);
   };
 
   return (
@@ -43,6 +48,15 @@ export const AdminSigninView: React.FC = () => {
         
         <h1>Admin Portal</h1>
         <p className="auth-subtitle">管理者アカウントでサインイン</p>
+
+        <GoogleSignInButton
+          onSuccess={onGoogleSuccess}
+          onError={(err) => console.error('Google Sign-In error:', err)}
+        />
+
+        <div className="auth-divider">
+          <span>または</span>
+        </div>
 
         <form onSubmit={onSubmit} className="auth-form-modern">
           <div className="form-group-modern">
