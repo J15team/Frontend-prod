@@ -1,67 +1,30 @@
 /**
- * useCodePreview
- * CodePreviewのロジックを分離したカスタムフック
- * Single Responsibility: プレビューHTML生成とコード取得ロジックのみを担当
+ * useCodePreview (V2)
+ * プリセット対応のプレビューフック
+ * React/Vue/Python対応
+ * ホットリロード対応
  */
 import { useCallback, useRef, useState, useEffect } from 'react';
-import { getCode } from '@/utils/storage/codeStorage';
-
-const DEFAULT_CODE = {
-  html: `<div class="container">
-  <h1>Hello, World!</h1>
-  <button id="btn">クリック</button>
-</div>`,
-  css: `.container {
-  text-align: center;
-  padding: 20px;
-}
-
-h1 {
-  color: #22c55e;
-}
-
-button {
-  padding: 10px 20px;
-  background: #22c55e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}`,
-  js: `const btn = document.getElementById('btn');
-btn.addEventListener('click', () => {
-  alert('ボタンがクリックされました！');
-});`,
-};
+import { getProject } from '@/utils/storage/codeStorage';
+import { getPresetById, DEFAULT_PRESET } from '@/config/languageConfig';
+import {
+  generateReactPreview,
+  generateVuePreview,
+  generateTypeScriptPreview,
+} from '@/runtime/frameworkPreview';
+import { generatePythonPreview } from '@/runtime/pythonRuntime';
 
 interface UseCodePreviewOptions {
   subjectId: number;
   currentSectionId: number;
+  autoRefresh?: boolean;
+  autoRefreshDelay?: number;
 }
 
 /**
- * 指定セクションのコードを取得、なければ前のセクションから継承
+ * Web基礎（HTML/CSS/JS）のプレビューHTML生成
  */
-const getCodeWithFallback = (
-  subjectId: number,
-  currentSectionId: number,
-  fileIndex: number,
-  defaultCode: string
-): string => {
-  const current = getCode(subjectId, currentSectionId * 10 + fileIndex);
-  if (current?.code) return current.code;
-
-  for (let prevSection = currentSectionId - 1; prevSection >= 1; prevSection--) {
-    const prev = getCode(subjectId, prevSection * 10 + fileIndex);
-    if (prev?.code) return prev.code;
-  }
-  return defaultCode;
-};
-
-/**
- * プレビュー用HTMLを生成
- */
-const generatePreviewHtml = (html: string, css: string, js: string): string => {
+const generateWebBasicsPreview = (html: string, css: string, js: string): string => {
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -91,29 +54,153 @@ try {
 </html>`;
 };
 
-export const useCodePreview = ({ subjectId, currentSectionId }: UseCodePreviewOptions) => {
+export const useCodePreview = ({ 
+  subjectId, 
+  currentSectionId,
+  autoRefresh = true,
+  autoRefreshDelay = 800,
+}: UseCodePreviewOptions) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [presetId, setPresetId] = useState<string>('web-basics');
+  const refreshTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastContentRef = useRef<string>('');
 
   const updatePreview = useCallback(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    const htmlCode = getCodeWithFallback(subjectId, currentSectionId, 0, DEFAULT_CODE.html);
-    const cssCode = getCodeWithFallback(subjectId, currentSectionId, 1, DEFAULT_CODE.css);
-    const jsCode = getCodeWithFallback(subjectId, currentSectionId, 2, DEFAULT_CODE.js);
+    // プロジェクトを取得
+    const project = getProject(subjectId, currentSectionId);
+    if (!project) {
+      // デフォルトのWeb基礎プレビュー
+      iframe.srcdoc = generateWebBasicsPreview(
+        '<div class="container"><h1>Hello, World!</h1></div>',
+        '.container { text-align: center; padding: 2rem; } h1 { color: #22c55e; }',
+        'console.log("Ready!");'
+      );
+      return;
+    }
 
-    iframe.srcdoc = generatePreviewHtml(htmlCode, cssCode, jsCode);
-    setError(null);
+    setPresetId(project.presetId);
+    const preset = getPresetById(project.presetId) || DEFAULT_PRESET;
+
+    try {
+      let previewHtml = '';
+
+      switch (project.presetId) {
+        case 'web-basics': {
+          const html = project.files['index.html']?.content || '';
+          const css = project.files['style.css']?.content || '';
+          const js = project.files['script.js']?.content || '';
+          previewHtml = generateWebBasicsPreview(html, css, js);
+          break;
+        }
+
+        case 'typescript-basics': {
+          const code = project.files['main.ts']?.content || '';
+          previewHtml = generateTypeScriptPreview(code);
+          break;
+        }
+
+        case 'react': {
+          const code = project.files['App.tsx']?.content || '';
+          const css = project.files['styles.css']?.content || '';
+          previewHtml = generateReactPreview(code, css);
+          break;
+        }
+
+        case 'vue': {
+          const code = project.files['App.vue']?.content || '';
+          previewHtml = generateVuePreview(code);
+          break;
+        }
+
+        case 'python': {
+          const code = project.files['main.py']?.content || '';
+          previewHtml = generatePythonPreview(code);
+          break;
+        }
+
+        default: {
+          // 未対応のプリセットはコード表示
+          const fileContents = Object.entries(project.files)
+            .map(([name, file]) => `=== ${name} ===\n${file.content}`)
+            .join('\n\n');
+          previewHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { 
+      font-family: 'Fira Code', monospace; 
+      background: #1e1e1e; 
+      color: #d4d4d4; 
+      padding: 1rem; 
+    }
+    pre { white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h3>📁 ${preset.label}</h3>
+  <pre>${fileContents}</pre>
+</body>
+</html>`;
+        }
+      }
+
+      iframe.srcdoc = previewHtml;
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'プレビュー生成エラー');
+    }
   }, [subjectId, currentSectionId]);
 
   useEffect(() => {
     updatePreview();
   }, [updatePreview]);
 
+  // ホットリロード: ローカルストレージの変更を監視
+  useEffect(() => {
+    if (!autoRefresh) return;
+
+    const checkForChanges = () => {
+      const project = getProject(subjectId, currentSectionId);
+      if (!project) return;
+
+      // ファイル内容のハッシュを作成
+      const currentContent = Object.entries(project.files)
+        .map(([name, file]) => `${name}:${file.content}`)
+        .join('|');
+
+      // 変更があればプレビュー更新
+      if (currentContent !== lastContentRef.current) {
+        lastContentRef.current = currentContent;
+        
+        // debounce
+        if (refreshTimeoutRef.current) {
+          clearTimeout(refreshTimeoutRef.current);
+        }
+        refreshTimeoutRef.current = setTimeout(() => {
+          updatePreview();
+        }, autoRefreshDelay);
+      }
+    };
+
+    // 500msごとにチェック
+    const intervalId = setInterval(checkForChanges, 500);
+
+    return () => {
+      clearInterval(intervalId);
+      if (refreshTimeoutRef.current) {
+        clearTimeout(refreshTimeoutRef.current);
+      }
+    };
+  }, [subjectId, currentSectionId, autoRefresh, autoRefreshDelay, updatePreview]);
+
   return {
     iframeRef,
     error,
+    presetId,
     updatePreview,
   };
 };

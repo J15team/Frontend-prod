@@ -1,8 +1,9 @@
 /**
  * GitHub Export Modal
  * 学習コードをGitHubリポジトリにエクスポートするモーダル
+ * プリセット選択機能付き
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGitHubExport, generateRepoName } from '@/hooks/useGitHubExport';
 
 interface GitHubExportModalProps {
@@ -19,20 +20,31 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
   const [repoName, setRepoName] = useState(generateRepoName());
   const [description, setDescription] = useState(`Pathlyで学習: ${subjectTitle}`);
   const [isPrivate, setIsPrivate] = useState(false);
+  const [selectedPreset, setSelectedPreset] = useState<string>('');
 
   const {
     githubUser,
     isConnected,
     hasCode,
+    availablePresets,
     loading,
     error,
     success,
     exportToGitHub,
   } = useGitHubExport(subjectId, subjectTitle);
 
+  // 初期選択: 最新のプリセットを選択
+  useEffect(() => {
+    if (availablePresets.length > 0 && !selectedPreset) {
+      setSelectedPreset(availablePresets[0].presetId);
+    }
+  }, [availablePresets, selectedPreset]);
+
   const handleExport = () => {
-    exportToGitHub({ repoName, description, isPrivate });
+    exportToGitHub({ repoName, description, isPrivate, presetId: selectedPreset });
   };
+
+  const selectedPresetInfo = availablePresets.find(p => p.presetId === selectedPreset);
 
   if (success) {
     return (
@@ -74,13 +86,41 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
         ) : (
           <>
             <div className="export-info">
-              <p>
-                {hasCode ? '最終セクションのコードをエクスポートします' : 'コードがありません'}
-              </p>
               <p className="export-user">
                 エクスポート先: <strong>@{githubUser?.login}</strong>
               </p>
             </div>
+
+            {/* プリセット選択 */}
+            {availablePresets.length > 0 && (
+              <div className="form-group">
+                <label>エクスポートするプリセット</label>
+                <div className="preset-select-buttons">
+                  {availablePresets.map((preset) => (
+                    <button
+                      key={preset.presetId}
+                      type="button"
+                      className={`preset-select-btn ${selectedPreset === preset.presetId ? 'active' : ''}`}
+                      onClick={() => setSelectedPreset(preset.presetId)}
+                    >
+                      <span className="preset-icon">{preset.icon}</span>
+                      <span className="preset-label">{preset.label}</span>
+                    </button>
+                  ))}
+                </div>
+                {selectedPresetInfo && (
+                  <small className="input-hint">
+                    {selectedPresetInfo.icon} {selectedPresetInfo.label} のコードをエクスポートします
+                  </small>
+                )}
+              </div>
+            )}
+
+            {availablePresets.length === 0 && (
+              <div className="export-warning">
+                <p>エクスポートするコードがありません</p>
+              </div>
+            )}
 
             <div className="form-group">
               <label>リポジトリ名</label>
@@ -123,7 +163,7 @@ export const GitHubExportModal: React.FC<GitHubExportModalProps> = ({
               <button
                 className="btn-github-export"
                 onClick={handleExport}
-                disabled={loading || !hasCode}
+                disabled={loading || !hasCode || !selectedPreset}
               >
                 {loading ? 'エクスポート中...' : 'エクスポート'}
               </button>

@@ -1,26 +1,37 @@
 /**
- * useGitHubExport
+ * useGitHubExport (V2)
  * GitHubへのコードエクスポート機能を管理するカスタムフック
+ * 多言語・プリセット対応
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { createRepository, addFileToRepo, updateFileInRepo } from '@/services/integrations/GitHubService';
-import { getSubjectFinalCode } from '@/utils/storage/codeStorage';
+import { getSubjectFinalProject, getSubjectFinalCode, getSubjectPresets, getSubjectProjectByPreset } from '@/utils/storage/codeStorage';
+import { getPresetById } from '@/config/languageConfig';
 import { isGitHubConnected, getGitHubUser, type GitHubUser } from '@/utils/storage/githubStorage';
 
 interface ExportConfig {
   repoName: string;
   description: string;
   isPrivate: boolean;
+  presetId?: string; // 追加: エクスポートするプリセット
 }
 
 interface ExportResult {
   url: string;
 }
 
+interface AvailablePreset {
+  presetId: string;
+  label: string;
+  icon: string;
+  updatedAt: string;
+}
+
 interface UseGitHubExportReturn {
   githubUser: GitHubUser | null;
   isConnected: boolean;
   hasCode: boolean;
+  availablePresets: AvailablePreset[]; // 追加
   loading: boolean;
   error: string | null;
   success: ExportResult | null;
@@ -30,22 +41,75 @@ interface UseGitHubExportReturn {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-const generateReadme = (subjectTitle: string): string => {
+/**
+ * プロジェクトに応じたREADMEを生成
+ */
+const generateReadme = (
+  subjectTitle: string,
+  presetId: string,
+  fileNames: string[]
+): string => {
+  const preset = getPresetById(presetId);
+  const presetLabel = preset?.label || 'Web基礎';
+  const presetIcon = preset?.icon || '🌐';
+
+  // ファイル構成
+  const fileList = fileNames.map(name => `├── ${name}`).join('\n');
+
+  // 使い方の説明（プリセットに応じて変更）
+  let usageInstructions = '';
+  switch (presetId) {
+    case 'web-basics':
+      usageInstructions = '`index.html` をブラウザで開いてください。';
+      break;
+    case 'typescript-basics':
+      usageInstructions = `\`\`\`bash
+npx ts-node main.ts
+# または
+npx tsc main.ts && node main.js
+\`\`\``;
+      break;
+    case 'react':
+      usageInstructions = `\`\`\`bash
+npm create vite@latest my-app -- --template react-ts
+# ファイルをコピーしてから
+npm install
+npm run dev
+\`\`\``;
+      break;
+    case 'vue':
+      usageInstructions = `\`\`\`bash
+npm create vue@latest
+# ファイルをコピーしてから
+npm install
+npm run dev
+\`\`\``;
+      break;
+    case 'python':
+      usageInstructions = `\`\`\`bash
+python main.py
+\`\`\``;
+      break;
+    default:
+      usageInstructions = 'ファイルを実行環境に合わせてセットアップしてください。';
+  }
+
   return `# ${subjectTitle}
+
+${presetIcon} **${presetLabel}** プロジェクト
 
 このプロジェクトは [Pathly](https://frontend-prod-xi.vercel.app) で学習した内容です。
 
 ## 📁 ファイル構成
 
 \`\`\`
-index.html  - HTML
-style.css   - CSS
-script.js   - JavaScript
+${fileList}
+└── README.md
 \`\`\`
 
 ## 🚀 使い方
 
-\`index.html\` をブラウザで開いてください。
+${usageInstructions}
 
 ## 📅 作成日
 
@@ -67,8 +131,25 @@ export const useGitHubExport = (
 
   const githubUser = getGitHubUser();
   const isConnected = isGitHubConnected();
+  
+  // 利用可能なプリセット一覧を取得
+  const availablePresets = useMemo<AvailablePreset[]>(() => {
+    const presets = getSubjectPresets(subjectId);
+    return presets.map(p => {
+      const presetDef = getPresetById(p.presetId);
+      return {
+        presetId: p.presetId,
+        label: presetDef?.label || p.presetId,
+        icon: presetDef?.icon || '📄',
+        updatedAt: p.updatedAt,
+      };
+    }).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  }, [subjectId]);
+
+  // 新しいプロジェクト形式を優先、なければ旧形式にフォールバック
+  const finalProject = getSubjectFinalProject(subjectId);
   const finalCode = getSubjectFinalCode(subjectId);
-  const hasCode = finalCode !== null;
+  const hasCode = finalProject !== null || finalCode !== null || availablePresets.length > 0;
 
   const resetState = useCallback(() => {
     setLoading(false);
@@ -83,7 +164,7 @@ export const useGitHubExport = (
         return;
       }
 
-      if (!finalCode) {
+      if (!hasCode) {
         setError('エクスポートするコードがありません。まずコードを書いてください。');
         return;
       }
@@ -102,31 +183,64 @@ export const useGitHubExport = (
         // GitHub APIのレート制限対策
         await delay(1500);
 
-        // READMEを更新
-        const readmeContent = generateReadme(subjectTitle);
-        await updateFileInRepo(githubUser.login, config.repoName, {
-          path: 'README.md',
-          content: readmeContent,
-        });
+        // プリセットが指定された場合はそのプロジェクトを取得
+        let projectToExport = config.presetId 
+          ? getSubjectProjectByPreset(subjectId, config.presetId)
+          : null;
+        let presetId = config.presetId || 'web-basics';
 
-        // 各ファイルを追加
-        if (finalCode.html) {
-          await addFileToRepo(githubUser.login, config.repoName, {
-            path: 'index.html',
-            content: finalCode.html,
-          });
+        // プリセット指定がなければ最新プロジェクトを使用
+        if (!projectToExport && finalProject) {
+          projectToExport = { files: finalProject.files };
+          presetId = finalProject.presetId;
         }
-        if (finalCode.css) {
-          await addFileToRepo(githubUser.login, config.repoName, {
-            path: 'style.css',
-            content: finalCode.css,
+
+        // 新しいプロジェクト形式を使用
+        if (projectToExport) {
+          const fileNames = Object.keys(projectToExport.files);
+
+          // READMEを更新
+          const readmeContent = generateReadme(subjectTitle, presetId, fileNames);
+          await updateFileInRepo(githubUser.login, config.repoName, {
+            path: 'README.md',
+            content: readmeContent,
           });
-        }
-        if (finalCode.js) {
-          await addFileToRepo(githubUser.login, config.repoName, {
-            path: 'script.js',
-            content: finalCode.js,
+
+          // 各ファイルを追加
+          for (const [filename, fileData] of Object.entries(projectToExport.files)) {
+            if (fileData.content) {
+              await addFileToRepo(githubUser.login, config.repoName, {
+                path: filename,
+                content: fileData.content,
+              });
+            }
+          }
+        } else if (finalCode) {
+          // 旧形式にフォールバック
+          const readmeContent = generateReadme(subjectTitle, 'web-basics', ['index.html', 'style.css', 'script.js']);
+          await updateFileInRepo(githubUser.login, config.repoName, {
+            path: 'README.md',
+            content: readmeContent,
           });
+
+          if (finalCode.html) {
+            await addFileToRepo(githubUser.login, config.repoName, {
+              path: 'index.html',
+              content: finalCode.html,
+            });
+          }
+          if (finalCode.css) {
+            await addFileToRepo(githubUser.login, config.repoName, {
+              path: 'style.css',
+              content: finalCode.css,
+            });
+          }
+          if (finalCode.js) {
+            await addFileToRepo(githubUser.login, config.repoName, {
+              path: 'script.js',
+              content: finalCode.js,
+            });
+          }
         }
 
         setSuccess({ url: repo.html_url });
@@ -137,13 +251,14 @@ export const useGitHubExport = (
         setLoading(false);
       }
     },
-    [isConnected, githubUser, finalCode, subjectTitle]
+    [isConnected, githubUser, finalProject, finalCode, hasCode, subjectTitle]
   );
 
   return {
     githubUser,
     isConnected,
     hasCode,
+    availablePresets,
     loading,
     error,
     success,

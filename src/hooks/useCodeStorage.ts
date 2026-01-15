@@ -1,47 +1,21 @@
 /**
- * useCodeStorage
- * コードの読み込み・保存・オートセーブを管理するカスタムフック
+ * useCodeStorage (V2)
+ * 新しいプロジェクトベースのコード管理フック
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { saveCode, getCode } from '@/utils/storage/codeStorage';
-
-export type FileType = 'html' | 'css' | 'javascript';
-
-export interface CodeState {
-  html: string;
-  css: string;
-  javascript: string;
-}
-
-export const FILE_TYPES: FileType[] = ['html', 'css', 'javascript'];
-
-const DEFAULT_CODE: CodeState = {
-  html: `<div class="container">
-  <h1>Hello, World!</h1>
-  <button id="btn">クリック</button>
-</div>`,
-  css: `.container {
-  text-align: center;
-  padding: 20px;
-}
-
-h1 {
-  color: #22c55e;
-}
-
-button {
-  padding: 10px 20px;
-  background: #22c55e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}`,
-  javascript: `const btn = document.getElementById('btn');
-btn.addEventListener('click', () => {
-  alert('ボタンがクリックされました！');
-});`,
-};
+import {
+  getProject,
+  initializeProject,
+  saveProjectFile,
+  changeProjectPreset,
+  type ProjectData,
+  type ProjectFile,
+} from '@/utils/storage/codeStorage';
+import {
+  getPresetById,
+  DEFAULT_PRESET,
+  type PresetDefinition,
+} from '@/config/languageConfig';
 
 interface UseCodeStorageOptions {
   subjectId: number;
@@ -50,68 +24,78 @@ interface UseCodeStorageOptions {
 }
 
 interface UseCodeStorageReturn {
-  codes: CodeState;
-  updateCode: (fileType: FileType, value: string) => void;
+  // プロジェクトデータ
+  project: ProjectData | null;
+  preset: PresetDefinition;
   isLoading: boolean;
+
+  // ファイル操作
+  files: Record<string, ProjectFile>;
+  activeFile: string | null;
+  setActiveFile: (filename: string) => void;
+  updateFileContent: (filename: string, content: string) => void;
+
+  // プリセット操作
+  changePreset: (presetId: string) => void;
 }
-
-/**
- * コードの継承を考慮して読み込む
- */
-const loadCodeWithInheritance = (
-  subjectId: number,
-  sectionId: number,
-  fileIndex: number,
-  fileType: FileType
-): string => {
-  // 現在のセクションから読み込み
-  const currentSaved = getCode(subjectId, sectionId * 10 + fileIndex);
-  if (currentSaved?.code) {
-    return currentSaved.code;
-  }
-
-  // 前のセクションから継承を試みる
-  for (let prevSection = sectionId - 1; prevSection >= 1; prevSection--) {
-    const prevSaved = getCode(subjectId, prevSection * 10 + fileIndex);
-    if (prevSaved?.code) {
-      return prevSaved.code;
-    }
-  }
-
-  // デフォルトコードを返す
-  return DEFAULT_CODE[fileType];
-};
 
 export const useCodeStorage = ({
   subjectId,
   sectionId,
   autoSaveDelay = 500,
 }: UseCodeStorageOptions): UseCodeStorageReturn => {
-  const [codes, setCodes] = useState<CodeState>({
-    html: '',
-    css: '',
-    javascript: '',
-  });
+  const [project, setProject] = useState<ProjectData | null>(null);
+  const [preset, setPreset] = useState<PresetDefinition>(DEFAULT_PRESET);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeFile, setActiveFile] = useState<string | null>(null);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // 初期読み込み
+  // 初期化
   useEffect(() => {
     setIsLoading(true);
-    const newCodes: CodeState = { html: '', css: '', javascript: '' };
 
-    FILE_TYPES.forEach((fileType, index) => {
-      newCodes[fileType] = loadCodeWithInheritance(subjectId, sectionId, index, fileType);
-    });
+    // プロジェクトを初期化（継承ロジック含む）
+    const currentProject = initializeProject(subjectId, sectionId);
 
-    setCodes(newCodes);
+    setProject(currentProject);
+
+    // プリセットを設定
+    const currentPreset = getPresetById(currentProject.presetId) || DEFAULT_PRESET;
+    setPreset(currentPreset);
+
+    // 最初のファイルをアクティブに
+    const fileNames = Object.keys(currentProject.files);
+    if (fileNames.length > 0) {
+      setActiveFile(fileNames[0]);
+    }
+
     setIsLoading(false);
   }, [subjectId, sectionId]);
 
-  // コード更新（オートセーブ付き）
-  const updateCode = useCallback(
-    (fileType: FileType, value: string) => {
-      setCodes(prev => ({ ...prev, [fileType]: value }));
+  // ファイル内容更新（オートセーブ付き）
+  const updateFileContent = useCallback(
+    (filename: string, content: string) => {
+      if (!project) return;
+
+      const file = project.files[filename];
+      if (!file) return;
+
+      // ローカル状態を即座に更新
+      setProject(prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          files: {
+            ...prev.files,
+            [filename]: {
+              ...prev.files[filename],
+              content,
+              updatedAt: new Date().toISOString(),
+            },
+          },
+          updatedAt: new Date().toISOString(),
+        };
+      });
 
       // 既存のタイマーをクリア
       if (saveTimeoutRef.current) {
@@ -120,11 +104,35 @@ export const useCodeStorage = ({
 
       // debounceで保存
       saveTimeoutRef.current = setTimeout(() => {
-        const fileIndex = FILE_TYPES.indexOf(fileType);
-        saveCode(subjectId, sectionId * 10 + fileIndex, value, fileType);
+        saveProjectFile(subjectId, sectionId, filename, content, file.languageId);
       }, autoSaveDelay);
     },
-    [subjectId, sectionId, autoSaveDelay]
+    [subjectId, sectionId, autoSaveDelay, project]
+  );
+
+  // プリセット変更
+  const changePreset = useCallback(
+    (presetId: string) => {
+      const newPreset = getPresetById(presetId);
+      if (!newPreset) return;
+
+      // ストレージを更新
+      changeProjectPreset(subjectId, sectionId, presetId);
+
+      // ローカル状態を更新
+      const updatedProject = getProject(subjectId, sectionId);
+      if (updatedProject) {
+        setProject(updatedProject);
+        setPreset(newPreset);
+
+        // 最初のファイルをアクティブに
+        const fileNames = Object.keys(updatedProject.files);
+        if (fileNames.length > 0) {
+          setActiveFile(fileNames[0]);
+        }
+      }
+    },
+    [subjectId, sectionId]
   );
 
   // クリーンアップ
@@ -137,8 +145,25 @@ export const useCodeStorage = ({
   }, []);
 
   return {
-    codes,
-    updateCode,
+    project,
+    preset,
     isLoading,
+    files: project?.files || {},
+    activeFile,
+    setActiveFile,
+    updateFileContent,
+    changePreset,
   };
 };
+
+// ===== 後方互換性のためのエクスポート =====
+export type { FileType } from '@/config/languageConfig';
+
+// 旧APIの型エクスポート（互換性のため）
+export interface CodeState {
+  html: string;
+  css: string;
+  javascript: string;
+}
+
+export const FILE_TYPES = ['html', 'css', 'javascript'] as const;

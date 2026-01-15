@@ -1,0 +1,168 @@
+/* ====================================================================
+   PresetSelector - プリセット選択ドロップダウン
+   ==================================================================== */
+.preset-selector {
+  position: relative;
+  z-index: 100;
+}
+
+.preset-selector-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #252526;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 180px;
+}
+
+.preset-selector-trigger:hover {
+  background: #2d2d2d;
+  border-color: #22c55e;
+}
+
+.preset-selector-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.preset-icon {
+  font-size: 1rem;
+}
+
+.preset-label {
+  flex: 1;
+  text-align: left;
+}
+
+.preset-arrow {
+  font-size: 0.75rem;
+  color: #808080;
+}
+
+/* ドロップダウンメニュー */
+.preset-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 280px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #1e1e1e;
+  border: 1px solid #3c3c3c;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* カテゴリ */
+.preset-category {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.preset-category:last-child {
+  border-bottom: none;
+}
+
+.preset-category-title {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #808080;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* オプション */
+.preset-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: #cccccc;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.preset-option:hover {
+  background: #2d2d2d;
+}
+
+.preset-option.active {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.preset-option .preset-icon {
+  font-size: 1.25rem;
+}
+
+.preset-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.preset-name {
+  font-weight: 500;
+}
+
+.preset-desc {
+  font-size: 0.75rem;
+  color: #808080;
+}
+
+.preset-option.active .preset-desc {
+  color: rgba(34, 197, 94, 0.7);
+}
+
+/* ダークモード対応（既定でダーク） */
+[data-theme="light"] .preset-selector-trigger {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+[data-theme="light"] .preset-selector-trigger:hover {
+  background: #e5e7eb;
+}
+
+[data-theme="light"] .preset-dropdown {
+  background: #ffffff;
+  border-color: #d1d5db;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .preset-category {
+  border-bottom-color: #e5e7eb;
+}
+
+[data-theme="light"] .preset-option {
+  color: #374151;
+}
+
+[data-theme="light"] .preset-option:hover {
+  background: #f3f4f6;
+}

@@ -28,6 +28,8 @@ import './styles/sections/sidebar.css';
 import './styles/sections/content.css';
 import './styles/sections/editor.css';
 import './styles/sections/responsive.css';
+import './styles/sections/preset.css';
+import './styles/sections/terminal.css';
 // Landing
 import './styles/landing/landing.css';
 import './styles/landing/header.css';
