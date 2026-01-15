@@ -59,6 +59,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
       case 'jsx': return '⚛️';
       case 'vue': return '💚';
       case 'py': return '🐍';
+      case 'c': return '⚙️';
       default: return '📄';
     }
   };
@@ -75,6 +76,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
       case 'jsx': return 'javascript';
       case 'vue': return 'html';
       case 'py': return 'python';
+      case 'c': return 'c';
       default: return 'plaintext';
     }
   };

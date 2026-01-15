@@ -174,7 +174,7 @@ export const SubjectManagementView: React.FC = () => {
                 required
               />
             </label>
-            <button type="submit" className="btn-primary" disabled={loading}>
+            <button type="submit" className="btn-primary btn-create-subject" disabled={loading}>
               {loading ? '送信中...' : '題材を作成'}
             </button>
           </form>
@@ -244,12 +244,12 @@ export const SubjectManagementView: React.FC = () => {
               />
             </label>
             <div className="management-actions">
-              <button type="submit" className="btn-primary" disabled={loading || !selectedSubjectId}>
+              <button type="submit" className="btn-primary btn-save-subject" disabled={loading || !selectedSubjectId}>
                 {loading ? '更新中...' : '題材を更新'}
               </button>
               <button
                 type="button"
-                className="btn-secondary"
+                className="btn-secondary btn-delete-subject"
                 disabled={!selectedSubjectId || loading}
                 onClick={handleDelete}
               >

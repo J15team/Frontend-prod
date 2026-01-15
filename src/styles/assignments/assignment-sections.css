@@ -1,0 +1,112 @@
+/**
+ * Assignment Sections Styles
+ * 課題セクションページ用スタイル
+ * 既存の題材ページと同じ構造、色だけオレンジ系
+ */
+
+.assignment-sections-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+/* ヘッダー */
+.assignment-sections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+}
+
+.assignment-sections-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.assignment-sections-header .btn-back {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.assignment-sections-header .btn-back:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.assignment-sections-header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.beta-badge {
+  background: rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.assignment-sections-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.assignment-sections-header .header-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+
+.assignment-sections-header .progress-cleared {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #86efac;
+}
+
+.assignment-sections-header .progress-divider {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.assignment-sections-header .progress-total {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.assignment-sections-header .progress-label {
+  font-size: 0.8rem;
+  margin-left: 0.3rem;
+  opacity: 0.9;
+}
+
+/* リサイザー（オレンジ系） */
+.assignment-resizer:hover {
+  background: #f59e0b !important;
+}
+
+/* 空セクション */
+.empty-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #9ca3af;
+  font-size: 1.1rem;
+}

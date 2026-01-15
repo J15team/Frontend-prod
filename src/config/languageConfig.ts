@@ -101,6 +101,14 @@ export const LANGUAGES: Record<string, LanguageDefinition> = {
     runtime: 'wasm',
     icon: '🐍',
   },
+  c: {
+    id: 'c',
+    label: 'C',
+    monacoLanguage: 'c',
+    fileExtension: '.c',
+    runtime: 'wasm',
+    icon: '⚙️',
+  },
 };
 
 // ===== デフォルトコンテンツ =====
@@ -166,6 +174,13 @@ h1 {
 </style>`,
 
   python: `print('Hello, World!')`,
+
+  c: `#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\\n");
+    return 0;
+}`,
 };
 
 // ===== プリセット定義 =====
@@ -231,6 +246,17 @@ export const PRESETS: PresetDefinition[] = [
     languages: ['python'],
     files: [
       { name: 'main.py', languageId: 'python', defaultContent: DEFAULT_CONTENTS.python },
+    ],
+  },
+  {
+    id: 'c',
+    label: 'C言語',
+    icon: '⚙️',
+    category: 'other',
+    description: 'C言語の基本',
+    languages: ['c'],
+    files: [
+      { name: 'main.c', languageId: 'c', defaultContent: DEFAULT_CONTENTS.c },
     ],
   },
 ];

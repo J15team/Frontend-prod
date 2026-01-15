@@ -14,6 +14,8 @@ const adminNavItems = [
   { path: '/admin/subjects', label: '題材管理' },
   { path: '/admin/sections', label: 'セクション管理' },
   { path: '/admin/tags', label: 'タグ管理' },
+  { path: '/admin/assignments', label: '課題題材管理 (Beta)' },
+  { path: '/admin/assignment-sections', label: '課題セクション管理 (Beta)' },
   { path: '/admin/users', label: '管理者ユーザー' },
 ];
 
@@ -27,7 +29,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <p className="admin-label">管理者コンソール</p>
           <h1>J15 Admin Portal</h1>
           <p className="admin-subtext">
-            バックエンドAPI（docs/detailed）で定義された題材・セクション・進捗・管理者エンドポイントを操作できます。
+            バックエンドAPIで定義された題材・セクション・進捗・管理者エンドポイントを操作できます。
           </p>
         </div>
         <Link to="/admin/endpoints" className="btn-secondary">

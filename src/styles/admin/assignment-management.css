@@ -1,0 +1,361 @@
+/**
+ * Assignment Management Styles
+ * 課題管理ページ用スタイル
+ */
+
+.assignment-management {
+  padding: 2rem;
+}
+
+.assignment-management .management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.assignment-management .management-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.assignment-management .beta-badge {
+  background: #f59e0b;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.assignment-management .header-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.assignment-management .subject-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+
+.assignment-management .btn-create {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.assignment-management .btn-create:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+}
+
+.assignment-management .btn-create:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.assignment-management .error-message {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* フォーム */
+.assignment-management .form-container {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 2px solid #fcd34d;
+}
+
+.assignment-management .form-container h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 1.5rem;
+}
+
+.assignment-management .form-group {
+  margin-bottom: 1rem;
+}
+
+.assignment-management .form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.assignment-management .form-group input[type="text"],
+.assignment-management .form-group input[type="number"],
+.assignment-management .form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.assignment-management .form-group textarea {
+  resize: vertical;
+}
+
+.assignment-management .form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.assignment-management .form-row .form-group {
+  flex: 1;
+}
+
+.assignment-management .checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.assignment-management .checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.assignment-management .form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.assignment-management .btn-save {
+  padding: 0.75rem 2rem;
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.assignment-management .btn-cancel {
+  padding: 0.75rem 2rem;
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* テストケースエディタ */
+.assignment-management .test-cases-editor {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.assignment-management .test-cases-editor h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.assignment-management .test-case-form {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.assignment-management .test-case-form .test-case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.assignment-management .test-case-form .test-case-header button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.assignment-management .btn-add-testcase {
+  padding: 0.5rem 1rem;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px dashed #fcd34d;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* テーブル */
+.assignment-management .subjects-table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.assignment-management .subjects-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.assignment-management .subjects-table th,
+.assignment-management .subjects-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.assignment-management .subjects-table th {
+  background: #fef3c7;
+  font-weight: 600;
+  color: #92400e;
+  font-size: 0.85rem;
+}
+
+.assignment-management .subjects-table td {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.assignment-management .description-cell {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assignment-management .actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.assignment-management .btn-edit {
+  padding: 0.4rem 0.8rem;
+  background: #fef3c7;
+  color: #92400e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.assignment-management .btn-delete {
+  padding: 0.4rem 0.8rem;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.assignment-management .loading {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+/* テストケース入力例 */
+.assignment-management .test-case-example {
+  margin-bottom: 1rem;
+}
+
+.assignment-management .test-case-example details {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.assignment-management .test-case-example summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: #92400e;
+}
+
+.assignment-management .test-case-example .example-content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #fcd34d;
+}
+
+.assignment-management .test-case-example .example-content p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.assignment-management .test-case-example .example-content pre {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1rem;
+  white-space: pre-wrap;
+}
+
+
+/* プレビュー・メモボタン */
+.assignment-management .btn-preview,
+.assignment-management .btn-memo {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.assignment-management .btn-preview:hover,
+.assignment-management .btn-memo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.assignment-management .btn-preview-small {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.assignment-management .btn-preview-small:hover {
+  background: #e5e7eb;
+}

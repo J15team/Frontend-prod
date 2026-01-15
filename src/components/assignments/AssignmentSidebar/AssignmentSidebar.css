@@ -1,0 +1,128 @@
+/**
+ * Assignment Sidebar Styles
+ */
+.assignment-sidebar {
+  height: 100%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.assignment-sidebar .sidebar-header {
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #92400e;
+  background: #fef3c7;
+  border-bottom: 1px solid #fcd34d;
+}
+
+.assignment-sidebar .sidebar-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.assignment-sidebar .sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s;
+}
+
+.assignment-sidebar .sidebar-item:hover {
+  background: #fffbeb;
+}
+
+.assignment-sidebar .sidebar-item.active {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+}
+
+/* クリア済みアイテム */
+.assignment-sidebar .sidebar-item.cleared {
+  background: linear-gradient(90deg, #ecfdf5 0%, #ffffff 100%);
+}
+
+.assignment-sidebar .sidebar-item.cleared:hover {
+  background: linear-gradient(90deg, #d1fae5 0%, #ecfdf5 100%);
+}
+
+.assignment-sidebar .sidebar-item.cleared.active {
+  background: linear-gradient(90deg, #d1fae5 0%, #ecfdf5 100%);
+  border-left: 4px solid #22c55e;
+}
+
+.assignment-sidebar .item-number {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.assignment-sidebar .sidebar-item.active .item-number {
+  background: #f59e0b;
+  color: white;
+}
+
+.assignment-sidebar .item-number.has-assignment {
+  background: #fcd34d;
+  color: #92400e;
+}
+
+/* クリア済み番号 */
+.assignment-sidebar .item-number.cleared {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);
+}
+
+.assignment-sidebar .sidebar-item.active .item-number.cleared {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+}
+
+.assignment-sidebar .item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.assignment-sidebar .item-title {
+  font-size: 0.9rem;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assignment-sidebar .sidebar-item.cleared .item-title {
+  color: #15803d;
+  font-weight: 500;
+}
+
+.assignment-sidebar .item-score {
+  font-size: 0.75rem;
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.assignment-sidebar .item-badge {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.assignment-sidebar .cleared-badge {
+  animation: bounce 0.5s ease-in-out;
+}

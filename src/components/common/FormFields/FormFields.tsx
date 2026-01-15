@@ -114,6 +114,7 @@ interface SubmitButtonProps {
   disabled?: boolean;
   loadingText?: string;
   defaultText?: string;
+  variant?: 'subject' | 'assignment' | 'default';
 }
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
@@ -121,12 +122,21 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   disabled = false,
   loadingText = '送信中...',
   defaultText = '送信',
-}) => (
-  <button
-    type="submit"
-    className="btn-primary"
-    disabled={loading || disabled}
-  >
-    {loading ? loadingText : defaultText}
-  </button>
-);
+  variant = 'subject',
+}) => {
+  const className = variant === 'assignment' 
+    ? 'btn-primary btn-create-assignment'
+    : variant === 'subject'
+    ? 'btn-primary btn-create-subject'
+    : 'btn-primary';
+
+  return (
+    <button
+      type="submit"
+      className={className}
+      disabled={loading || disabled}
+    >
+      {loading ? loadingText : defaultText}
+    </button>
+  );
+};

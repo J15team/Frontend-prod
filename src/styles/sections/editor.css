@@ -151,6 +151,178 @@
   min-height: 300px;
 }
 
+/* 標準入力セクション */
+.stdin-input-section {
+  padding: 0.5rem 1rem;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.stdin-input-section label {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.stdin-input {
+  width: 100%;
+  padding: 0.4rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  resize: vertical;
+  background: #fff;
+}
+
+.stdin-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* C言語プレビュー結果 */
+.c-preview-result {
+  flex: 1;
+  overflow-y: auto;
+  background: #1e1e1e;
+  padding: 1rem;
+}
+
+.c-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  color: #f59e0b;
+  font-size: 1rem;
+}
+
+.c-loading .loading-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.c-loading .loading-icon.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.c-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.c-result {
+  background: #252526;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.c-result-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #333;
+}
+
+.c-result .status-badge {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.c-result .status-badge.success {
+  color: #22c55e;
+}
+
+.c-result .status-badge.compile_error,
+.c-result .status-badge.runtime_error,
+.c-result .status-badge.error {
+  color: #ef4444;
+}
+
+.c-result .status-badge.timeout {
+  color: #f59e0b;
+}
+
+.c-result .execution-time {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.c-output,
+.c-error {
+  padding: 1rem;
+}
+
+.c-output label,
+.c-error label {
+  display: block;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.c-output pre {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 4px;
+  color: #22c55e;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}
+
+.c-error pre {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 4px;
+  color: #ef4444;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}
+
+/* 実行ボタン */
+.preview-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-run-preview {
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-run-preview:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-run-preview:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* ダークモード */
 [data-theme="dark"] .preview-header {
   background: var(--bg-tertiary);

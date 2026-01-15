@@ -25,6 +25,20 @@ const cards = [
     endpoint: '/api/tags',
   },
   {
+    title: '課題題材管理 (Beta)',
+    description: '課題題材の作成・更新・削除。コード提出・自動採点システム用。',
+    link: '/admin/assignments',
+    endpoint: '/api/assignments',
+    badge: 'Beta',
+  },
+  {
+    title: '課題セクション管理 (Beta)',
+    description: 'テストケース付きセクションの管理。制限時間・メモリ制限の設定。',
+    link: '/admin/assignment-sections',
+    endpoint: '/api/assignments/{id}/sections',
+    badge: 'Beta',
+  },
+  {
     title: '進捗確認',
     description: 'GET/POST/DELETE /api/progress/subjects/{subjectId} を手動検証。',
     link: '/progress',
@@ -43,11 +57,14 @@ export const AdminDashboardView: React.FC = () => {
     <div className="admin-dashboard">
       <div className="admin-dashboard-grid">
         {cards.map((card) => (
-          <div key={card.title} className="admin-card">
-            <p className="admin-card-endpoint">{card.endpoint}</p>
+          <div key={card.title} className={`admin-card ${card.badge ? 'admin-card-beta' : ''}`}>
+            <p className="admin-card-endpoint">
+              {card.endpoint}
+              {card.badge && <span className="admin-card-badge">{card.badge}</span>}
+            </p>
             <h2>{card.title}</h2>
             <p>{card.description}</p>
-            <Link to={card.link} className="btn-primary">
+            <Link to={card.link} className={card.badge ? 'btn-primary btn-assignment' : 'btn-primary'}>
               開く
             </Link>
           </div>

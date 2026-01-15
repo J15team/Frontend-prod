@@ -122,6 +122,31 @@ export const useCodePreview = ({
           break;
         }
 
+        case 'c': {
+          // C言語はAPI経由で実行するため、初期状態はプレースホルダー
+          previewHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { 
+      font-family: 'Fira Code', monospace; 
+      background: #1e1e1e; 
+      color: #6b7280; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <p>▶️ 実行ボタンを押してください</p>
+</body>
+</html>`;
+          break;
+        }
+
         default: {
           // 未対応のプリセットはコード表示
           const fileContents = Object.entries(project.files)
@@ -168,8 +193,8 @@ export const useCodePreview = ({
       const project = getProject(subjectId, currentSectionId);
       if (!project) return;
 
-      // Python/TypeScriptはホットリロード無効
-      if (project.presetId === 'python' || project.presetId === 'typescript-basics') {
+      // Python/TypeScript/Cは手動実行のためホットリロード無効
+      if (project.presetId === 'python' || project.presetId === 'typescript-basics' || project.presetId === 'c') {
         return;
       }
 

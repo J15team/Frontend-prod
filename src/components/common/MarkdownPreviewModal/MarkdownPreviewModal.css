@@ -285,3 +285,151 @@
     width: 100%;
   }
 }
+
+/* C言語プレビュー結果 */
+.c-preview-result-modal {
+  flex: 1;
+  overflow-y: auto;
+  background: #1e1e1e;
+  padding: 1rem;
+}
+
+.c-preview-result-modal .c-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  color: #f59e0b;
+  font-size: 1rem;
+}
+
+.c-preview-result-modal .c-loading .loading-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.c-preview-result-modal .c-loading .loading-icon.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.c-preview-result-modal .c-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.c-preview-result-modal .c-result {
+  background: #252526;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.c-preview-result-modal .c-result-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #333;
+}
+
+.c-preview-result-modal .status-badge {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.c-preview-result-modal .status-badge.success {
+  color: #22c55e;
+}
+
+.c-preview-result-modal .status-badge.compile_error,
+.c-preview-result-modal .status-badge.runtime_error,
+.c-preview-result-modal .status-badge.error {
+  color: #ef4444;
+}
+
+.c-preview-result-modal .status-badge.timeout {
+  color: #f59e0b;
+}
+
+.c-preview-result-modal .execution-time {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.c-preview-result-modal .c-output,
+.c-preview-result-modal .c-error {
+  padding: 1rem;
+}
+
+.c-preview-result-modal .c-output label,
+.c-preview-result-modal .c-error label {
+  display: block;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.c-preview-result-modal .c-output pre {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 4px;
+  color: #22c55e;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}
+
+.c-preview-result-modal .c-error pre {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 4px;
+  color: #ef4444;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}
+
+
+/* C言語標準入力 */
+.c-stdin-section {
+  padding: 0.5rem 1rem;
+  background: #252526;
+  border-bottom: 1px solid #333;
+}
+
+.c-stdin-section label {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 0.25rem;
+}
+
+.c-stdin-input {
+  width: 100%;
+  padding: 0.4rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  border: 1px solid #444;
+  border-radius: 4px;
+  resize: vertical;
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+.c-stdin-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+}

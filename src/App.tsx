@@ -25,6 +25,10 @@ import { AdminUsersView } from '@/views/admin/AdminUsersView';
 import { AdminLayout } from '@/views/admin/AdminLayout';
 import { AdminDashboardView } from '@/views/admin/AdminDashboardView';
 import { TagManagementView } from '@/views/admin/TagManagementView';
+import { AssignmentManagementView } from '@/views/admin/AssignmentManagementView';
+import { AssignmentSectionManagementView } from '@/views/admin/AssignmentSectionManagementView';
+import { AssignmentsView } from '@/views/assignments/AssignmentsView';
+import { AssignmentSectionsView } from '@/views/assignments/AssignmentSectionsView';
 import { RankingView } from '@/views/ranking/RankingView';
 import { ForbiddenView } from '@/views/error/ForbiddenView';
 import { AdminKeyRequiredView } from '@/views/error/AdminKeyRequiredView';
@@ -95,6 +99,22 @@ const App: React.FC = () => {
           }
         />
         <Route
+          path="/assignments"
+          element={
+            <ProtectedRoute>
+              <AssignmentsView />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assignments/:assignmentSubjectId/sections"
+          element={
+            <ProtectedRoute>
+              <AssignmentSectionsView />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>
@@ -146,6 +166,26 @@ const App: React.FC = () => {
             <ProtectedRoute requireAdmin={true}>
               <AdminLayout>
                 <TagManagementView />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/assignments"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <AssignmentManagementView />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/assignment-sections"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <AssignmentSectionManagementView />
               </AdminLayout>
             </ProtectedRoute>
           }

@@ -56,6 +56,9 @@ export const SectionManagementView: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [showMemo, setShowMemo] = useState(false);
 
+  // トースト通知状態
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
   // 初期ロード時に題材一覧を取得
   useEffect(() => {
     fetchSubjects();
@@ -139,6 +142,11 @@ export const SectionManagementView: React.FC = () => {
     await handleSectionSelect(selectedSectionId);
   };
 
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 2000);
+  };
+
   const handleCopyLink = async (imageUrl: string) => {
     try {
       if (navigator.clipboard?.writeText) {
@@ -151,10 +159,10 @@ export const SectionManagementView: React.FC = () => {
         document.execCommand('copy');
         document.body.removeChild(textarea);
       }
-      alert('画像URLをコピーしました');
+      showToast('画像URLをコピーしました');
     } catch (error) {
       console.error('コピーに失敗しました', error);
-      alert('コピーに失敗しました');
+      showToast('コピーに失敗しました', 'error');
     }
   };
 
@@ -235,6 +243,26 @@ export const SectionManagementView: React.FC = () => {
         onClear={memo.clear}
         onClose={() => setShowMemo(false)}
       />
+
+      {/* トースト通知 */}
+      {toast && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            backgroundColor: toast.type === 'success' ? '#4caf50' : '#f44336',
+            color: 'white',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            zIndex: 9999,
+            animation: 'fadeIn 0.3s ease',
+          }}
+        >
+          {toast.message}
+        </div>
+      )}
     </div>
   );
 };

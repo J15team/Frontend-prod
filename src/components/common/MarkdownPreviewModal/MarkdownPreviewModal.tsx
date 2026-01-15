@@ -1,7 +1,7 @@
 /**
  * MarkdownPreviewModal
  * Markdownコンテンツのプレビューとコードエディターを提供するモーダル
- * 全プリセット対応（HTML/CSS/JS, TypeScript, React, Vue, Python）
+ * 全プリセット対応（HTML/CSS/JS, TypeScript, React, Vue, Python, C言語）
  */
 import React, { useState, useRef, useCallback } from 'react';
 import { marked } from 'marked';
@@ -12,6 +12,7 @@ import {
   generateVuePreview, 
   generateTypeScriptPreview 
 } from '@/runtime/frameworkPreview';
+import { previewCode, type CodePreviewResponse } from '@/services/assignments/AssignmentService';
 import './MarkdownPreviewModal.css';
 
 type ModalTab = 'markdown' | 'code';
@@ -44,6 +45,8 @@ export const MarkdownPreviewModal: React.FC<MarkdownPreviewModalProps> = ({
   const [codes, setCodes] = useState<Record<string, string>>(() => getDefaultCodes('web-basics'));
   const [activeFile, setActiveFile] = useState('index.html');
   const [isRunning, setIsRunning] = useState(false);
+  const [cResult, setCResult] = useState<CodePreviewResponse | null>(null);
+  const [cStdinInput, setCStdinInput] = useState('');
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const preset = getPresetById(selectedPreset);
@@ -53,6 +56,8 @@ export const MarkdownPreviewModal: React.FC<MarkdownPreviewModalProps> = ({
     setSelectedPreset(newPresetId);
     const newCodes = getDefaultCodes(newPresetId);
     setCodes(newCodes);
+    setCResult(null);
+    setCStdinInput('');
     const newPreset = getPresetById(newPresetId);
     if (newPreset && newPreset.files.length > 0) {
       setActiveFile(newPreset.files[0].name);
@@ -73,13 +78,42 @@ export const MarkdownPreviewModal: React.FC<MarkdownPreviewModalProps> = ({
       case 'tsx': return 'typescript';
       case 'vue': return 'html';
       case 'py': return 'python';
+      case 'c': return 'c';
       default: return 'plaintext';
     }
   };
 
   const runPreview = useCallback(async () => {
-    if (!iframeRef.current) return;
     setIsRunning(true);
+
+    // C言語はAPI経由で実行（iframeを使わない）
+    if (selectedPreset === 'c') {
+      const cCode = codes['main.c'] || '';
+      setCResult(null);
+      try {
+        const result = await previewCode({
+          code: cCode,
+          language: 'c',
+          input: cStdinInput,
+          timeLimit: 2000,
+        });
+        setCResult(result);
+      } catch (err) {
+        setCResult({
+          output: null,
+          executionTime: null,
+          status: 'ERROR',
+          errorMessage: '通信エラーが発生しました',
+        });
+      }
+      setIsRunning(false);
+      return;
+    }
+
+    if (!iframeRef.current) {
+      setIsRunning(false);
+      return;
+    }
 
     try {
       let previewHtml = '';
@@ -265,12 +299,68 @@ sys.stderr = StringIO()
                   {isRunning ? '⏳ 実行中...' : '▶ 実行'}
                 </button>
               </div>
-              <iframe
-                ref={iframeRef}
-                className="code-preview-iframe"
-                title="Code Preview"
-                sandbox="allow-scripts allow-modals"
-              />
+              {selectedPreset === 'c' && (
+                <div className="c-stdin-section">
+                  <label>📥 標準入力（改行区切り）</label>
+                  <textarea
+                    className="c-stdin-input"
+                    value={cStdinInput}
+                    onChange={(e) => setCStdinInput(e.target.value)}
+                    placeholder="例: 5&#10;10"
+                    rows={2}
+                  />
+                </div>
+              )}
+              {selectedPreset === 'c' ? (
+                <div className="c-preview-result-modal">
+                  {isRunning && (
+                    <div className="c-loading">
+                      <img src="/icon.PNG" alt="Loading" className="loading-icon spinning" />
+                      <span>実行中...</span>
+                    </div>
+                  )}
+                  {!isRunning && cResult && (
+                    <div className={`c-result ${cResult.status === 'SUCCESS' ? 'success' : 'error'}`}>
+                      <div className="c-result-status">
+                        <span className={`status-badge ${cResult.status.toLowerCase()}`}>
+                          {cResult.status === 'SUCCESS' && '✅ 成功'}
+                          {cResult.status === 'COMPILE_ERROR' && '❌ コンパイルエラー'}
+                          {cResult.status === 'RUNTIME_ERROR' && '💥 実行時エラー'}
+                          {cResult.status === 'TIMEOUT' && '⏱️ タイムアウト'}
+                          {cResult.status === 'ERROR' && '⚠️ エラー'}
+                        </span>
+                        {cResult.executionTime !== null && (
+                          <span className="execution-time">⏱️ {cResult.executionTime}ms</span>
+                        )}
+                      </div>
+                      {cResult.status === 'SUCCESS' && (
+                        <div className="c-output">
+                          <label>📤 出力</label>
+                          <pre>{cResult.output || '(出力なし)'}</pre>
+                        </div>
+                      )}
+                      {cResult.errorMessage && (
+                        <div className="c-error">
+                          <label>❌ エラー内容</label>
+                          <pre>{cResult.errorMessage}</pre>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {!isRunning && !cResult && (
+                    <div className="c-placeholder">
+                      <p>▶️ 「実行」ボタンを押してコードを実行</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <iframe
+                  ref={iframeRef}
+                  className="code-preview-iframe"
+                  title="Code Preview"
+                  sandbox="allow-scripts allow-modals"
+                />
+              )}
             </div>
           </div>
         )}

@@ -1,0 +1,464 @@
+/**
+ * Assignments Styles
+ * 課題題材ページ用スタイル（オレンジ/アンバー系テーマ）
+ */
+
+.assignments-page-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ヘッダー */
+.assignments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+}
+
+.assignments-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.assignments-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.beta-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.assignments-header .header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.assignments-header .btn-secondary,
+.assignments-header .btn-profile {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.assignments-header .btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.assignments-header .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.assignments-header .btn-profile {
+  background: white;
+  color: #d97706;
+}
+
+.assignments-header .btn-profile:hover {
+  background: #fef3c7;
+}
+
+/* メインコンテナ */
+.assignments-container {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Beta版説明 */
+.beta-notice {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+.beta-notice-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.beta-notice-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.beta-notice-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #78350f;
+  line-height: 1.6;
+}
+
+/* フィルターバー */
+.assignments-container .filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.assignments-container .filter-section,
+.assignments-container .sort-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.assignments-container .filter-label {
+  font-size: 0.9rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.assignments-container .star-filter {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.assignments-container .star-filter-btn {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.assignments-container .star-filter-btn:hover {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.assignments-container .star-filter-btn.active {
+  border-color: #f59e0b;
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.assignments-container .clear-filter-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.assignments-container .sort-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.assignments-container .filter-result {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* カテゴリ */
+.assignment-category {
+  margin-bottom: 3rem;
+}
+
+.assignment-category .category-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #fcd34d;
+}
+
+.assignment-category .category-emoji {
+  font-size: 1.5rem;
+}
+
+.assignment-category .category-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.assignment-category .category-count {
+  font-size: 0.9rem;
+  color: #666;
+  background: #fef3c7;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
+
+.assignment-category .category-stars {
+  margin-left: auto;
+}
+
+/* グリッド */
+.assignments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* カード */
+.assignment-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+}
+
+.assignment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+}
+
+.assignment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.assignment-badge {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.assignment-card-body h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.assignment-card-body p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 進捗表示 */
+.assignment-progress {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #fffbeb;
+  border-radius: 8px;
+}
+
+.assignment-progress .progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.assignment-progress .progress-label {
+  font-size: 0.75rem;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.assignment-progress .progress-text {
+  font-size: 0.8rem;
+  color: #78350f;
+  font-weight: 500;
+}
+
+.assignment-progress .progress-bar-container {
+  height: 8px;
+  background: #fde68a;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.assignment-progress .progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.assignment-progress .progress-percent {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #92400e;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+/* クリア済みカード */
+.assignment-card.cleared {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
+}
+
+.assignment-card.cleared:hover {
+  border-color: #059669;
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.2);
+}
+
+.assignment-badge.cleared {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.assignment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.assignment-footer .section-count {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+/* 空状態 */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6b7280;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+}
+
+/* フッター */
+.assignments-footer {
+  background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+  color: white;
+  padding: 2rem;
+}
+
+.assignments-footer .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.assignments-footer .footer-brand {
+  margin-bottom: 1rem;
+}
+
+.assignments-footer .footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.assignments-footer .footer-logo-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.assignments-footer .footer-logo-title {
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.assignments-footer .footer-tagline {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+.assignments-footer .footer-copyright {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* アニメーション */
+.animated-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animated-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .assignments-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .assignments-header .header-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .assignments-container {
+    padding: 1rem;
+  }
+
+  .assignments-container .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .assignments-grid {
+    grid-template-columns: 1fr;
+  }
+}

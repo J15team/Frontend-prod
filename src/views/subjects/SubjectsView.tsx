@@ -551,6 +551,9 @@ export const SubjectsView: React.FC = () => {
           <h1>題材一覧</h1>
         </div>
         <div className="header-actions">
+          <button onClick={() => navigate('/assignments')} className="btn-assignments">
+            📝 課題題材 <span className="beta-tag">Beta</span>
+          </button>
           <button onClick={() => navigate('/ranking')} className="btn-ranking">
             🏆 ランキング
           </button>
