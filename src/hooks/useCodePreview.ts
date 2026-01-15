@@ -160,12 +160,18 @@ export const useCodePreview = ({
   }, [updatePreview]);
 
   // ホットリロード: ローカルストレージの変更を監視
+  // Python/TypeScriptは手動実行のためホットリロード無効
   useEffect(() => {
     if (!autoRefresh) return;
 
     const checkForChanges = () => {
       const project = getProject(subjectId, currentSectionId);
       if (!project) return;
+
+      // Python/TypeScriptはホットリロード無効
+      if (project.presetId === 'python' || project.presetId === 'typescript-basics') {
+        return;
+      }
 
       // ファイル内容のハッシュを作成
       const currentContent = Object.entries(project.files)
