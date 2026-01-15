@@ -2,7 +2,7 @@
  * Subjects ViewModel
  * 題材一覧のロジックを管理するViewModel
  */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { getAllSubjects } from '@/services/subjects/SubjectService';
 import { getProgress } from '@/services/progress/ProgressService';
 import { getAllTags } from '@/services/tags/TagService';
@@ -74,26 +74,51 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // 重複フェッチ防止用のref
+  const isFetchingRef = useRef(false);
+  const isFetchingTagsRef = useRef(false);
+  const tagsFetchedRef = useRef(false);
+  const progressCacheRef = useRef<SubjectProgress>({});
+
   /**
    * タグ一覧を取得し、subjectTagsマップを構築
+   * 重複フェッチを防止
    */
   const fetchAllTags = async (): Promise<void> => {
+    // 既にフェッチ済みまたはフェッチ中の場合はスキップ
+    if (tagsFetchedRef.current || isFetchingTagsRef.current) {
+      return;
+    }
+
+    isFetchingTagsRef.current = true;
+
     try {
       const tags = await getAllTags();
       setAllTags(tags);
       // subjectIdsから逆引きマップを構築
       setSubjectTags(buildSubjectTagsMap(tags));
+      tagsFetchedRef.current = true;
     } catch (err) {
       console.error('Failed to fetch tags:', err);
+    } finally {
+      isFetchingTagsRef.current = false;
     }
   };
 
   /**
    * 題材一覧と進捗を取得
+   * 重複フェッチを防止するためrefで管理
    */
   const fetchSubjects = async (tags?: string[]): Promise<void> => {
+    // 既にフェッチ中の場合はスキップ
+    if (isFetchingRef.current) {
+      return;
+    }
+
+    isFetchingRef.current = true;
     setLoading(true);
     setError(null);
+
     try {
       const data = await getAllSubjects(tags);
       setSubjects(data);
@@ -101,9 +126,11 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
       // 保存済みの期限を読み込み
       setDeadlines(getAllDeadlines());
 
-      // 進捗を取得（キャッシュ済みのものはスキップ）
-      const progressMap: SubjectProgress = { ...progress };
-      const subjectsNeedingProgress = data.filter(s => progressMap[s.subjectId] === undefined);
+      // 進捗を取得（refのキャッシュを使用して重複APIコールを防止）
+      const progressMap: SubjectProgress = { ...progressCacheRef.current };
+      const subjectsNeedingProgress = data.filter(
+        (s) => progressMap[s.subjectId] === undefined
+      );
 
       await Promise.all(
         subjectsNeedingProgress.map(async (subject) => {
@@ -116,6 +143,8 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
         })
       );
 
+      // refとstateの両方を更新
+      progressCacheRef.current = progressMap;
       setProgress(progressMap);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -125,6 +154,7 @@ export const useSubjectsViewModel = (): SubjectsViewModelReturn => {
       }
     } finally {
       setLoading(false);
+      isFetchingRef.current = false;
     }
   };
 

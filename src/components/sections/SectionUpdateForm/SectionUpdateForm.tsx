@@ -1,9 +1,16 @@
 /**
  * SectionUpdateForm
  * セクション更新/削除フォームコンポーネント
+ * 共通FormFieldsを使用してDRY原則に準拠
  */
 import React from 'react';
 import { type Section } from '@/models/Section';
+import {
+  TextInput,
+  DescriptionField,
+  ImageUpload,
+} from '@/components/common/FormFields/FormFields';
+import { ImageList } from './ImageList';
 
 interface SectionUpdateFormData {
   title: string;
@@ -42,6 +49,13 @@ export const SectionUpdateForm: React.FC<SectionUpdateFormProps> = ({
   onPreview,
   onOpenMemo,
 }) => {
+  const updateField = <K extends keyof SectionUpdateFormData>(
+    key: K,
+    value: SectionUpdateFormData[K]
+  ) => {
+    onFormChange({ ...formData, [key]: value });
+  };
+
   return (
     <div className="management-card">
       <h2>セクション更新/削除</h2>
@@ -60,85 +74,30 @@ export const SectionUpdateForm: React.FC<SectionUpdateFormProps> = ({
             ))}
           </select>
         </label>
-        <label>
-          タイトル
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => onFormChange({ ...formData, title: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          説明
-          <textarea
-            value={formData.description}
-            onChange={(e) =>
-              onFormChange({ ...formData, description: e.target.value })
-            }
-          />
-          <button
-            type="button"
-            className="btn-preview"
-            onClick={() => onPreview(formData.description)}
-            disabled={!formData.description}
-          >
-            👁️ プレビュー
-          </button>
-          <button
-            type="button"
-            className="btn-memo"
-            onClick={onOpenMemo}
-          >
-            📝 メモ帳
-          </button>
-        </label>
-        <label>
-          画像ファイル (任意)
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              onFormChange({ ...formData, image: e.target.files?.[0] ?? null })
-            }
-          />
-        </label>
+
+        <TextInput
+          label="タイトル"
+          value={formData.title}
+          onChange={(v) => updateField('title', v)}
+          required
+        />
+
+        <DescriptionField
+          value={formData.description}
+          onChange={(v) => updateField('description', v)}
+          onPreview={onPreview}
+          onOpenMemo={onOpenMemo}
+        />
+
+        <ImageUpload onChange={(file) => updateField('image', file)} />
 
         {selectedSection && (
-          <div className="image-status">
-            <p>現在の画像: {selectedSection.images?.length ?? 0}件</p>
-            {selectedSection.images && selectedSection.images.length > 0 ? (
-              <ul className="image-list">
-                {selectedSection.images.map((image) => (
-                  <li key={image.imageId}>
-                    <div className="image-list-row">
-                      <span className="image-label">画像ID: {image.imageId}</span>
-                      <a href={image.imageUrl} target="_blank" rel="noreferrer">
-                        新しいタブで開く
-                      </a>
-                      <button
-                        type="button"
-                        className="btn-secondary"
-                        onClick={() => onCopyLink(image.imageUrl)}
-                      >
-                        リンクをコピー
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-danger"
-                        disabled={loading}
-                        onClick={() => onDeleteImage(image.imageId)}
-                      >
-                        画像を削除
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>画像は登録されていません</p>
-            )}
-          </div>
+          <ImageList
+            images={selectedSection.images ?? []}
+            loading={loading}
+            onDeleteImage={onDeleteImage}
+            onCopyLink={onCopyLink}
+          />
         )}
 
         <div className="management-actions">

@@ -1,23 +1,19 @@
 /**
  * SectionsHeader
  * セクションページのヘッダーコンポーネント
+ * formatDateをutilsに分離（Single Responsibility原則）
  */
 import React from 'react';
 import { ProgressBar } from '@/components/common/ProgressBar/ProgressBar';
 import { type Subject } from '@/models/Subject';
 import { type ProgressData } from '@/models/Progress';
+import { formatDate } from '@/utils/formatDate';
 
 interface SectionsHeaderProps {
   subject: Subject;
   progressData: ProgressData;
   onBackClick: () => void;
 }
-
-const formatDate = (value?: string) => {
-  if (!value) return '-';
-  const date = new Date(value);
-  return date.toLocaleString();
-};
 
 export const SectionsHeader: React.FC<SectionsHeaderProps> = ({
   subject,

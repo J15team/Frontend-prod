@@ -1,13 +1,17 @@
 /**
  * SectionListTable
  * セクション一覧テーブルコンポーネント
+ * SectionTableRowに行を分離（Single Responsibility原則）
  */
 import React from 'react';
 import { type Section } from '@/models/Section';
+import { SectionTableRow } from './SectionTableRow';
 
 interface SectionListTableProps {
   sections: Section[];
 }
+
+const TABLE_HEADERS = ['ID', 'タイトル', '説明', '画像'];
 
 export const SectionListTable: React.FC<SectionListTableProps> = ({
   sections,
@@ -20,22 +24,12 @@ export const SectionListTable: React.FC<SectionListTableProps> = ({
       ) : (
         <div className="data-table">
           <div className="data-table-header">
-            <span>ID</span>
-            <span>タイトル</span>
-            <span>説明</span>
-            <span>画像</span>
+            {TABLE_HEADERS.map((header) => (
+              <span key={header}>{header}</span>
+            ))}
           </div>
           {sections.map((section) => (
-            <div key={section.sectionId} className="data-table-row">
-              <span>#{section.sectionId}</span>
-              <span>{section.title}</span>
-              <span className="table-description">{section.description}</span>
-              <span>
-                {section.images && section.images.length > 0
-                  ? `${section.images.length}件`
-                  : '-'}
-              </span>
-            </div>
+            <SectionTableRow key={section.sectionId} section={section} />
           ))}
         </div>
       )}

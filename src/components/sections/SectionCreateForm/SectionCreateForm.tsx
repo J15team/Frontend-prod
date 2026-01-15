@@ -1,8 +1,15 @@
 /**
  * SectionCreateForm
  * セクション作成フォームコンポーネント
+ * 共通FormFieldsを使用してDRY原則に準拠
  */
 import React, { useState } from 'react';
+import {
+  TextInput,
+  DescriptionField,
+  ImageUpload,
+  SubmitButton,
+} from '@/components/common/FormFields/FormFields';
 
 interface SectionFormData {
   sectionId: string;
@@ -19,6 +26,13 @@ interface SectionCreateFormProps {
   onOpenMemo: () => void;
 }
 
+const INITIAL_FORM_DATA: SectionFormData = {
+  sectionId: '',
+  title: '',
+  description: '',
+  image: null,
+};
+
 export const SectionCreateForm: React.FC<SectionCreateFormProps> = ({
   loading,
   disabled,
@@ -26,82 +40,54 @@ export const SectionCreateForm: React.FC<SectionCreateFormProps> = ({
   onPreview,
   onOpenMemo,
 }) => {
-  const [formData, setFormData] = useState<SectionFormData>({
-    sectionId: '',
-    title: '',
-    description: '',
-    image: null,
-  });
+  const [formData, setFormData] = useState<SectionFormData>(INITIAL_FORM_DATA);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onSubmit(formData);
-    setFormData({ sectionId: '', title: '', description: '', image: null });
+    setFormData(INITIAL_FORM_DATA);
+  };
+
+  const updateField = <K extends keyof SectionFormData>(
+    key: K,
+    value: SectionFormData[K]
+  ) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
     <div className="management-card">
       <h2>セクション作成 (POST)</h2>
       <form className="management-form" onSubmit={handleSubmit}>
-        <label>
-          セクションID
-          <input
-            type="number"
-            min="0"
-            max="100"
-            value={formData.sectionId}
-            onChange={(e) =>
-              setFormData({ ...formData, sectionId: e.target.value })
-            }
-            required
-          />
-        </label>
-        <label>
-          タイトル
-          <input
-            type="text"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          説明 (Markdown可)
-          <textarea
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-          />
-          <button
-            type="button"
-            className="btn-preview"
-            onClick={() => onPreview(formData.description)}
-            disabled={!formData.description}
-          >
-            👁️ プレビュー
-          </button>
-          <button
-            type="button"
-            className="btn-memo"
-            onClick={onOpenMemo}
-          >
-            📝 メモ帳
-          </button>
-        </label>
-        <label>
-          画像ファイル (任意)
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              setFormData({ ...formData, image: e.target.files?.[0] ?? null })
-            }
-          />
-        </label>
-        <button type="submit" className="btn-primary" disabled={loading || disabled}>
-          {loading ? '送信中...' : '作成'}
-        </button>
+        <TextInput
+          label="セクションID"
+          type="number"
+          value={formData.sectionId}
+          onChange={(v) => updateField('sectionId', v)}
+          required
+          min={0}
+          max={100}
+        />
+        <TextInput
+          label="タイトル"
+          value={formData.title}
+          onChange={(v) => updateField('title', v)}
+          required
+        />
+        <DescriptionField
+          label="説明 (Markdown可)"
+          value={formData.description}
+          onChange={(v) => updateField('description', v)}
+          onPreview={onPreview}
+          onOpenMemo={onOpenMemo}
+        />
+        <ImageUpload onChange={(file) => updateField('image', file)} />
+        <SubmitButton
+          loading={loading}
+          disabled={disabled}
+          loadingText="送信中..."
+          defaultText="作成"
+        />
       </form>
     </div>
   );

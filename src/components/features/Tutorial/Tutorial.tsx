@@ -2,17 +2,17 @@
  * Tutorial Component
  * 初回ログイン時のインタラクティブチュートリアル
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-interface TutorialStep {
-  target: string;
-  title: string;
-  description: string;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-  action?: 'click' | 'none';
-  navigateTo?: string;
-}
+import {
+  useTutorialState,
+  shouldShowTutorial,
+  type TutorialStep,
+} from '@/hooks/useTutorialState';
+import {
+  useTargetHighlight,
+  calculateTooltipPosition,
+} from '@/hooks/useTargetHighlight';
 
 const TUTORIAL_SUBJECT_ID = 100;
 
@@ -93,150 +93,57 @@ interface TutorialProps {
 
 export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects' }) => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-
   const tutorialSteps = page === 'sections' ? sectionsTutorialSteps : subjectsTutorialSteps;
-  const step = tutorialSteps[currentStep];
 
-  useEffect(() => {
-    setHasScrolled(false);
-  }, [currentStep]);
+  const {
+    currentStep,
+    step,
+    totalSteps,
+    goToNextStep,
+    completeTutorial,
+  } = useTutorialState(tutorialSteps, onComplete);
 
-  const updateTargetPosition = useCallback(() => {
-    if (!step) return;
-    
-    const selectors = step.target.split(', ');
-    let target: Element | null = null;
-    
-    for (const selector of selectors) {
-      target = document.querySelector(selector);
-      if (target) break;
-    }
-    
-    if (target) {
-      const rect = target.getBoundingClientRect();
-      
-      if (!hasScrolled && (rect.top < 0 || rect.bottom > window.innerHeight)) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        setHasScrolled(true);
-      }
-      
-      setTargetRect(target.getBoundingClientRect());
-      setIsVisible(true);
-    } else {
-      setTargetRect(null);
-    }
-  }, [step, hasScrolled]);
-
-  useEffect(() => {
-    let animationId: number;
-    
-    const tick = () => {
-      updateTargetPosition();
-      animationId = requestAnimationFrame(tick);
-    };
-    
-    animationId = requestAnimationFrame(tick);
-    
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, [updateTargetPosition]);
-
-  const handleComplete = () => {
-    setIsVisible(false);
-    localStorage.setItem('tutorial_completed', 'true');
-    onComplete();
-  };
+  const { targetRect, isVisible } = useTargetHighlight({
+    targetSelector: step?.target,
+    enabled: true,
+  });
 
   const handleSkip = () => {
-    handleComplete();
+    completeTutorial();
   };
 
   const handleNext = () => {
+    if (!step) return;
+
+    // ページ遷移が必要な場合
     if (step.navigateTo === 'sections') {
       navigate(`/subjects/${TUTORIAL_SUBJECT_ID}/sections`, {
-        state: { continueTutorial: true }
+        state: { continueTutorial: true },
       });
-      onComplete();
+      completeTutorial();
       return;
     }
-    
+
+    // クリックアクションの実行
     if (step.action === 'click' && !step.target.includes('clear-filter')) {
       const target = document.querySelector(step.target) as HTMLElement;
-      if (target) {
-        target.click();
-      }
+      target?.click();
     }
 
+    // 次のステップへ（遅延を入れてアニメーションを待つ）
     setTimeout(() => {
       const nextStep = tutorialSteps[currentStep + 1];
       if (nextStep) {
         const nextTarget = document.querySelector(nextStep.target) as HTMLElement;
-        if (nextTarget) {
-          nextTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        nextTarget?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      
-      if (currentStep < tutorialSteps.length - 1) {
-        setCurrentStep(prev => prev + 1);
-      } else {
-        handleComplete();
-      }
+      goToNextStep();
     }, 300);
   };
 
   if (!isVisible || !targetRect || !step) return null;
 
-  const getTooltipStyle = (): React.CSSProperties => {
-    const padding = 16;
-    const tooltipWidth = 320;
-    const viewportWidth = window.innerWidth;
-    
-    switch (step.position) {
-      case 'right':
-        return {
-          top: targetRect.top + targetRect.height / 2,
-          left: targetRect.right + padding,
-          transform: 'translateY(-50%)',
-        };
-      case 'left':
-        return {
-          top: targetRect.top + targetRect.height / 2,
-          left: targetRect.left - tooltipWidth - padding,
-          transform: 'translateY(-50%)',
-        };
-      case 'top':
-        return {
-          top: targetRect.top - padding,
-          left: targetRect.left + targetRect.width / 2,
-          transform: 'translate(-50%, -100%)',
-        };
-      case 'bottom':
-      default: {
-        const centerX = targetRect.left + targetRect.width / 2;
-        let left = centerX;
-        let transform = 'translateX(-50%)';
-        
-        if (centerX < tooltipWidth / 2 + padding) {
-          left = targetRect.left;
-          transform = 'none';
-        } else if (centerX > viewportWidth - tooltipWidth / 2 - padding) {
-          left = targetRect.right - tooltipWidth;
-          transform = 'none';
-        }
-        
-        return {
-          top: targetRect.bottom + padding,
-          left,
-          transform,
-        };
-      }
-    }
-  };
+  const tooltipStyle = calculateTooltipPosition(targetRect, step.position);
 
   return (
     <div className="tutorial-overlay">
@@ -272,9 +179,9 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
         }}
       />
 
-      <div className="tutorial-tooltip" style={getTooltipStyle()}>
+      <div className="tutorial-tooltip" style={tooltipStyle}>
         <div className="tutorial-step-indicator">
-          {currentStep + 1} / {tutorialSteps.length}
+          {currentStep + 1} / {totalSteps}
         </div>
         <h3 className="tutorial-title">{step.title}</h3>
         <p className="tutorial-description">{step.description}</p>
@@ -291,9 +198,5 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete, page = 'subjects
   );
 };
 
-export const shouldShowTutorial = (isFirstLogin?: boolean): boolean => {
-  if (localStorage.getItem('tutorial_completed') === 'true') {
-    return false;
-  }
-  return isFirstLogin === true;
-};
+// Re-export shouldShowTutorial for backwards compatibility
+export { shouldShowTutorial };

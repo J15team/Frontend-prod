@@ -398,8 +398,8 @@
   flex-shrink: 0;
 }
 
-/* Loading Spinner */
-.loading-spinner {
+/* Loading Spinner (auth用の古いスタイル - 使用しない) */
+.auth-loading-spinner {
   width: 40px;
   height: 40px;
   border: 4px solid #e5e7eb;

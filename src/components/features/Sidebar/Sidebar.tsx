@@ -1,9 +1,11 @@
 /**
  * Sidebar Component
  * サイドバーコンポーネント（セクション一覧）
+ * SidebarItemに個別アイテムを分離（Single Responsibility原則）
  */
 import React from 'react';
 import { type Section } from '@/models/Section';
+import { SidebarItem } from './SidebarItem';
 
 interface SidebarProps {
   sections: Section[];
@@ -22,32 +24,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <div className="sidebar">
-      {sections.map((section) => {
-        const isActive = currentSection?.sectionId === section.sectionId;
-        const isCleared = isSectionCleared(section.sectionId);
-
-        return (
-          <div
-            key={section.sectionId}
-            className={`sidebar-item ${isActive ? 'active' : ''} ${isCleared ? 'cleared' : ''}`}
-            onClick={() => onSectionClick(section)}
-          >
-            {isCleared && <span className="finish-icon">✓</span>}
-            <span className="item-text">
-              #{section.sectionId} {section.title}
-            </span>
-            <button
-              className="complete-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                onCompleteClick(section.sectionId);
-              }}
-            >
-              {isCleared ? '未完了にする' : '完了にする'}
-            </button>
-          </div>
-        );
-      })}
+      {sections.map((section) => (
+        <SidebarItem
+          key={section.sectionId}
+          section={section}
+          isActive={currentSection?.sectionId === section.sectionId}
+          isCleared={isSectionCleared(section.sectionId)}
+          onClick={() => onSectionClick(section)}
+          onCompleteClick={() => onCompleteClick(section.sectionId)}
+        />
+      ))}
     </div>
   );
 };

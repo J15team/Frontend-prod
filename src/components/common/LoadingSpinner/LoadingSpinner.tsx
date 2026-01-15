@@ -14,6 +14,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   return (
     <div className="loading-spinner-container">
       <div className="loading-spinner">
+        <div className="sonar-sweep"></div>
         <img src="/icon.PNG" alt="Loading" className="spinner-icon" />
       </div>
       <p className="loading-message">{message}</p>

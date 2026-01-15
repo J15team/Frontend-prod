@@ -1,10 +1,12 @@
 /**
  * EditorPanel
  * エディター/プレビュータブ切り替えコンポーネント
+ * TabButtonを使用してDRY原則に準拠
  */
 import React, { useState } from 'react';
 import { CodeEditor } from '@/components/features/CodeEditor/CodeEditor';
 import { CodePreview } from '@/components/features/CodePreview/CodePreview';
+import { TabButton } from '@/components/common/TabButton/TabButton';
 
 interface EditorPanelProps {
   subjectId: number;
@@ -12,6 +14,11 @@ interface EditorPanelProps {
 }
 
 type TabType = 'editor' | 'preview';
+
+const TABS: { type: TabType; label: string; icon: string }[] = [
+  { type: 'editor', label: 'エディタ', icon: '📝' },
+  { type: 'preview', label: 'プレビュー', icon: '👁️' },
+];
 
 export const EditorPanel: React.FC<EditorPanelProps> = ({
   subjectId,
@@ -22,18 +29,15 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
   return (
     <div className="editor-panel">
       <div className="editor-panel-tabs">
-        <button
-          className={`tab-btn ${activeTab === 'editor' ? 'active' : ''}`}
-          onClick={() => setActiveTab('editor')}
-        >
-          📝 エディタ
-        </button>
-        <button
-          className={`tab-btn ${activeTab === 'preview' ? 'active' : ''}`}
-          onClick={() => setActiveTab('preview')}
-        >
-          👁️ プレビュー
-        </button>
+        {TABS.map((tab) => (
+          <TabButton
+            key={tab.type}
+            label={tab.label}
+            icon={tab.icon}
+            isActive={activeTab === tab.type}
+            onClick={() => setActiveTab(tab.type)}
+          />
+        ))}
       </div>
       {activeTab === 'editor' ? (
         <CodeEditor

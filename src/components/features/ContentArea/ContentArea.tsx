@@ -2,9 +2,9 @@
  * ContentArea Component
  * コンテンツ表示エリアコンポーネント
  */
-import React, { useEffect, useRef, useCallback } from 'react';
-import { marked } from 'marked';
+import React from 'react';
 import { type Section } from '@/models/Section';
+import { useMarkdownContent } from '@/hooks/useMarkdownContent';
 
 interface ContentAreaProps {
   section: Section;
@@ -16,61 +16,18 @@ interface ContentAreaProps {
   hasPrev: boolean;
 }
 
-export const ContentArea: React.FC<ContentAreaProps> = ({ 
-  section, 
-  isCleared, 
-  onComplete, 
+export const ContentArea: React.FC<ContentAreaProps> = ({
+  section,
+  isCleared,
+  onComplete,
   onNext,
   onPrev,
   hasNext,
-  hasPrev
+  hasPrev,
 }) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const addCopyButtons = useCallback(() => {
-    if (!contentRef.current) return;
-    
-    const codeBlocks = contentRef.current.querySelectorAll('pre');
-    codeBlocks.forEach((pre) => {
-      if (pre.querySelector('.code-copy-btn')) return;
-      
-      const wrapper = document.createElement('div');
-      wrapper.className = 'code-block-wrapper';
-      pre.parentNode?.insertBefore(wrapper, pre);
-      wrapper.appendChild(pre);
-      
-      const btn = document.createElement('button');
-      btn.className = 'code-copy-btn';
-      btn.textContent = '📋 コピー';
-      btn.title = 'コードをコピー';
-      btn.onclick = async () => {
-        const code = pre.querySelector('code')?.textContent || pre.textContent || '';
-        try {
-          await navigator.clipboard.writeText(code);
-          btn.textContent = '✓ コピーしました';
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.textContent = '📋 コピー';
-            btn.classList.remove('copied');
-          }, 2000);
-        } catch (err) {
-          console.error('コピーに失敗:', err);
-        }
-      };
-      wrapper.appendChild(btn);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.innerHTML = marked.parse(section.description) as string;
-      addCopyButtons();
-    }
-    if (containerRef.current) {
-      containerRef.current.scrollTop = 0;
-    }
-  }, [section.description, addCopyButtons]);
+  const { contentRef, containerRef } = useMarkdownContent({
+    content: section.description,
+  });
 
   return (
     <div className="content-area" ref={containerRef}>
@@ -79,7 +36,7 @@ export const ContentArea: React.FC<ContentAreaProps> = ({
         <h2>{section.title}</h2>
       </header>
       <div className="content-body" ref={contentRef} />
-      
+
       <div className="content-actions">
         <div className="content-actions-left">
           {hasPrev && (
