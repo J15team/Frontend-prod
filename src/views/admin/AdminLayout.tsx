@@ -14,7 +14,7 @@ const adminNavItems = [
   { path: '/admin/progress', label: '進捗ダッシュボード', color: '#8b5cf6' },
   { path: '/admin/subjects', label: '題材管理', color: '#22c55e' },
   { path: '/admin/sections', label: 'セクション管理', color: '#22c55e' },
-  { path: '/admin/tags', label: 'タグ管理', color: '#3b82f6' },
+  { path: '/admin/tags', label: 'タグ管理', color: '#06b6d4' },
   { path: '/admin/assignments', label: '課題題材管理', color: '#f59e0b' },
   { path: '/admin/assignment-sections', label: '課題セクション管理', color: '#f59e0b' },
   { path: '/admin/users', label: '管理者ユーザー', color: '#ef4444' },
@@ -51,6 +51,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               style={{
                 borderBottomColor: isActive ? item.color : 'transparent',
                 color: isActive ? item.color : undefined,
+                backgroundColor: isActive ? `${item.color}10` : undefined,
               }}
             >
               {item.label}
