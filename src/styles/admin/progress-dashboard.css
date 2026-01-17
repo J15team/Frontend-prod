@@ -1,0 +1,430 @@
+/**
+ * Admin Progress Dashboard Styles
+ */
+
+.progress-dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ローディング・エラー状態 */
+.progress-dashboard .loading-state,
+.progress-dashboard .error-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.progress-dashboard .loading-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.progress-dashboard .loading-icon.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.progress-dashboard .error-state {
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 12px;
+}
+
+/* ヘッダー */
+.progress-dashboard .dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.progress-dashboard .dashboard-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.progress-dashboard .header-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.progress-dashboard .type-toggle {
+  display: flex;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.progress-dashboard .toggle-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.progress-dashboard .toggle-btn.active {
+  background: white;
+  color: #1f2937;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-dashboard .btn-refresh {
+  padding: 0.5rem 1rem;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.progress-dashboard .btn-refresh:hover {
+  background: #d1d5db;
+}
+
+/* 一覧ビュー */
+.progress-dashboard .list-header {
+  margin-bottom: 1rem;
+}
+
+.progress-dashboard .user-count {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.progress-dashboard .users-table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.progress-dashboard .users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.progress-dashboard .users-table th,
+.progress-dashboard .users-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.progress-dashboard .users-table th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.85rem;
+}
+
+.progress-dashboard .users-table td {
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.progress-dashboard .username-cell .username {
+  font-weight: 600;
+}
+
+.progress-dashboard .email-cell {
+  color: #6b7280;
+}
+
+.progress-dashboard .progress-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-dashboard .progress-bar-mini {
+  width: 100px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-dashboard .progress-bar-mini .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-dashboard .progress-text {
+  font-weight: 600;
+  color: #374151;
+  min-width: 40px;
+}
+
+.progress-dashboard .cleared-badge {
+  background: #ecfdf5;
+  color: #059669;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.progress-dashboard .btn-detail {
+  padding: 0.4rem 0.8rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.progress-dashboard .btn-detail:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+
+/* 詳細ビュー */
+.progress-dashboard .user-detail-view {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.progress-dashboard .btn-back {
+  padding: 0.5rem 1rem;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s;
+}
+
+.progress-dashboard .btn-back:hover {
+  background: #e5e7eb;
+}
+
+.progress-dashboard .user-info-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.progress-dashboard .user-avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.progress-dashboard .user-details h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+}
+
+.progress-dashboard .user-details p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.progress-dashboard .user-stats {
+  margin-left: auto;
+  display: flex;
+  gap: 2rem;
+}
+
+.progress-dashboard .stat {
+  text-align: center;
+}
+
+.progress-dashboard .stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.progress-dashboard .stat-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* 題材進捗リスト */
+.progress-dashboard .subjects-progress-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.progress-dashboard .subjects-progress-list h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1.5rem 0;
+}
+
+.progress-dashboard .empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #9ca3af;
+}
+
+.progress-dashboard .subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.progress-dashboard .subject-card {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 1rem;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.progress-dashboard .subject-card:hover {
+  border-color: #e5e7eb;
+}
+
+.progress-dashboard .subject-card.cleared {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-color: #86efac;
+}
+
+.progress-dashboard .subject-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.progress-dashboard .subject-title {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.progress-dashboard .cleared-icon {
+  font-size: 1.1rem;
+}
+
+.progress-dashboard .subject-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.progress-dashboard .progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-dashboard .progress-bar .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-dashboard .progress-percent {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+  min-width: 40px;
+}
+
+.progress-dashboard .subject-sections {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* 他の進捗を見るボタン */
+.progress-dashboard .other-progress-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.progress-dashboard .btn-toggle-other {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.progress-dashboard .btn-toggle-other:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .progress-dashboard {
+    padding: 1rem;
+  }
+
+  .progress-dashboard .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progress-dashboard .user-info-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .progress-dashboard .user-stats {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+
+  .progress-dashboard .subjects-grid {
+    grid-template-columns: 1fr;
+  }
+}

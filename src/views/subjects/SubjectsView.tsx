@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSubjectsViewModel } from '@/viewmodels/subjects/useSubjectsViewModel';
 import { useAuthViewModel } from '@/viewmodels/auth/useAuthViewModel';
 import { recordSubjectView, recordTagView } from '@/services/ranking/RankingService';
+import { getStoredUser } from '@/utils/storage/tokenStorage';
 import { type Subject } from '@/models/Subject';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner/LoadingSpinner';
 import { Tutorial, shouldShowTutorial } from '@/components/features/Tutorial/Tutorial';
@@ -416,6 +417,10 @@ export const SubjectsView: React.FC = () => {
   // チュートリアル
   const [showTutorial, setShowTutorial] = useState(false);
   
+  // 管理者判定
+  const currentUser = getStoredUser();
+  const isAdmin = currentUser?.role === 'ROLE_ADMIN';
+  
   useEffect(() => {
     // ログイン時にisFirstLoginがlocationのstateで渡される場合
     const state = location.state as { isFirstLogin?: boolean } | null;
@@ -551,6 +556,11 @@ export const SubjectsView: React.FC = () => {
           <h1>題材一覧</h1>
         </div>
         <div className="header-actions">
+          {isAdmin && (
+            <button onClick={() => navigate('/admin')} className="btn-admin">
+              ⚙️ 管理画面
+            </button>
+          )}
           <button onClick={() => navigate('/assignments')} className="btn-assignments">
             📝 課題題材 <span className="beta-tag">Beta</span>
           </button>

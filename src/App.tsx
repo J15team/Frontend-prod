@@ -27,6 +27,7 @@ import { AdminDashboardView } from '@/views/admin/AdminDashboardView';
 import { TagManagementView } from '@/views/admin/TagManagementView';
 import { AssignmentManagementView } from '@/views/admin/AssignmentManagementView';
 import { AssignmentSectionManagementView } from '@/views/admin/AssignmentSectionManagementView';
+import { AdminProgressDashboardView } from '@/views/admin/AdminProgressDashboardView';
 import { AssignmentsView } from '@/views/assignments/AssignmentsView';
 import { AssignmentSectionsView } from '@/views/assignments/AssignmentSectionsView';
 import { RankingView } from '@/views/ranking/RankingView';
@@ -128,6 +129,16 @@ const App: React.FC = () => {
             <ProtectedRoute requireAdmin={true}>
               <AdminLayout>
                 <AdminDashboardView />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/progress"
+          element={
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <AdminProgressDashboardView />
               </AdminLayout>
             </ProtectedRoute>
           }

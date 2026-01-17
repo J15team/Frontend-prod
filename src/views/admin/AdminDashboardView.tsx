@@ -7,48 +7,46 @@ import { Link } from 'react-router-dom';
 
 const cards = [
   {
-    title: '題材管理',
-    description: 'POST/PUT/DELETE /api/subjects。maxSectionsや題材メタデータを管理。',
+    title: '📊 進捗ダッシュボード',
+    description: '全ユーザーの学習進捗を一覧で確認。',
+    link: '/admin/progress',
+    color: '#8b5cf6',
+  },
+  {
+    title: '📚 題材管理',
+    description: '題材の作成・編集・削除。',
     link: '/admin/subjects',
-    endpoint: '/api/subjects',
+    color: '#22c55e',
   },
   {
-    title: 'セクション管理',
-    description: '画像付き multipart 対応のセクション作成・更新・削除。',
+    title: '📄 セクション管理',
+    description: 'セクションの作成・編集・画像アップロード。',
     link: '/admin/sections',
-    endpoint: '/api/subjects/{subjectId}/sections',
+    color: '#22c55e',
   },
   {
-    title: 'タグ管理',
-    description: 'タグの作成・削除と題材へのタグ付与。検索・フィルタリング用。',
+    title: '🏷️ タグ管理',
+    description: 'タグの作成・削除と題材へのタグ付与。',
     link: '/admin/tags',
-    endpoint: '/api/tags',
+    color: '#3b82f6',
   },
   {
-    title: '課題題材管理 (Beta)',
-    description: '課題題材の作成・更新・削除。コード提出・自動採点システム用。',
+    title: '📝 課題題材管理',
+    description: '課題題材の作成・編集・削除。',
     link: '/admin/assignments',
-    endpoint: '/api/assignments',
-    badge: 'Beta',
+    color: '#f59e0b',
   },
   {
-    title: '課題セクション管理 (Beta)',
-    description: 'テストケース付きセクションの管理。制限時間・メモリ制限の設定。',
+    title: '✏️ 課題セクション管理',
+    description: 'テストケース付きセクションの管理。',
     link: '/admin/assignment-sections',
-    endpoint: '/api/assignments/{id}/sections',
-    badge: 'Beta',
+    color: '#f59e0b',
   },
   {
-    title: '進捗確認',
-    description: 'GET/POST/DELETE /api/progress/subjects/{subjectId} を手動検証。',
-    link: '/progress',
-    endpoint: '/api/progress/...',
-  },
-  {
-    title: '管理者ユーザー',
-    description: 'APIキー経由の作成と JWT 認証済みの一覧/更新/削除。',
+    title: '👤 管理者ユーザー',
+    description: '管理者アカウントの一覧・作成・削除。',
     link: '/admin/users',
-    endpoint: '/api/admin/users',
+    color: '#ef4444',
   },
 ];
 
@@ -57,14 +55,18 @@ export const AdminDashboardView: React.FC = () => {
     <div className="admin-dashboard">
       <div className="admin-dashboard-grid">
         {cards.map((card) => (
-          <div key={card.title} className={`admin-card ${card.badge ? 'admin-card-beta' : ''}`}>
-            <p className="admin-card-endpoint">
-              {card.endpoint}
-              {card.badge && <span className="admin-card-badge">{card.badge}</span>}
-            </p>
+          <div 
+            key={card.title} 
+            className="admin-card"
+            style={{ borderTopColor: card.color }}
+          >
             <h2>{card.title}</h2>
             <p>{card.description}</p>
-            <Link to={card.link} className={card.badge ? 'btn-primary btn-assignment' : 'btn-primary'}>
+            <Link 
+              to={card.link} 
+              className="btn-primary"
+              style={{ background: card.color }}
+            >
               開く
             </Link>
           </div>

@@ -10,13 +10,14 @@ interface AdminLayoutProps {
 }
 
 const adminNavItems = [
-  { path: '/admin', label: 'ダッシュボード' },
-  { path: '/admin/subjects', label: '題材管理' },
-  { path: '/admin/sections', label: 'セクション管理' },
-  { path: '/admin/tags', label: 'タグ管理' },
-  { path: '/admin/assignments', label: '課題題材管理 (Beta)' },
-  { path: '/admin/assignment-sections', label: '課題セクション管理 (Beta)' },
-  { path: '/admin/users', label: '管理者ユーザー' },
+  { path: '/admin', label: 'ダッシュボード', color: '#6b7280' },
+  { path: '/admin/progress', label: '進捗ダッシュボード', color: '#8b5cf6' },
+  { path: '/admin/subjects', label: '題材管理', color: '#22c55e' },
+  { path: '/admin/sections', label: 'セクション管理', color: '#22c55e' },
+  { path: '/admin/tags', label: 'タグ管理', color: '#3b82f6' },
+  { path: '/admin/assignments', label: '課題題材管理', color: '#f59e0b' },
+  { path: '/admin/assignment-sections', label: '課題セクション管理', color: '#f59e0b' },
+  { path: '/admin/users', label: '管理者ユーザー', color: '#ef4444' },
 ];
 
 export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
@@ -27,26 +28,35 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <header className="admin-header">
         <div>
           <p className="admin-label">管理者コンソール</p>
-          <h1>J15 Admin Portal</h1>
-          <p className="admin-subtext">
-            バックエンドAPIで定義された題材・セクション・進捗・管理者エンドポイントを操作できます。
-          </p>
+          <h1>Pathly Admin</h1>
         </div>
-        <Link to="/admin/endpoints" className="btn-secondary">
-          エンドポイント一覧へ戻る
-        </Link>
+        <div className="header-buttons">
+          <Link to="/admin/endpoints" className="btn-secondary">
+            📋 エンドポイント一覧
+          </Link>
+          <Link to="/subjects" className="btn-secondary">
+            ← ユーザー画面へ
+          </Link>
+        </div>
       </header>
 
       <nav className="admin-nav">
-        {adminNavItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`admin-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-          >
-            {item.label}
-          </Link>
-        ))}
+        {adminNavItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`admin-nav-link ${isActive ? 'active' : ''}`}
+              style={{
+                borderBottomColor: isActive ? item.color : 'transparent',
+                color: isActive ? item.color : undefined,
+              }}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
 
       <main className="admin-content">{children}</main>
