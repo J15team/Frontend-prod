@@ -178,3 +178,64 @@ body {
 [data-theme="dark"] .modal-content {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
+
+
+/* ====================================================================
+   グローバル レスポンシブ
+   ==================================================================== */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .btn-back {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+    border-radius: 10px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-primary,
+  .btn-secondary {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .btn-back {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .modal-actions {
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .loading-container,
+  .error-container {
+    font-size: 1rem;
+    min-height: 150px;
+  }
+}

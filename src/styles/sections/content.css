@@ -323,3 +323,165 @@
   background: #3a3a3a;
   border-color: var(--text-muted);
 }
+
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .content-area {
+    padding: 20px 16px;
+  }
+
+  .content-body h1 {
+    font-size: 1.4rem;
+  }
+
+  .content-body h2 {
+    font-size: 1.2rem;
+  }
+
+  .content-body h3 {
+    font-size: 1rem;
+  }
+
+  .content-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .content-body pre {
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .content-body table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .content-body th,
+  .content-body td {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .main-content-split {
+    flex-direction: column;
+  }
+
+  .split-left {
+    width: 100% !important;
+    max-height: 50vh;
+    padding: 0.75rem;
+  }
+
+  .split-right {
+    width: 100% !important;
+    min-height: 300px;
+  }
+
+  .split-resizer {
+    display: none;
+  }
+
+  .content-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .content-actions-left,
+  .content-actions-center,
+  .content-actions-right {
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-complete-section,
+  .btn-next-section,
+  .btn-prev-section {
+    width: 100%;
+  }
+
+  .btn-complete-section {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .section-completed-badge {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-next-section,
+  .btn-prev-section {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .code-copy-btn {
+    opacity: 1;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-area {
+    padding: 16px 12px;
+  }
+
+  .content-body h1 {
+    font-size: 1.25rem;
+  }
+
+  .content-body h2 {
+    font-size: 1.1rem;
+  }
+
+  .content-body h3 {
+    font-size: 1rem;
+  }
+
+  .content-body {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .content-body pre {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .content-body ul,
+  .content-body ol {
+    padding-left: 1.25rem;
+  }
+
+  .split-left {
+    padding: 0.5rem;
+  }
+
+  .content-actions {
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+  }
+
+  .btn-complete-section {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .section-completed-badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .btn-next-section,
+  .btn-prev-section {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}

@@ -217,3 +217,92 @@
 [data-theme="dark"] .admin-card-endpoint {
   color: var(--text-muted);
 }
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .admin-layout {
+    padding: 16px 12px 40px;
+    gap: 16px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    align-items: stretch;
+  }
+
+  .admin-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .admin-header .header-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .admin-header .header-buttons .btn-secondary {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+  }
+
+  .admin-nav {
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-nav-link {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .admin-content {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .admin-dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .admin-card {
+    padding: 16px;
+  }
+
+  .admin-card h2 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-layout {
+    padding: 12px 8px 30px;
+  }
+
+  .admin-header {
+    padding: 12px;
+  }
+
+  .admin-label {
+    font-size: 0.7rem;
+  }
+
+  .admin-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .admin-nav-link {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .admin-content {
+    padding: 12px;
+  }
+}

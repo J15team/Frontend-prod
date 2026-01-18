@@ -278,11 +278,120 @@
   .preview-modal-header {
     flex-wrap: wrap;
     gap: 0.5rem;
+    padding: 0.75rem 1rem;
   }
 
   .preview-modal-tabs {
     order: 3;
     width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .preview-tab-btn {
+    flex: 1;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .preview-modal-content {
+    padding: 1rem;
+  }
+
+  .preview-modal-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .preview-modal-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .preview-modal-content h3 {
+    font-size: 1rem;
+  }
+
+  .preview-modal-content pre {
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .code-tabs {
+    flex-wrap: wrap;
+  }
+
+  .code-tab {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .code-preview-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .btn-run-code {
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .code-preview-section {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preview-modal-header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .preview-tab-btn {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .preview-close-btn {
+    font-size: 1.25rem;
+  }
+
+  .preview-modal-content {
+    padding: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .preview-modal-content h1 {
+    font-size: 1.25rem;
+  }
+
+  .preview-modal-content h2 {
+    font-size: 1.1rem;
+  }
+
+  .preview-modal-content h3 {
+    font-size: 1rem;
+  }
+
+  .preview-modal-content pre {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .code-tab {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .code-preview-header {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .btn-run-code {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -432,4 +541,93 @@
 .c-stdin-input:focus {
   outline: none;
   border-color: #f59e0b;
+}
+
+
+/* C言語プレビュー結果 レスポンシブ */
+@media (max-width: 768px) {
+  .c-preview-result-modal {
+    padding: 0.75rem;
+  }
+
+  .c-preview-result-modal .c-loading {
+    padding: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .c-preview-result-modal .c-loading .loading-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .c-preview-result-modal .c-result-status {
+    padding: 0.5rem 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .c-preview-result-modal .status-badge {
+    font-size: 0.8rem;
+  }
+
+  .c-preview-result-modal .execution-time {
+    font-size: 0.7rem;
+  }
+
+  .c-preview-result-modal .c-output,
+  .c-preview-result-modal .c-error {
+    padding: 0.75rem;
+  }
+
+  .c-preview-result-modal .c-output pre,
+  .c-preview-result-modal .c-error pre {
+    padding: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .c-stdin-section {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .c-stdin-section label {
+    font-size: 0.7rem;
+  }
+
+  .c-stdin-input {
+    padding: 0.3rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .c-preview-result-modal {
+    padding: 0.5rem;
+  }
+
+  .c-preview-result-modal .c-loading {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .c-preview-result-modal .c-result-status {
+    padding: 0.4rem 0.5rem;
+  }
+
+  .c-preview-result-modal .status-badge {
+    font-size: 0.75rem;
+  }
+
+  .c-preview-result-modal .c-output pre,
+  .c-preview-result-modal .c-error pre {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .c-stdin-section {
+    padding: 0.3rem 0.5rem;
+  }
+
+  .c-stdin-input {
+    font-size: 0.7rem;
+  }
 }

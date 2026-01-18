@@ -101,3 +101,141 @@
   font-size: 0.75rem;
   font-weight: 500;
 }
+
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .subject-category {
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+  }
+
+  .category-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .category-emoji {
+    font-size: 1.25rem;
+  }
+
+  .category-title {
+    font-size: 1.1rem;
+  }
+
+  .category-stars {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .subject-card-header {
+    padding: 16px 16px 0;
+  }
+
+  .subject-card-body {
+    padding: 12px 16px;
+  }
+
+  .subject-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .subject-card p {
+    font-size: 0.85rem;
+  }
+
+  .subject-progress {
+    padding: 0 16px;
+  }
+
+  .subject-footer {
+    padding: 12px 16px;
+  }
+
+  .subject-tags {
+    gap: 4px;
+  }
+
+  .subject-tag {
+    padding: 3px 8px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .subject-category {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .category-header {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .category-title {
+    font-size: 1rem;
+  }
+
+  .category-count {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+
+  .subject-card-header {
+    padding: 12px 12px 0;
+  }
+
+  .subject-card-body {
+    padding: 10px 12px;
+  }
+
+  .subject-card h2 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .subject-card p {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .subject-progress {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .subject-progress .progress-label {
+    font-size: 0.7rem;
+    min-width: 35px;
+  }
+
+  .subject-progress .progress-percentage {
+    font-size: 0.8rem;
+    min-width: 35px;
+  }
+
+  .subject-footer {
+    padding: 10px 12px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .section-count {
+    font-size: 0.8rem;
+  }
+
+  .created-at {
+    font-size: 0.75rem;
+  }
+
+  .deadline-badge {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    margin: 8px 12px;
+  }
+}

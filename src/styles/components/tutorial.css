@@ -106,6 +106,70 @@
     bottom: 24px !important;
     top: auto !important;
     transform: none !important;
+    padding: 20px;
+  }
+
+  .tutorial-title {
+    font-size: 1.1rem;
+  }
+
+  .tutorial-description {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+
+  .tutorial-actions {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tutorial-skip {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .tutorial-next {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tutorial-tooltip {
+    width: calc(100vw - 24px);
+    left: 12px !important;
+    right: 12px;
+    bottom: 16px !important;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .tutorial-step-indicator {
+    font-size: 0.7rem;
+  }
+
+  .tutorial-title {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .tutorial-description {
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .tutorial-skip {
+    font-size: 0.75rem;
+  }
+
+  .tutorial-next {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+  }
+
+  .tutorial-hint {
+    font-size: 0.8rem;
   }
 }
 

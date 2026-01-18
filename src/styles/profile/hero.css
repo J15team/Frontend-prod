@@ -101,3 +101,100 @@
 }
 
 .btn-settings-outline:hover { background: var(--color-primary); color: white; }
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .profile-hero-bg {
+    height: 140px;
+  }
+
+  .profile-header {
+    padding: 12px 16px;
+  }
+
+  .btn-back-light,
+  .btn-signout {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .profile-hero-content {
+    padding-top: 10px;
+  }
+
+  .profile-avatar-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-avatar-ring {
+    width: 136px;
+    height: 136px;
+    top: -8px;
+    left: -8px;
+  }
+
+  .profile-avatar-large {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-name-large {
+    font-size: 1.5rem;
+    margin-top: 12px;
+  }
+
+  .profile-email-light {
+    font-size: 0.9rem;
+  }
+
+  .btn-settings-outline {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-hero-bg {
+    height: 120px;
+  }
+
+  .profile-header {
+    padding: 10px 12px;
+  }
+
+  .btn-back-light,
+  .btn-signout {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .profile-avatar-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-avatar-ring {
+    width: 116px;
+    height: 116px;
+  }
+
+  .profile-avatar-large {
+    width: 100px;
+    height: 100px;
+    border-width: 3px;
+  }
+
+  .profile-name-large {
+    font-size: 1.3rem;
+  }
+
+  .profile-email-light {
+    font-size: 0.85rem;
+  }
+
+  .btn-settings-outline {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+  }
+}

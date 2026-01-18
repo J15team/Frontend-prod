@@ -359,3 +359,115 @@
 .assignment-management .btn-preview-small:hover {
   background: #e5e7eb;
 }
+
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .assignment-management {
+    padding: 1rem;
+  }
+
+  .assignment-management .management-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .assignment-management .management-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .assignment-management .header-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .assignment-management .subject-select {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .assignment-management .btn-create {
+    width: 100%;
+  }
+
+  .assignment-management .form-container {
+    padding: 1rem;
+  }
+
+  .assignment-management .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .assignment-management .form-actions {
+    flex-direction: column;
+  }
+
+  .assignment-management .btn-save,
+  .assignment-management .btn-cancel {
+    width: 100%;
+  }
+
+  .assignment-management .subjects-table-container {
+    overflow-x: auto;
+  }
+
+  .assignment-management .subjects-table {
+    min-width: 500px;
+  }
+
+  .assignment-management .subjects-table th,
+  .assignment-management .subjects-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .assignment-management .description-cell {
+    max-width: 150px;
+  }
+
+  .assignment-management .actions-cell {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .assignment-management .test-case-form {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .assignment-management {
+    padding: 0.75rem;
+  }
+
+  .assignment-management .management-header h1 {
+    font-size: 1rem;
+  }
+
+  .assignment-management .form-container {
+    padding: 0.75rem;
+  }
+
+  .assignment-management .form-container h2 {
+    font-size: 1rem;
+  }
+
+  .assignment-management .form-group label {
+    font-size: 0.85rem;
+  }
+
+  .assignment-management .form-group input[type="text"],
+  .assignment-management .form-group input[type="number"],
+  .assignment-management .form-group textarea {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .assignment-management .btn-preview,
+  .assignment-management .btn-memo {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
