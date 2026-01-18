@@ -244,3 +244,187 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .member-header {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .member-header .btn-back {
+    font-size: 0.9rem;
+  }
+
+  .member-header .header-title {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+  }
+
+  .member-main {
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .member-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .member-image {
+    width: 200px;
+    height: 250px;
+    border-radius: 12px;
+  }
+
+  .member-image .image-placeholder {
+    font-size: 4rem;
+  }
+
+  .member-role-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.85rem;
+  }
+
+  .member-name {
+    font-size: 2rem;
+  }
+
+  .member-name-en {
+    font-size: 0.9rem;
+  }
+
+  .member-title {
+    font-size: 1rem;
+  }
+
+  .member-content {
+    padding: 2rem;
+    border-radius: 16px;
+  }
+
+  .member-section {
+    margin-bottom: 2rem;
+  }
+
+  .member-section h2 {
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+  }
+
+  .member-bio p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .skill-tag {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .member-link {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .member-header {
+    padding: 0.6rem 1rem;
+  }
+
+  .member-header .btn-back {
+    font-size: 0.85rem;
+  }
+
+  .member-header .header-title {
+    font-size: 0.7rem;
+    display: none;
+  }
+
+  .member-main {
+    padding: 4rem 1rem 2rem;
+  }
+
+  .member-hero {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .member-image {
+    width: 160px;
+    height: 200px;
+  }
+
+  .member-image .image-placeholder {
+    font-size: 3rem;
+  }
+
+  .member-role-badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .member-name {
+    font-size: 1.5rem;
+  }
+
+  .member-name-en {
+    font-size: 0.8rem;
+  }
+
+  .member-title {
+    font-size: 0.9rem;
+  }
+
+  .member-content {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .member-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .member-section h2 {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .member-bio p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .member-skills,
+  .member-hobbys,
+  .member-from {
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+  }
+
+  .member-links {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .member-link {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.85rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .member-footer {
+    padding: 1.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}

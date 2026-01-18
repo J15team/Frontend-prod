@@ -82,3 +82,100 @@
   color: #9ca3af;
   line-height: 1.6;
 }
+
+
+/* レスポンシブ */
+@media (max-width: 1024px) {
+  .flow-section {
+    padding: 6rem 6%;
+  }
+
+  .flow-timeline {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .flow-item::after {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .flow-section {
+    padding: 4rem 5%;
+  }
+
+  .flow-timeline {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .flow-number {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .flow-content {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .flow-image {
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .flow-image .placeholder-icon {
+    font-size: 2rem;
+  }
+
+  .flow-content h3 {
+    font-size: 1rem;
+  }
+
+  .flow-content p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flow-section {
+    padding: 3rem 4%;
+  }
+
+  .flow-timeline {
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .flow-number {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .flow-content {
+    padding: 1rem;
+  }
+
+  .flow-image {
+    height: 80px;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .flow-image .placeholder-icon {
+    font-size: 1.75rem;
+  }
+
+  .flow-content h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .flow-content p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+}

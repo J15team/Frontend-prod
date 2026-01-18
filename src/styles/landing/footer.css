@@ -80,3 +80,121 @@
   color: #6b7280;
   font-size: 0.875rem;
 }
+
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .landing-footer-v2 {
+    padding: 3rem 5% 1.5rem;
+  }
+
+  .footer-main {
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-brand {
+    text-align: center;
+  }
+
+  .footer-brand .logo {
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+
+  .footer-brand .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .footer-brand .logo-title {
+    height: 24px;
+  }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  .link-group {
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .link-group h4 {
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .link-group a {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-bottom {
+    padding-top: 1.5rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-footer-v2 {
+    padding: 2rem 4% 1rem;
+  }
+
+  .footer-main {
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .footer-brand .logo {
+    font-size: 1.1rem;
+  }
+
+  .footer-brand .logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .footer-brand .logo-title {
+    height: 20px;
+  }
+
+  .footer-brand p {
+    font-size: 0.8rem;
+  }
+
+  .footer-links {
+    gap: 1.5rem;
+  }
+
+  .link-group {
+    min-width: 100px;
+  }
+
+  .link-group h4 {
+    font-size: 0.75rem;
+  }
+
+  .link-group a {
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom {
+    padding-top: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+  }
+}

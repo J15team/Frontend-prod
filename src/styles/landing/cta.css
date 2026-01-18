@@ -100,3 +100,75 @@
   border-color: white;
   background: rgba(255, 255, 255, 0.1);
 }
+
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .cta-section {
+    min-height: 60vh;
+  }
+
+  .cta-content {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .cta-label {
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-cta-primary,
+  .btn-cta-secondary {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-section {
+    min-height: 50vh;
+  }
+
+  .cta-content {
+    padding: 1rem;
+  }
+
+  .cta-label {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-section p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-cta-primary,
+  .btn-cta-secondary {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}

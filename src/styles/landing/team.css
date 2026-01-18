@@ -93,3 +93,95 @@
   background: #16a34a;
   transform: rotate(90deg);
 }
+
+
+/* レスポンシブ */
+@media (max-width: 1024px) {
+  .team-section {
+    padding: 6rem 6%;
+  }
+
+  .team-grid-large {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-section {
+    padding: 4rem 5%;
+  }
+
+  .team-grid-large {
+    gap: 1.5rem;
+  }
+
+  .team-photo {
+    border-radius: 16px;
+    margin-bottom: 1rem;
+  }
+
+  .team-photo .photo-placeholder {
+    font-size: 3rem;
+  }
+
+  .team-card-name {
+    font-size: 1.25rem;
+  }
+
+  .team-card-role {
+    font-size: 0.8rem;
+  }
+
+  .team-card-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .team-grid-large {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-section {
+    padding: 3rem 4%;
+  }
+
+  .team-grid-large {
+    max-width: 320px;
+    gap: 1.25rem;
+  }
+
+  .team-photo {
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+  }
+
+  .team-photo .photo-placeholder {
+    font-size: 2.5rem;
+  }
+
+  .team-card-info {
+    gap: 0.75rem;
+  }
+
+  .team-card-name {
+    font-size: 1.1rem;
+  }
+
+  .team-card-role {
+    font-size: 0.75rem;
+  }
+
+  .team-card-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+}
