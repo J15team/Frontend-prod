@@ -27,7 +27,7 @@ const membersData: Record<string, {
     nameEn: 'RIKI YOSHIDA',
     role: 'Tech Lead',
     title: 'Tech Lead (Frontend & Backend)',
-    image: '/images/team/member-1-detail.png',
+    image: '/images/team/member-1-detail.jpg',
     bio: [
       '徳島県出身。',
       'この作品における大体なんでもやったなんでも屋さんです。',
